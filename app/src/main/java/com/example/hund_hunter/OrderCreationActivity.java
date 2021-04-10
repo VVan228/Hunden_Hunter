@@ -31,7 +31,7 @@ public class OrderCreationActivity extends AppCompatActivity {
 
 
     }
-    public void setLocation(){
+    public void setLocation(View view){
         Intent set_act = new Intent(OrderCreationActivity.this, SetLocetionActivity.class);
         startActivity(set_act);
     }
