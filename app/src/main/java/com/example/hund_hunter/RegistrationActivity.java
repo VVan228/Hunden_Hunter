@@ -74,19 +74,24 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        ref.addChildEventListener(new ChildEventListener() {
+        FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                User newPost = dataSnapshot.getValue(User.class);
-                System.out.println("Author: " + newPost.name);
-                System.out.println("Title: " + newPost.email);
+                User newPost = new User();
+                newPost = dataSnapshot.getValue(User.class);
+                System.out.println("Author: " + newPost.name.toString());
+                System.out.println("Title: " + newPost.email.toString());
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                User changedPost = dataSnapshot.getValue(User.class);
+            }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                User removedPost = dataSnapshot.getValue(User.class);
+            }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
