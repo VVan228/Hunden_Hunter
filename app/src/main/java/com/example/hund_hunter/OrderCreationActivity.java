@@ -1,5 +1,6 @@
 package com.example.hund_hunter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -33,7 +34,16 @@ public class OrderCreationActivity extends AppCompatActivity {
     }
     public void setLocation(View view){
         Intent set_act = new Intent(OrderCreationActivity.this, SetLocetionActivity.class);
-        startActivity(set_act);
+        startActivityForResult(set_act, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        String name = data.getStringExtra("coords");
+        Toast.makeText(OrderCreationActivity.this, name, Toast.LENGTH_LONG).show();
     }
 
     public void onclick(View view) {
