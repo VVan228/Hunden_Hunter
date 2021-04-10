@@ -7,6 +7,7 @@
     tools:context=".OrderCreationActivity">
 
     <LinearLayout
+        android:id="@+id/ll_lostForm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -27,6 +28,14 @@
             android:text="Ввести время"
             >
         </Button>
+
+        <EditText
+            android:id="@+id/reward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Вознаграждение ₽"
+            android:inputType="phone" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
