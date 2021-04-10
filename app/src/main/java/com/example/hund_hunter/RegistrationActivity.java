@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.text.format.DateFormat;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -54,31 +56,16 @@ public class RegistrationActivity extends AppCompatActivity {
         find = extras.getBoolean("find");
         lost = extras.getBoolean("lost");
 
-        usersRef.addChildEventListener(new ChildEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("users").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                User newPost = new User();
-                newPost = dataSnapshot.getValue(User.class);
-                System.out.println("Author: " + newPost.name.toString());
-                System.out.println("Title: " + newPost.email.toString());
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                }
             }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                //User changedPost = dataSnapshot.getValue(User.class);
-                Log.d("type",dataSnapshot.getValue(User.class).getEmail());
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                User removedPost = dataSnapshot.getValue(User.class);
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
