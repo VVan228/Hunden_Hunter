@@ -7,11 +7,15 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class OrderCreationActivity extends AppCompatActivity {
+    private EditText revard;
     int DIALOG_TIME = 1;
     int myHour = 14;
     int myMinute = 35;
@@ -22,10 +26,16 @@ public class OrderCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_creation);
         tvTime = (TextView) findViewById(R.id.tvTime);
+
+        revard = (EditText) findViewById(R.id.reward);
+
+
     }
 
     public void onclick(View view) {
         showDialog(DIALOG_TIME);
+
+
     }
 
     protected Dialog onCreateDialog(int id) {
