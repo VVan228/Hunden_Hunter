@@ -17,6 +17,7 @@ import android.text.format.DateFormat;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -63,7 +64,9 @@ public class RegistrationActivity extends AppCompatActivity {
         if(!isNull){
             Map<String, User> users = new HashMap<>();
             users.put("checkin", new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
-            FirebaseDatabase.getInstance().getReference().push().setValue(users);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference usersRef = ref.child("users");
+            usersRef.setValue(users);
         }else{
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
