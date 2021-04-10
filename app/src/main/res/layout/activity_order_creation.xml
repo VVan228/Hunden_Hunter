@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderCreationActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_lostForm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выбрать место" />
+
+        <Button
+            android:id="@+id/tvTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onclick"
+            android:text="Ввести время"
+            >
+        </Button>
+
+        <EditText
+            android:id="@+id/reward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Вознаграждение ₽"
+            android:inputType="phone" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
