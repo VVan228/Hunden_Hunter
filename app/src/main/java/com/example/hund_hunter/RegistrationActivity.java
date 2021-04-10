@@ -35,7 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
         password = findViewById(R.id.editTextTextPassword);
 
         // Проверка на непустые поля
-        FirebaseDatabase.getInstance().getReference().push().setValue(name+" "+familia+" "+email+" "+password);
+
 
         Bundle extras = getIntent().getExtras();
         find = extras.getBoolean("find");
@@ -43,6 +43,18 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void findButton(View view){
+        String nameTxt = name.getText().toString();
+        String familiaTxt = familia.getText().toString();
+        String emailTxt = email.getText().toString();
+        String passwordTxt = password.getText().toString();
+
+        if(!nameTxt.equals("")&&!familiaTxt.equals("")&&!emailTxt.equals("")&&!passwordTxt.equals("")){
+            FirebaseDatabase.getInstance().getReference().push().setValue(nameTxt+" "+familiaTxt+" "+emailTxt+" "+passwordTxt);
+        }else{
+            Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         Intent reg_act = null;
         if(find){
             reg_act = new Intent(RegistrationActivity.this, SeekerActivity.class);
@@ -51,4 +63,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         startActivity(reg_act);
     }
+
+    /*public void nullTest(String string){
+        try {
+            strin
+        }
+
+    }*/
 }
