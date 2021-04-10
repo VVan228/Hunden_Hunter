@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:onClick="onClick"
+            android:onClick="lostButtonClick"
             android:layout_marginBottom="25dp"
             android:layout_marginHorizontal="10dp"
             android:id="@+id/b_lose"
@@ -27,7 +27,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:onClick="onClick"
+            android:onClick="findButtonOnClick"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="200dp"
             android:layout_marginHorizontal="10dp"
