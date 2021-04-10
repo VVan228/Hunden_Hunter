@@ -62,11 +62,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         if(!isNull){
-            Map<String, User> users = new HashMap<>();
-            users.put("checkin", new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
             DatabaseReference usersRef = ref.child("users");
-            usersRef.setValue(users);
+            DatabaseReference newUsersRef = usersRef.push();
+            newUsersRef.setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
         }else{
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
