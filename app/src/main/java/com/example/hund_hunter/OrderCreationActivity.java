@@ -31,6 +31,10 @@ public class OrderCreationActivity extends AppCompatActivity {
 
 
     }
+    public void setLocation(){
+        Intent set_act = new Intent(OrderCreationActivity.this, SetLocetionActivity.class);
+        startActivity(set_act);
+    }
 
     public void onclick(View view) {
         showDialog(DIALOG_TIME);
