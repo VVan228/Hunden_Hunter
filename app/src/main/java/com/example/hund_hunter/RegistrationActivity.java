@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name, familia, email, password;
+    EditText[] eds = new EditText[4];
+    String[] names;
     boolean find, lost;
 
 
@@ -29,10 +31,12 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);//TODO: сделать чтьобы съехжало при появлении клавиатуры
-        name = findViewById(R.id.editTextTextPersonName);
-        familia = findViewById(R.id.editTextTextPersonName2);
-        email = findViewById(R.id.editTextTextEmailAddress2);
-        password = findViewById(R.id.editTextTextPassword);
+
+        eds[0] = findViewById(R.id.editTextTextPersonName);
+        eds[1] = findViewById(R.id.editTextTextPersonName2);
+        eds[2] = findViewById(R.id.editTextTextEmailAddress2);
+        eds[3] = findViewById(R.id.editTextTextPassword);
+        names = new String[]{"name", "familia", "email", "password"};
 
         // Проверка на непустые поля
 
@@ -43,13 +47,22 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void findButton(View view){
-        String nameTxt = name.getText().toString();
-        String familiaTxt = familia.getText().toString();
-        String emailTxt = email.getText().toString();
-        String passwordTxt = password.getText().toString();
+        String[] edsTxt = new String[eds.length];
+        boolean isNull = false;
+        for(int i = 0; i<eds.length; i++){
+            edsTxt[i] = eds[i].getText().toString();
+            if(edsTxt[i].equals("")){
+                isNull = true;
+            }
+        }
 
-        if(!nameTxt.equals("")&&!familiaTxt.equals("")&&!emailTxt.equals("")&&!passwordTxt.equals("")){
-            FirebaseDatabase.getInstance().getReference().push().setValue(nameTxt+" "+familiaTxt+" "+emailTxt+" "+passwordTxt);
+
+        if(!isNull){
+            String res = "";
+            for(int i = 0; i<eds.length; i++){
+                res += edsTxt[i]+" ";
+            }
+            FirebaseDatabase.getInstance().getReference().push().setValue(res);
         }else{
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
@@ -64,10 +77,9 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(reg_act);
     }
 
-    /*public void nullTest(String string){
-        try {
-            strin
-        }
+    public String nullTest(EditText ed){
+        String txt = ed.getText().toString();
+        return txt;
 
-    }*/
+    }
 }
