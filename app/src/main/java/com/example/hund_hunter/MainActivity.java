@@ -11,11 +11,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Context context = MainActivity.this;
-        Class destinationActivity = StartActivity.class;
-        Intent child_act_intent = new Intent(context, destinationActivity);
-        child_act_intent.putExtra(Intent.EXTRA_TEXT, "");
-        startActivity(child_act_intent);
+        Intent start_act = new Intent(MainActivity.this, StartActivity.class);
+        //child_act_intent.putExtra(Intent.EXTRA_TEXT, "");
+        startActivity(start_act);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
