@@ -11,13 +11,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         Intent start_act = new Intent(MainActivity.this, StartActivity.class);
         //child_act_intent.putExtra(Intent.EXTRA_TEXT, "");
         startActivity(start_act);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.d("kjuby","its Work!!!!");
-        Log.d("rdashk","its Work too!!!!");
     }
 }
