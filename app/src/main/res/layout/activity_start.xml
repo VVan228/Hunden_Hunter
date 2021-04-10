@@ -19,7 +19,7 @@
             android:layout_marginTop="250dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="У меня потерялась собака"
             android:background="@drawable/button_main_shape"
             />
@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:id="@+id/button2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Я хочу искать!"
             android:background="@drawable/button_main_shape"
             />
