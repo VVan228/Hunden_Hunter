@@ -37,13 +37,16 @@ public class StartActivity extends AppCompatActivity {
             startActivity(reg_act);
         }
         else {
-            /*if (extra == "lost") {
+            if (extra == "lost") {
                 Snackbar.make(findViewById(R.id.ll_lostForm), "Вы авторизованы", Snackbar.LENGTH_SHORT).show();
+                Intent reg_act = new Intent(StartActivity.this, OrderCreationActivity.class);
+                reg_act.putExtra(extra, true);
+                startActivity(reg_act);
             }
             else {
-                Snackbar.make(findViewById(R.id.act_with_map), "Вы авторизованы", Snackbar.LENGTH_SHORT).show();
-            }*/
-            Toast.makeText(this, "Карта", Toast.LENGTH_LONG).show();
+                //Snackbar.make(findViewById(R.id.act_with_map), "Вы авторизованы", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(StartActivity.this, "Карта", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
