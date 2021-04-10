@@ -50,7 +50,7 @@ public class OrderCreationActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             myHour = hourOfDay;
             myMinute = minute;
-            tvTime.setText("Время пропажи " + myHour + " часов " + myMinute + " минут");
+            tvTime.setText("Время пропажи" + myHour + "часов" + myMinute + "минут");
         }
     };
 
