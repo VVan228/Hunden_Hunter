@@ -14,7 +14,7 @@
 
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/setPlace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Выбрать место" />
@@ -37,6 +37,26 @@
             android:ems="10"
             android:hint="Вознаграждение ₽"
             android:inputType="phone" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Прикрепить фото" />
+
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Коментарий"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/publish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Опубликовать" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
