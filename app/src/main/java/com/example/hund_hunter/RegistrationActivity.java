@@ -32,7 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void findButton(View view){
-        Intent reg_act = new Intent(RegistrationActivity.this, SeekerActivity.class);
+        Intent reg_act = new Intent(RegistrationActivity.this, OrderCreationActivity.class);
         startActivity(reg_act);
     }
 }
