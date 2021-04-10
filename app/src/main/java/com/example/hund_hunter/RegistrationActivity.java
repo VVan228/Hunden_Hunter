@@ -19,6 +19,7 @@ import android.widget.Toast;
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name, familia, email, password;
+    boolean find, lost;
 
 
     @Override
@@ -29,10 +30,19 @@ public class RegistrationActivity extends AppCompatActivity {
         familia = findViewById(R.id.editTextTextPersonName2);
         email = findViewById(R.id.editTextTextEmailAddress2);
         password = findViewById(R.id.editTextTextPassword);
+
+        Bundle extras = getIntent().getExtras();
+        find = extras.getBoolean("find");
+        lost = extras.getBoolean("lost");
     }
 
     public void findButton(View view){
-        Intent reg_act = new Intent(RegistrationActivity.this, OrderCreationActivity.class);
+        Intent reg_act = null;
+        if(find){
+            reg_act = new Intent(RegistrationActivity.this, SeekerActivity.class);
+        }else if(lost){
+            reg_act = new Intent(RegistrationActivity.this, OrderCreationActivity.class);
+        }
         startActivity(reg_act);
     }
 }
