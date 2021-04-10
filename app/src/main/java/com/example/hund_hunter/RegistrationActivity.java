@@ -34,6 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
     String[] names;
     boolean find, lost;
     DatabaseReference ref;
+    DatabaseReference usersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,30 +53,8 @@ public class RegistrationActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         find = extras.getBoolean("find");
         lost = extras.getBoolean("lost");
-    }
 
-    public void findButton(View view){
-        String[] edsTxt = new String[eds.length];
-        boolean isNull = false;
-        for(int i = 0; i<eds.length; i++){
-            edsTxt[i] = eds[i].getText().toString();
-            if(edsTxt[i].equals("")){
-                isNull = true;
-            }
-        }
-
-
-        if(!isNull){
-            ref = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference usersRef = ref.child("users");
-            //DatabaseReference newUsersRef = usersRef.push();
-            usersRef.push().setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3], edsTxt[4]));
-        }else{
-            Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        /*FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
+        usersRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 User newPost = new User();
@@ -100,7 +79,29 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });*/
+        });
+    }
+
+    public void findButton(View view){
+        String[] edsTxt = new String[eds.length];
+        boolean isNull = false;
+        for(int i = 0; i<eds.length; i++){
+            edsTxt[i] = eds[i].getText().toString();
+            if(edsTxt[i].equals("")){
+                isNull = true;
+            }
+        }
+
+
+        if(!isNull){
+            ref = FirebaseDatabase.getInstance().getReference();
+            usersRef = ref.child("users");
+            //DatabaseReference newUsersRef = usersRef.push();
+            usersRef.push().setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3], edsTxt[4]));
+        }else{
+            Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         Intent reg_act = null;
         if(find){
