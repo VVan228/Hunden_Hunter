@@ -19,6 +19,9 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name, familia, email, password;
@@ -58,11 +61,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         if(!isNull){
-            String res = "";
-            for(int i = 0; i<eds.length; i++){
-                res += edsTxt[i]+" ";
-            }
-            FirebaseDatabase.getInstance().getReference().push().setValue(res);
+            Map<String, User> users = new HashMap<>();
+            users.put("checkin", new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
+            FirebaseDatabase.getInstance().getReference().push().setValue(users);
         }else{
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
