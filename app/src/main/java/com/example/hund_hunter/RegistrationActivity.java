@@ -47,7 +47,8 @@ public class RegistrationActivity extends AppCompatActivity {
         eds[1] = findViewById(R.id.editTextTextPersonName2);
         eds[2] = findViewById(R.id.editTextTextEmailAddress2);
         eds[3] = findViewById(R.id.editTextTextPassword);
-        names = new String[]{"name", "familia", "email", "password"};
+        eds[4] = findViewById(R.id.tel);
+        names = new String[]{"name", "familia", "email", "password", "tel"};
 
         // Проверка на непустые поля
 
