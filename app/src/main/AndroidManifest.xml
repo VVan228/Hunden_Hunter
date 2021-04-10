@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hund_Hunter">
-        <activity android:name=".OrderCreationActivity"></activity>
+        <activity android:name=".SeekerActivity"></activity>
+        <activity android:name=".OrderCreationActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
