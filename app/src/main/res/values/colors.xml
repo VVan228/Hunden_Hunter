@@ -9,7 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_green">#96f3fb</color>
     <color name="green">#00C19F</color>
+    <color name="light_custom_green">#01D8B2</color>
     <color name="dark_green">#006e5a</color>
     <color name="yellow">#FFE258</color>
+    <color name="light_yellow">#F6F1D7</color>
+    <color name="pink">#ee5d94</color>
+
+
 
 </resources>
