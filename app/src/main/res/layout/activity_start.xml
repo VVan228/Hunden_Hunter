@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="У меня потерялась собака"
+            android:text="@string/lose"
             android:background="@drawable/button_main_shape"
             />
 
@@ -33,7 +33,7 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Я хочу искать!"
+            android:text="@string/find"
             android:background="@drawable/button_main_shape"
             />
     </LinearLayout>

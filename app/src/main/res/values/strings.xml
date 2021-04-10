@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hund_Hunter</string>
+    <string name="find">Я хочу искать!</string>
+    <string name="lose">У меня потерялась собака</string>
 </resources>
