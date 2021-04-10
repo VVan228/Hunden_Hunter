@@ -10,5 +10,6 @@ public class OrderCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_creation);
+        //TODO: принять extra
     }
 }
