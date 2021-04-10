@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class OrderCreationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);//TODO: сделать чтьобы съехжало при появлении клавиатуры
+        setContentView(R.layout.activity_order_creation);
     }
 }
