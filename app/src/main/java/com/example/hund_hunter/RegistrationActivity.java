@@ -32,7 +32,7 @@ import java.util.Map;
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name, familia, email, password;
-    EditText[] eds = new EditText[4];
+    EditText[] eds = new EditText[5];
     String[] names;
     boolean find, lost;
     DatabaseReference ref;
