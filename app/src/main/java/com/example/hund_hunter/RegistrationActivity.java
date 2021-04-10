@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.text.format.DateFormat;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name, familia, email, password;
@@ -30,6 +33,9 @@ public class RegistrationActivity extends AppCompatActivity {
         familia = findViewById(R.id.editTextTextPersonName2);
         email = findViewById(R.id.editTextTextEmailAddress2);
         password = findViewById(R.id.editTextTextPassword);
+
+        // Проверка на непустые поля
+        FirebaseDatabase.getInstance().getReference().push().setValue(name+" "+familia+" "+email+" "+password);
 
         Bundle extras = getIntent().getExtras();
         find = extras.getBoolean("find");
