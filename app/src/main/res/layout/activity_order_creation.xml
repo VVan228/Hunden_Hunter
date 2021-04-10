@@ -21,6 +21,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:onClick="setLocation"
                 android:layout_weight="1"
                 android:id="@+id/setPlace"
                 android:layout_width="match_parent"
