@@ -25,6 +25,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:onClick="onClick"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="200dp"
             android:layout_marginHorizontal="10dp"
