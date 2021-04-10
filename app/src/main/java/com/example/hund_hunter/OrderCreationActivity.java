@@ -50,7 +50,16 @@ public class OrderCreationActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             myHour = hourOfDay;
             myMinute = minute;
-            tvTime.setText(myHour + " : " + myMinute );
+            String minNull = "";
+            String hourNull = "";
+            if(myHour <= 10 ){
+                hourNull = "0";
+            }
+
+            if(myMinute <= 10 ){
+                minNull = "0";
+            }
+            tvTime.setText(hourNull + myHour + " : " + minNull + myMinute );
         }
     };
 
