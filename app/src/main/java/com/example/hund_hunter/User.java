@@ -7,6 +7,7 @@ public class User {
     public String familia;
     public String email;
     public String password;
+    private String tel;
 
     public User() {}
 
@@ -42,10 +43,19 @@ public class User {
         return password;
     }
 
-    public User(String name, String familia, String email, String password) {
+    public User(String name, String familia, String email, String password, String tel) {
         this.name = name;
         this.familia = familia;
         this.email = email;
         this.password = password;
+        this.tel = tel;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 }
