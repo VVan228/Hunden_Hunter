@@ -7,9 +7,11 @@
     tools:context=".OrderCreationActivity">
 
     <LinearLayout
+        android:id="@+id/ll_lostForm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <Button
             android:id="@+id/button3"
@@ -17,41 +19,23 @@
             android:layout_height="wrap_content"
             android:text="Выбрать место" />
 
-        <LinearLayout
+        <Button
+            android:id="@+id/tvTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onclick"
+            android:text="Ввести время"
+            >
+        </Button>
+
+        <EditText
+            android:id="@+id/reward"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <EditText
-                android:layout_marginHorizontal="10dp"
-                android:id="@+id/editTextTextPersonName4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
-                android:textFontWeight="1" />
-
-            <TextView
-
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=":" />
-
-            <EditText
-                android:layout_marginHorizontal="10dp"
-                android:id="@+id/editTextTextPersonName5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
-                 />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Вознаграждение ₽"
+            android:inputType="phone" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
