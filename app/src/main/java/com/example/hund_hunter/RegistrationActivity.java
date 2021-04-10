@@ -18,13 +18,17 @@ import android.widget.Toast;
 
 public class RegistrationActivity extends AppCompatActivity {
 
+    private EditText name, familia, email, password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);//TODO: сделать чтьобы съехжало при появлении клавиатуры
-
-
+        name = findViewById(R.id.editTextTextPersonName);
+        familia = findViewById(R.id.editTextTextPersonName2);
+        email = findViewById(R.id.editTextTextEmailAddress2);
+        password = findViewById(R.id.editTextTextPassword);
     }
 
     public void findButton(View view){
