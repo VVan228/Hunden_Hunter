@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -85,7 +86,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                User changedPost = dataSnapshot.getValue(User.class);
+                //User changedPost = dataSnapshot.getValue(User.class);
+                Log.d("type",dataSnapshot.getValue(User.class).getEmail());
             }
 
             @Override
