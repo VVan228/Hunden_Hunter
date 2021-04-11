@@ -63,6 +63,8 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void findButton(View view){
+        System.out.println("hi");
+        Log.d("yy", "base0");
         String[] edsTxt = new String[eds.length];
         boolean isNull = false;
         for(int i = 0; i<eds.length; i++){
@@ -74,6 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         if(!isNull){
+            Log.d("yy", "base");
             ref = FirebaseDatabase.getInstance().getReference();
             usersRef = ref.child("users");
             //DatabaseReference newUsersRef = usersRef.push();
@@ -106,14 +109,14 @@ public class RegistrationActivity extends AppCompatActivity {
                         field.setAccessible(true);
                         try { map.put(field.getName(), field.get(task.getResult().getValue())); } catch (Exception e) { }
                     }*/
-                    Map<String, Object> map = (Map<String, Object>)task.getResult().getValue();
-                    Map<String, User> map2 = new HashMap<>();
-                    for (Map.Entry<String, Object> entry : map.entrySet()) {
-                        Log.d("yy", entry.getValue().getClass().getName());
-                        //map2.put(entry.getKey(), (User)entry.getValue());
+                    Map<String, Map<String,String>> map = (Map<String, Map<String,String>>)task.getResult().getValue();
+                    Map<String, Map<String,String>> map2 = new HashMap<>();
+                    for (Map.Entry<String, Map<String,String>> entry : map.entrySet()) {
+                        //Log.d("yy", entry.getValue().getClass().getName());
+                        map2.put(entry.getKey(), (Map<String, String>)entry.getValue());
                     }
-                    for (Map.Entry<String, User> entry : map2.entrySet()) {
-                        Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().password);
+                    for (Map.Entry<String, Map<String,String>> entry : map2.entrySet()) {
+                        Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().get("password"));
                     }
                     //Log.d("yy", (User.class) map.get("-MXy6e_X5eJgZiPtic5A"));
                 }
