@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +25,7 @@ public class SetLocetionActivity extends AppCompatActivity implements OnMapReady
 
     private Marker marker;
     private GoogleMap mMap;
+    private LatLng coords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +55,15 @@ public class SetLocetionActivity extends AppCompatActivity implements OnMapReady
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
                 marker = mMap.addMarker(new MarkerOptions().position(latLng).title("здесь"));
-                Intent intent = new Intent();
-                intent.putExtra("coords", latLng.toString());
-                setResult(1, intent);
-                finish();
+                coords = latLng;
             }
         });
+    }
+
+    public void onSubmit(View view) {
+        Intent intent = new Intent();
+        intent.putExtra("coords", coords.toString());
+        setResult(1, intent);
+        finish();
     }
 }
