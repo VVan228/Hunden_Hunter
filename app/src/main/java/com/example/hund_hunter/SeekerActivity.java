@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,17 +48,33 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-            /*    mMap.clear();
-                marker = mMap.addMarker(new MarkerOptions().position(latLng).title("здесь"));
-                coords = latLng;*/
+
+                TextView textView=(TextView) findViewById(R.id.bottom_sheet);
+                /*textView = data time + discription + etc */
+
             }
         });
     }
+
+
+
 
     public void onSubmit(View view) {
         Intent intent = new Intent();
         intent.putExtra("coords", coords.toString());
         setResult(1, intent);
         finish();
+    }
+
+
+    public void createMarker(String string){
+        String[] latlong =  string.replaceAll("^[0-9;]","").split(";");
+        double latitude = Double.parseDouble(latlong[0]);
+        double longitude = Double.parseDouble(latlong[1]);
+
+        LatLng location = new LatLng(latitude, longitude);
+
+        mMap.addMarker(new MarkerOptions().position(location));
+
     }
 }
