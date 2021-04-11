@@ -74,7 +74,7 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        ref.addChildEventListener(new ChildEventListener() {
+        /*ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 User newPost = dataSnapshot.getValue(User.class);
@@ -93,7 +93,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });
+        });*/
 
         Intent reg_act = null;
         if(find){
