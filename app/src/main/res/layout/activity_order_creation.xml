@@ -84,7 +84,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="100dp"
                 android:background="@drawable/button_main_shape"
-
+                android:onClick="submit"
                 android:text="Опубликовать" />
         </LinearLayout>
 
