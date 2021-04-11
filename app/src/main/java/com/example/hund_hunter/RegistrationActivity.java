@@ -75,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
+        /*FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 User newPost = new User();
@@ -100,7 +100,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });
+        });*/
 
         Intent reg_act = null;
         if(find){
