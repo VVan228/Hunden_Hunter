@@ -13,8 +13,8 @@ public class Listener extends AppCompatActivity implements GoogleMap.OnMarkerCli
 
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
-        TextView text = findViewById(R.id.bottom_sheet);
+    public boolean onMarkerClick(final Marker marker) {
+        TextView text = findViewById(R.id.bottom_sheet_3);
         text.setText(marker.getPosition().toString());
         return true;
     }

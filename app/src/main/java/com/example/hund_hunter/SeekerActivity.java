@@ -44,7 +44,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //mMap.setOnMarkerClickListener(new Listener());
+
         //mMap.setOnMarkerClickListener(SeekerActivity.this);
 
 
@@ -63,7 +63,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                     for (Map.Entry<String, Map<String,String>> entry : map2.entrySet()) {
 
                         //Log.d("yy", entry.getValue().get("coord"));
-                        createMarker(entry.getValue().get("coord"));
+                        createMarker(entry.getValue().get("coord"), entry.getValue().get("email")+"\n"+entry.getValue().get("price"));
 
                         //Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().get("email"));
                     }
@@ -76,7 +76,18 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                //Toast.makeText(SeekerActivity.this, marker.getPosition().toString(), Toast.LENGTH_LONG).show();
+                TextView text = findViewById(R.id.bottom_sheet_2);
+                text.setText(marker.getPosition().toString());
 
+                TextView text2 = findViewById(R.id.bottom_sheet_3);
+                text2.setText(marker.getTag().toString());
+                return true;
+            }
+        });
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         LatLng myPlace = new LatLng(52.27537, 104.2774);
@@ -90,7 +101,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onMapClick(LatLng latLng) {
 
-                TextView textView=(TextView) findViewById(R.id.bottom_sheet);
+                TextView textView=(TextView) findViewById(R.id.bottom_sheet_3);
                 /*textView = data time + discription + etc */
 
             }
@@ -108,7 +119,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
-    public void createMarker(String string){
+    public void createMarker(String string, String tag){
         /*String res = string.replaceAll("[^0-9,]","");
         String[] latlong =  res.split(",");
         double latitude = Double.parseDouble(latlong[0]);
@@ -127,6 +138,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         double lat = Double.parseDouble(gpsVal[0]);
         double lon = Double.parseDouble(gpsVal[1]);
         Marker a = mMap.addMarker(new MarkerOptions().zIndex(100).position(new LatLng(lat,lon)));
+        a.setTag(tag);
 
 
     }
