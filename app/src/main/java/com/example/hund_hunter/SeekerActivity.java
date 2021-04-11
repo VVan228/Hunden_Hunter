@@ -1,12 +1,17 @@
 package com.example.hund_hunter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +21,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Marker marker;
@@ -30,6 +44,33 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //mMap.setOnMarkerClickListener(new Listener());
+        //mMap.setOnMarkerClickListener(SeekerActivity.this);
+
+
+        FirebaseDatabase.getInstance().getReference().child("orders").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Map<String, Map<String,String>> map = (Map<String, Map<String,String>>)task.getResult().getValue();
+                    Map<String, Map<String,String>> map2 = new HashMap<>();
+                    for (Map.Entry<String, Map<String,String>> entry : map.entrySet()) {
+                        map2.put(entry.getKey(), (Map<String, String>)entry.getValue());
+                    }
+                    for (Map.Entry<String, Map<String,String>> entry : map2.entrySet()) {
+
+                        //Log.d("yy", entry.getValue().get("coord"));
+                        createMarker(entry.getValue().get("coord"));
+
+                        //Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().get("email"));
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
@@ -68,13 +109,25 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
     public void createMarker(String string){
-        String[] latlong =  string.replaceAll("^[0-9;]","").split(";");
+        /*String res = string.replaceAll("[^0-9,]","");
+        String[] latlong =  res.split(",");
         double latitude = Double.parseDouble(latlong[0]);
         double longitude = Double.parseDouble(latlong[1]);
 
         LatLng location = new LatLng(latitude, longitude);
+        Log.d("yy", location.toString());
 
-        mMap.addMarker(new MarkerOptions().position(location));
+        mMap.addMarker(new MarkerOptions().position(location));*/
+        String from_lat_lng = "";
+        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(string);
+        while(m.find()) {
+            from_lat_lng = m.group(1) ;
+        }
+        String[] gpsVal = from_lat_lng.split(",");
+        double lat = Double.parseDouble(gpsVal[0]);
+        double lon = Double.parseDouble(gpsVal[1]);
+        Marker a = mMap.addMarker(new MarkerOptions().zIndex(100).position(new LatLng(lat,lon)));
+
 
     }
 }
