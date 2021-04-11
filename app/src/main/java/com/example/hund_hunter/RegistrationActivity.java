@@ -17,6 +17,9 @@ import android.text.format.DateFormat;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,7 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText[] eds = new EditText[4];
     String[] names;
     boolean find, lost;
-
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         if(!isNull){
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            ref = FirebaseDatabase.getInstance().getReference();
             DatabaseReference usersRef = ref.child("users");
             //DatabaseReference newUsersRef = usersRef.push();
             usersRef.setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
@@ -70,6 +73,27 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
         }
+
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                User newPost = dataSnapshot.getValue(User.class);
+                System.out.println("Author: " + newPost.name);
+                System.out.println("Title: " + newPost.email);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
         Intent reg_act = null;
         if(find){
