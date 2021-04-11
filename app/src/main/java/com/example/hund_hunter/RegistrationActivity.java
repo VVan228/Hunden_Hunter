@@ -25,7 +25,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,17 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
         find = extras.getBoolean("find");
         lost = extras.getBoolean("lost");
 
-        FirebaseDatabase.getInstance().getReference().child("users").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                }
-            }
-        });
+
     }
 
     public void findButton(View view){
@@ -90,6 +82,45 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
         }
+
+
+        FirebaseDatabase.getInstance().getReference().child("users").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    //User user = new Gson().fromJson(String.valueOf(task.getResult().getValue(User.class)), User.class);
+                    //Log.d("yy", task.getResult().getValue().get("-MXy6e_X5eJgZiPtic5A").getClass().getName());
+                    /*for (String name : task.getResult().getValue()[]) {
+                        System.out.println("key: " + name);
+                    }
+                    Map<Integer, Integer> map = new HashMap<String, Object>();
+                    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                        System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                    }*/
+
+                    /*Map<String, Object> map = new HashMap<>();
+                    for (Field field : task.getResult().getValue().getClass().getDeclaredFields()) {
+                        field.setAccessible(true);
+                        try { map.put(field.getName(), field.get(task.getResult().getValue())); } catch (Exception e) { }
+                    }*/
+                    Map<String, Object> map = (Map<String, Object>)task.getResult().getValue();
+                    Map<String, User> map2 = new HashMap<>();
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        Log.d("yy", entry.getValue().getClass().getName());
+                        //map2.put(entry.getKey(), (User)entry.getValue());
+                    }
+                    for (Map.Entry<String, User> entry : map2.entrySet()) {
+                        Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().password);
+                    }
+                    //Log.d("yy", (User.class) map.get("-MXy6e_X5eJgZiPtic5A"));
+                }
+            }
+        });
+
+
 
         Intent reg_act = null;
         if(find){
