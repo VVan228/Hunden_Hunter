@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -68,32 +69,38 @@ public class RegistrationActivity extends AppCompatActivity {
             ref = FirebaseDatabase.getInstance().getReference();
             DatabaseReference usersRef = ref.child("users");
             //DatabaseReference newUsersRef = usersRef.push();
-            usersRef.setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
+            usersRef.push().setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3]));
         }else{
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
         }
 
-        /*ref.addChildEventListener(new ChildEventListener() {
+        FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                User newPost = dataSnapshot.getValue(User.class);
-                System.out.println("Author: " + newPost.name);
-                System.out.println("Title: " + newPost.email);
+                User newPost = new User();
+                newPost = dataSnapshot.getValue(User.class);
+                System.out.println("Author: " + newPost.name.toString());
+                System.out.println("Title: " + newPost.email.toString());
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                //User changedPost = dataSnapshot.getValue(User.class);
+                Log.d("type",dataSnapshot.getValue(User.class).getEmail());
+            }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                User removedPost = dataSnapshot.getValue(User.class);
+            }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });*/
+        });
 
         Intent reg_act = null;
         if(find){

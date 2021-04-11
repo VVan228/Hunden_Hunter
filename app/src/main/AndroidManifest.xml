@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hund_hunter">
 
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,11 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hund_Hunter">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDEWTvRriVn6e_uxBiURqhkA5jvDQ-KRns" />
-
-        <activity android:name=".SetLocetionActivity"></activity>
+        <activity android:name=".SubmitActivity"></activity>
+        <activity android:name=".SetLocetionActivity" />
         <activity android:name=".SeekerActivity" />
         <activity android:name=".OrderCreationActivity" />
         <activity android:name=".RegistrationActivity" />
