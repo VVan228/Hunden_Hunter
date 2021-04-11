@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,13 +78,8 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
 
-        if(!isNull){
-            Log.d("yy", "base");
-            ref = FirebaseDatabase.getInstance().getReference();
-            usersRef = ref.child("users");
-            //DatabaseReference newUsersRef = usersRef.push();
-            usersRef.push().setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3], edsTxt[4]));
-        }else{
+        if(isNull){
+            Log.d("yy", "null");
             Toast.makeText(RegistrationActivity.this, "заполните поля", Toast.LENGTH_LONG).show();
             return;
         }
@@ -94,44 +92,51 @@ public class RegistrationActivity extends AppCompatActivity {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    //User user = new Gson().fromJson(String.valueOf(task.getResult().getValue(User.class)), User.class);
-                    //Log.d("yy", task.getResult().getValue().get("-MXy6e_X5eJgZiPtic5A").getClass().getName());
-                    /*for (String name : task.getResult().getValue()[]) {
-                        System.out.println("key: " + name);
-                    }
-                    Map<Integer, Integer> map = new HashMap<String, Object>();
-                    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-                        System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                    }*/
-
-                    /*Map<String, Object> map = new HashMap<>();
-                    for (Field field : task.getResult().getValue().getClass().getDeclaredFields()) {
-                        field.setAccessible(true);
-                        try { map.put(field.getName(), field.get(task.getResult().getValue())); } catch (Exception e) { }
-                    }*/
                     Map<String, Map<String,String>> map = (Map<String, Map<String,String>>)task.getResult().getValue();
                     Map<String, Map<String,String>> map2 = new HashMap<>();
                     for (Map.Entry<String, Map<String,String>> entry : map.entrySet()) {
-                        //Log.d("yy", entry.getValue().getClass().getName());
                         map2.put(entry.getKey(), (Map<String, String>)entry.getValue());
                     }
+                    boolean exists = false;
                     for (Map.Entry<String, Map<String,String>> entry : map2.entrySet()) {
-                        Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().get("password"));
+                        Log.d("yy", entry.getValue().get("email"));
+                        if(edsTxt[2].equals(entry.getValue().get("email"))){
+
+                            exists = true;
+                        }
+                        //Log.d("yy", "Key = " + entry.getKey() + ", Value = " + entry.getValue().get("email"));
                     }
-                    //Log.d("yy", (User.class) map.get("-MXy6e_X5eJgZiPtic5A"));
+                    if(exists){
+                        Toast.makeText(RegistrationActivity.this, "почта занята", Toast.LENGTH_LONG).show();
+                        return;
+                    }else{
+                        SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = mySharedPreferences.edit();
+                        editor.putString(StartActivity.APP_PREFERENCES_EMAIL, edsTxt[2]);
+                        editor.apply();
+
+                        ref = FirebaseDatabase.getInstance().getReference();
+                        usersRef = ref.child("users");
+                        //DatabaseReference newUsersRef = usersRef.push();
+                        usersRef.push().setValue(new User(edsTxt[0], edsTxt[1], edsTxt[2], edsTxt[3], edsTxt[4]));
+
+                        Toast.makeText(RegistrationActivity.this, "успешно!)", Toast.LENGTH_LONG).show();
+                    }
+
                 }
+                Intent reg_act = null;
+                if(find){
+                    reg_act = new Intent(RegistrationActivity.this, SeekerActivity.class);
+                }else if(lost){
+                    reg_act = new Intent(RegistrationActivity.this, OrderCreationActivity.class);
+                }
+                startActivity(reg_act);
             }
         });
 
 
 
-        Intent reg_act = null;
-        if(find){
-            reg_act = new Intent(RegistrationActivity.this, SeekerActivity.class);
-        }else if(lost){
-            reg_act = new Intent(RegistrationActivity.this, OrderCreationActivity.class);
-        }
-        startActivity(reg_act);
+
     }
 
     public String nullTest(EditText ed){
