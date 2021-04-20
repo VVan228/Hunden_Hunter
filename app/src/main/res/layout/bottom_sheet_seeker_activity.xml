@@ -4,7 +4,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="340dp"
-    android:background="@android:color/darker_gray"
+    android:background="@color/green"
     android:orientation="vertical"
     app:behavior_hideable="false"
     app:behavior_peekHeight="80dp"
@@ -14,10 +14,10 @@
         android:id="@+id/bottom_sheet_2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/colorAccent"
+        android:background="@color/yellow"
         android:gravity="center"
-        android:text="bottom sheet2"
-        android:textColor="@android:color/white" />
+        android:text="BOTTOM"
+        android:textColor="@color/green" />
 
     <TextView
         android:id="@+id/bottom_sheet_3"

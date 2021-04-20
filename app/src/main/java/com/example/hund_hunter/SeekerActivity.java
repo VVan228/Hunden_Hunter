@@ -81,10 +81,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             public boolean onMarkerClick(Marker marker) {
                 //Toast.makeText(SeekerActivity.this, marker.getPosition().toString(), Toast.LENGTH_LONG).show();
                 TextView text = findViewById(R.id.bottom_sheet_2);
-                text.setText(marker.getPosition().toString());
+                text.setText("email: " + marker.getTag().toString().split("\n")[0]);
 
                 TextView text2 = findViewById(R.id.bottom_sheet_3);
-                text2.setText(marker.getTag().toString());
+                text2.setText("reward: " + marker.getTag().toString().split("\n")[1]);
                 return true;
             }
         });
