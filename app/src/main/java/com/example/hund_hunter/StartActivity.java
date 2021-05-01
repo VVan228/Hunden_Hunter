@@ -32,8 +32,6 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void regisr(String extra){
-        // пользователь не авторизован
-        //if (FirebaseAuth.getInstance().getCurrentUser() == null) {
         SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
         if(mySharedPreferences.contains(StartActivity.APP_PREFERENCES_EMAIL)){
             Toast.makeText(StartActivity.this, "logged as "+mySharedPreferences.getString(StartActivity.APP_PREFERENCES_EMAIL,""), Toast.LENGTH_LONG).show();
@@ -51,21 +49,6 @@ public class StartActivity extends AppCompatActivity {
             reg_act.putExtra(extra, true);
             startActivity(reg_act);
         }
-
-
-        //}
-        /*else {
-            if (extra == "lost") {
-                Snackbar.make(findViewById(R.id.ll_lostForm), "Вы авторизованы", Snackbar.LENGTH_SHORT).show();
-                Intent reg_act = new Intent(StartActivity.this, OrderCreationActivity.class);
-                reg_act.putExtra(extra, true);
-                startActivity(reg_act);
-            }
-            else {
-                //Snackbar.make(findViewById(R.id.act_with_map), "Вы авторизованы", Snackbar.LENGTH_SHORT).show();
-                Toast.makeText(StartActivity.this, "Карта", Toast.LENGTH_LONG).show();
-            }
-        }*/
     }
 
 

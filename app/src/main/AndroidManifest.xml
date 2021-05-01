@@ -14,7 +14,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDEWTvRriVn6e_uxBiURqhkA5jvDQ-KRns" />
 
-        <activity android:name=".SubmitActivity"></activity>
         <activity android:name=".SetLocetionActivity" />
         <activity android:name=".SeekerActivity" />
         <activity android:name=".OrderCreationActivity" />
