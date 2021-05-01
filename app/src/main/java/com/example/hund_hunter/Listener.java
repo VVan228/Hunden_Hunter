@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
-import org.w3c.dom.Text;
-
 public class Listener extends AppCompatActivity implements GoogleMap.OnMarkerClickListener{
 
 

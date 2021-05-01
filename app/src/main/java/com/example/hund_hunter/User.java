@@ -1,7 +1,5 @@
 package com.example.hund_hunter;
 
-import java.util.Date;
-
 public class User {
     public String name;
     public String familia;

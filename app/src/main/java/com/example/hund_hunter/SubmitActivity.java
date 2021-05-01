@@ -1,8 +1,8 @@
 package com.example.hund_hunter;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SubmitActivity extends AppCompatActivity {
 
