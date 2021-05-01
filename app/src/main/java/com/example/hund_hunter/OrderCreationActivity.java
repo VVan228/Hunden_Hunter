@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class OrderCreationActivity extends AppCompatActivity {
+    FireDB db;
     private EditText revard;
     int DIALOG_TIME = 1;
     int myHour = 14;
@@ -35,8 +36,9 @@ public class OrderCreationActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_creation);
-        tvTime = (TextView) findViewById(R.id.tvTime);
 
+        db = new FireDB(new String[]{"orders"});
+        tvTime = (TextView) findViewById(R.id.tvTime);
         revard = (EditText) findViewById(R.id.reward);
 
 
@@ -48,6 +50,7 @@ public class OrderCreationActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
             return;
         }
@@ -83,25 +86,22 @@ public class OrderCreationActivity extends AppCompatActivity {
             if(myMinute <= 10 ){
                 minNull = "0";
             }
-            tvTime.setText(hourNull + myHour + " : " + minNull + myMinute );
+            tvTime.setText(hourNull + myHour + " : " + minNull + myMinute);
             time = hourNull + myHour + " : " + minNull + myMinute;
         }
     };
 
     public void submit(View view){
+        SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
         EditText comment = findViewById(R.id.comment);
         EditText price = findViewById(R.id.reward);
+        String email = mySharedPreferences.getString(StartActivity.APP_PREFERENCES_EMAIL,"");
         String commentTxt = comment.getText().toString();
         String pricetTxt = price.getText().toString();
         if(coords.equals("")||time.equals("")||commentTxt.equals("")||pricetTxt.equals("")){
             return;
         }
-        Log.d("yy", "added");
-        ref = FirebaseDatabase.getInstance().getReference();
-        usersRef = ref.child("orders");
-        //DatabaseReference newUsersRef = usersRef.push();
-        SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
-        usersRef.push().setValue(new Order(mySharedPreferences.getString(StartActivity.APP_PREFERENCES_EMAIL,""), pricetTxt, commentTxt, coords, time));
+        db.pushValue(new Order(email, pricetTxt, commentTxt, coords, time));
     }
 
 
