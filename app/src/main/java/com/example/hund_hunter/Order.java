@@ -7,6 +7,8 @@ public class Order {
     String coord;
     String time;
 
+    public Order() {}
+
     public Order(String email, String price, String comment, String coord, String time) {
         this.email = email;
         this.price = price;
