@@ -26,8 +26,23 @@ public class FireDB {
         ref.push().setValue(data);
     }
 
-    void getData(ChildEventListener listener){
-        Query query = ref;
+
+    //db.getData(listener, db.orderBy("time").limitToFirst(2));
+    //db.getData(listener, db.orderBy("email").equalTo("vvan"));
+
+    void getData(ChildEventListener listener, Query query){
         query.addChildEventListener(listener);
+    }
+
+    Query orderBy(String child){
+        return ref.orderByChild(child);
+    }
+
+    Query limitToFirst(int n){
+        return ref.limitToFirst(n);
+    }
+
+    Query equalTo(String s){
+        return ref.equalTo(s);
     }
 }
