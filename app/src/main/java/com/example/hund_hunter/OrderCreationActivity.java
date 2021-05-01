@@ -6,13 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 public class OrderCreationActivity extends AppCompatActivity {
@@ -37,7 +43,33 @@ public class OrderCreationActivity extends AppCompatActivity {
         tvTime = (TextView) findViewById(R.id.tvTime);
         revard = (EditText) findViewById(R.id.reward);
 
+        //пример запроса данных, игнорируйте
+        db.getData(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("FireDB", snapshot.getValue(Order.class).getEmail());
+            }
 
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        }, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
     }
     public void setLocation(View view){
         Intent set_act = new Intent(OrderCreationActivity.this, SetLocetionActivity.class);

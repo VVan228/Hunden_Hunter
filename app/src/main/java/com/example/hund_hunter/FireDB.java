@@ -14,6 +14,7 @@ public class FireDB {
         ref = database.getReference();
     }
     FireDB(String[] childSeq){
+        //пример заполнения childSeq
         //FireDB db = new FireDB(new String[]{"orders"});
         database = FirebaseDatabase.getInstance();
         ref = database.getReference();
@@ -26,23 +27,38 @@ public class FireDB {
         ref.push().setValue(data);
     }
 
-
-    //db.getData(listener, db.orderBy("time").limitToFirst(2));
-    //db.getData(listener, db.orderBy("email").equalTo("vvan"));
-
-    void getData(ChildEventListener listener, Query query){
-        query.addChildEventListener(listener);
+    DatabaseReference getRef(){
+        return ref;
     }
 
-    Query orderBy(String child){
-        return ref.orderByChild(child);
+    //для получения данных нужно передать ChildEventListener и запрос, который создается как объект и меняется при помощи методов из самого объекта как в примере
+    //db.getData(listener, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
+    void getData(ChildEventListener listener, myQuery query){
+        query.ref.addChildEventListener(listener);
+    }
+}
+
+//пример создания запроса
+//new myQuery(db.getRef()).orderBy("email").equalTo("vvang");
+class myQuery{
+    public Query ref;
+
+    myQuery(DatabaseReference _ref){
+        ref = _ref;
     }
 
-    Query limitToFirst(int n){
-        return ref.limitToFirst(n);
+    myQuery orderBy(String child){
+        ref = ref.orderByChild(child);
+        return this;
     }
 
-    Query equalTo(String s){
-        return ref.equalTo(s);
+    myQuery limitToFirst(int n){
+        ref = ref.limitToFirst(n);
+        return this;
+    }
+
+    myQuery equalTo(String s){
+        ref = ref.equalTo(s);
+        return this;
     }
 }
