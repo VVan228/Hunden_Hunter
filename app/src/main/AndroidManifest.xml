@@ -18,7 +18,8 @@
         <activity android:name=".SeekerActivity" />
         <activity android:name=".OrderCreationActivity" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".StartActivity">
+        <activity android:name=".StartActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
