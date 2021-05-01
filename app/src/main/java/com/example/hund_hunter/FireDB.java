@@ -31,7 +31,9 @@ public class FireDB {
         return ref;
     }
 
-    //для получения данных нужно передать ChildEventListener и запрос, который создается как объект и меняется при помощи методов из самого объекта как в примере
+    //для получения данных нужно передать ChildEventListener и запрос,
+    //который создается как объект и меняется при помощи методов из самого объекта как в примере.
+    //кстати, в myQuery обязательно нужно передать ref при помощи getRef()
     //db.getData(listener, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
     void getData(ChildEventListener listener, myQuery query){
         query.ref.addChildEventListener(listener);
