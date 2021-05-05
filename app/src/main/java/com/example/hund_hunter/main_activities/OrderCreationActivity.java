@@ -1,4 +1,4 @@
-package com.example.hund_hunter;
+package com.example.hund_hunter.main_activities;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -16,6 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hund_hunter.R;
+import com.example.hund_hunter.data_classes.Order;
+import com.example.hund_hunter.fire_classes.FireDB;
+import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.log_in_activities.StartActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,7 +77,7 @@ public class OrderCreationActivity extends AppCompatActivity {
         }, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
     }
     public void setLocation(View view){
-        Intent set_act = new Intent(OrderCreationActivity.this, SetLocetionActivity.class);
+        Intent set_act = new Intent(OrderCreationActivity.this, SetLocationActivity.class);
         startActivityForResult(set_act, 1);
     }
 

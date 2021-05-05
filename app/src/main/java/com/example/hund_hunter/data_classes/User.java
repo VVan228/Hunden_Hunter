@@ -1,4 +1,4 @@
-package com.example.hund_hunter;
+package com.example.hund_hunter.data_classes;
 
 public class User {
     public String name;

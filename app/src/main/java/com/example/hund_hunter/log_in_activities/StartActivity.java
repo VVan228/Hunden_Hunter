@@ -1,4 +1,4 @@
-package com.example.hund_hunter;
+package com.example.hund_hunter.log_in_activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hund_hunter.main_activities.OrderCreationActivity;
+import com.example.hund_hunter.R;
+import com.example.hund_hunter.main_activities.SeekerActivity;
 
 public class StartActivity extends AppCompatActivity {
     public static final String APP_PREFERENCES = "mysettings";

@@ -14,12 +14,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDEWTvRriVn6e_uxBiURqhkA5jvDQ-KRns" />
 
-        <activity android:name=".SetLocetionActivity" />
-        <activity android:name=".SeekerActivity" />
-        <activity android:name=".OrderCreationActivity" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".StartActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".main_activities.SetLocationActivity" />
+        <activity android:name=".main_activities.SeekerActivity" />
+        <activity android:name=".main_activities.OrderCreationActivity" />
+        <activity android:name=".log_in_activities.RegistrationActivity" />
+        <activity android:name=".log_in_activities.StartActivity" />
+        <activity android:name=".log_in_activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

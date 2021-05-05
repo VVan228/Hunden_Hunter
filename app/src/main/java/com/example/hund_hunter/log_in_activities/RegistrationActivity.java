@@ -1,4 +1,4 @@
-package com.example.hund_hunter;
+package com.example.hund_hunter.log_in_activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hund_hunter.main_activities.OrderCreationActivity;
+import com.example.hund_hunter.R;
+import com.example.hund_hunter.main_activities.SeekerActivity;
+import com.example.hund_hunter.data_classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;

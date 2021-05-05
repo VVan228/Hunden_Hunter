@@ -1,5 +1,5 @@
 
-package com.example.hund_hunter;
+package com.example.hund_hunter.main_activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hund_hunter.R;
+import com.example.hund_hunter.data_classes.Order;
+import com.example.hund_hunter.fire_classes.FireDB;
+import com.example.hund_hunter.fire_classes.myQuery;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

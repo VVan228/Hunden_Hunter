@@ -1,4 +1,4 @@
-package com.example.hund_hunter;
+package com.example.hund_hunter.main_activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hund_hunter.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,7 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class SetLocetionActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SetLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private Marker marker;
     private GoogleMap mMap;
@@ -24,7 +25,7 @@ public class SetLocetionActivity extends AppCompatActivity implements OnMapReady
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_locetion);
+        setContentView(R.layout.activity_set_location);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
