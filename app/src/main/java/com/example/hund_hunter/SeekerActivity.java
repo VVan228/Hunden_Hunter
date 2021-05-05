@@ -1,3 +1,4 @@
+
 package com.example.hund_hunter;
 
 import android.content.Intent;
@@ -109,15 +110,33 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                     info.put("information", e.getMessage());
                     markerData = new JSONObject(info);
                 }
-                TextView text = findViewById(R.id.bottom_sheet_2);
+                TextView email = findViewById(R.id.emailInfo);
                 try {
-                    text.setText(markerData.getString("email"));
+                    email.setText(markerData.getString("email"));
                 } catch (JSONException e) {
-                    text.setText("error " + e.getMessage());
+                    email.setText("error " + e.getMessage());
                 }
 
-                TextView text2 = findViewById(R.id.bottom_sheet_3);
-                text2.setText(markerData.toString());
+                TextView reward = findViewById(R.id.rewardInfo);
+                try {
+                    reward.setText(markerData.getString("price"));
+                } catch (JSONException e) {
+                    reward.setText("error " + e.getMessage());
+                }
+
+                TextView comment = findViewById(R.id.commentInfo);
+                try {
+                    comment.setText(markerData.getString("comment"));
+                } catch (JSONException e) {
+                    comment.setText("error " + e.getMessage());
+                }
+
+                TextView time = findViewById(R.id.timeInfo);
+                try {
+                    time.setText(markerData.getString("time"));
+                } catch (JSONException e) {
+                    time.setText("error " + e.getMessage());
+                }
                 return true;
             }
         });
