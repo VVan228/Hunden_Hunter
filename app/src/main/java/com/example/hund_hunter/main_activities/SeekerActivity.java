@@ -14,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
-import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
+import com.example.hund_hunter.fire_classes.MyQuery;
+import com.example.hund_hunter.fire_classes.interfaces.OnChildAddedListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,7 +56,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         //mMap.setOnMarkerClickListener(SeekerActivity.this);
 
         //получить метки
-        db.getData(new ChildEventListener() {
+        db.getData(new MyQuery(db.getRef()).orderBy("time"), new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Order order = snapshot.getValue(Order.class);
@@ -75,27 +77,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 createMarker(coords, markerDataJson.toString());
                 Log.d("tag4me", markerDataJson.toString());
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        }, new myQuery(db.getRef()).orderBy("time"));
+        }).create());
     }
 
     @Override

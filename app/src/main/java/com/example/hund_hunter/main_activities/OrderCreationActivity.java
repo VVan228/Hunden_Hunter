@@ -19,7 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
-import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
+import com.example.hund_hunter.fire_classes.MyQuery;
+import com.example.hund_hunter.fire_classes.interfaces.OnChildAddedListener;
 import com.example.hund_hunter.log_in_activities.StartActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -49,32 +51,12 @@ public class OrderCreationActivity extends AppCompatActivity {
         revard = (EditText) findViewById(R.id.reward);
 
         //пример запроса данных, игнорируйте
-        db.getData(new ChildEventListener() {
+        db.getData(new MyQuery(db.getRef()).orderBy("email").equalTo("vvang"), new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Log.d("FireDB", snapshot.getValue(Order.class).getEmail());
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        }, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
+        }).create());
     }
     public void setLocation(View view){
         Intent set_act = new Intent(OrderCreationActivity.this, SetLocationActivity.class);
