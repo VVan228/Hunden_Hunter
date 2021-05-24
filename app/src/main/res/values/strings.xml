@@ -4,4 +4,15 @@
     <string name="lose">У меня потерялась собака</string>
     <string name="your_email">email</string>
     <string name="empty_password">****</string>
+    <string name="surname">Фамилия</string>
+    <string name="tel">Номер телефона</string>
+    <string name="pass">Пароль</string>
+    <string name="email">Почта</string>
+    <string name="already_exist">Уже зарегистрирован</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="name">Имя</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="reset_password">Your email to sent you password reset</string>
+    <string name="change_pass">Сменить пароль</string>
+    <string name="back">Отмена</string>
 </resources>
