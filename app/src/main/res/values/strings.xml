@@ -11,15 +11,8 @@
     <string name="already_exist">Уже зарегистрирован</string>
     <string name="confirm">Подтвердить</string>
     <string name="name">Имя</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="reset_password">Your email to sent you password reset</string>
     <string name="change_pass">Сменить пароль</string>
     <string name="back">Отмена</string>
-    <string name="sign_out">sign out</string>
-    <string name="remove_user">remove user</string>
-    <string name="change_password">change password</string>
-    <string name="change_email">change email</string>
-    <string name="remove">remove</string>
     <string name="new_user">Зарегистрироваться</string>
     <string name="forgot_pass">Забыли пароль?</string>
     <string name="come_in">Вход</string>

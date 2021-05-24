@@ -9,7 +9,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.AuthResult;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.hund_hunter.R;
 
@@ -18,7 +26,8 @@ public class FirstActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    private AppCompatButton btnLogin;
+    private Button btnSignup, btnReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +45,7 @@ public class FirstActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignup = (Button) findViewById(R.id.btn_signup);
-        btnLogin = (Button) findViewById(R.id.btn_login);
+        btnLogin = (AppCompatButton) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
         btnSignup.setOnClickListener(v -> {
@@ -63,18 +72,21 @@ public class FirstActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(FirstActivity.this, task -> {
-                        progressBar.setVisibility(View.GONE);
-                        if (!task.isSuccessful()) {
-                            if (password.length() < 6) {
-                                inputPassword.setError("Пароль слишком короткий! Минимум 6 знаков!");
-                            } else {
+                    .addOnCompleteListener(FirstActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(Task< AuthResult > task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (!task.isSuccessful()) {
+                                if (password.length() < 6) {
+                                    inputPassword.setError("Пароль слишком короткий! Минимум 6 знаков!");
+                                } else {
                                 Toast.makeText(FirstActivity.this, "Проверьте логин!", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
+                                startActivity(intent);
+                                }
                             }
-                        } else {
-                            Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
-                            startActivity(intent);
-                        }
                     });
         });
     }

@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/remove"
+            android:text="Удалить"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -139,7 +139,7 @@
             android:layout_marginHorizontal="20dp"
             android:textColor="@color/dark_green"
             android:background="@drawable/button_main_shape"
-            android:text="@string/change_email"
+            android:text="Сменить логин"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -151,7 +151,7 @@
             android:layout_marginHorizontal="20dp"
             android:textColor="@color/dark_green"
             android:background="@drawable/button_main_shape"
-            android:text="@string/change_password"
+            android:text="Сменить пароль"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -163,7 +163,7 @@
             android:layout_marginHorizontal="20dp"
             android:textColor="@color/dark_green"
             android:background="@drawable/button_main_shape"
-            android:text="@string/remove_user"
+            android:text="Удалить пользователя"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -174,7 +174,7 @@
             android:layout_marginHorizontal="20dp"
             android:textColor="@color/dark_green"
             android:background="@drawable/button_main_shape"
-            android:text="@string/sign_out"
+            android:text="Выйти"
             android:textStyle="bold" />
 
     </LinearLayout>
