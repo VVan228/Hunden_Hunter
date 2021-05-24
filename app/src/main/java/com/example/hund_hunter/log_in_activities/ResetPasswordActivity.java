@@ -44,10 +44,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }
 
             progressBar.setVisibility(View.VISIBLE);
-            auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener(task -> {
+            auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ResetPasswordActivity.this, "Инструкции для восстановления высланы! Проверьте почту!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ResetPasswordActivity.this, "Инструкции для восстановления высланы! Проверьте почту.", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ResetPasswordActivity.this, "Введена некорректная почта!", Toast.LENGTH_SHORT).show();
                         }

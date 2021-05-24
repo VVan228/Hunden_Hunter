@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.hund_hunter.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class FirstActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
@@ -32,11 +32,11 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+            startActivity(new Intent(FirstActivity.this, SignupActivity.class));
             finish();
         }
 
-        setContentView(R.layout.login);
+        setContentView(R.layout.first_page);
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -45,9 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
-        btnSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
+        btnSignup.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, SignupActivity.class)));
 
-        btnReset.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class)));
+        btnReset.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, ResetPasswordActivity.class)));
 
         btnLogin.setOnClickListener(v -> {
             String email = inputEmail.getText().toString();
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
             //authenticate user
             auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(FirstActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBar.setVisibility(View.GONE);
@@ -75,10 +75,10 @@ public class LoginActivity extends AppCompatActivity {
                                 if (password.length() < 6) {
                                     inputPassword.setError("Пароль слишком короткий! Минимум 6 знаков!");
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Проверьте логин и пароль!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FirstActivity.this, "Проверьте логин и пароль!", Toast.LENGTH_LONG).show();
                                 }
                             } else {
-                                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                                Intent intent = new Intent(FirstActivity.this, SignupActivity.class);
                                 startActivity(intent);
                                 finish();
                             }

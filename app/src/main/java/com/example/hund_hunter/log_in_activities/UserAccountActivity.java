@@ -91,11 +91,11 @@ public class UserAccountActivity extends AppCompatActivity {
                 user.updateEmail(newEmail.getText().toString().trim())
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(UserAccountActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserAccountActivity.this, "Email изменен!", Toast.LENGTH_LONG).show();
                                 signOut();
                                 progressBar.setVisibility(View.GONE);
                             } else {
-                                Toast.makeText(UserAccountActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserAccountActivity.this, "Невозможно изменить email!", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
@@ -120,23 +120,23 @@ public class UserAccountActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             if (user != null && !newPassword.getText().toString().trim().equals("")) {
                 if (newPassword.getText().toString().trim().length() < 6) {
-                    newPassword.setError("Password too short, enter minimum 6 characters");
+                    newPassword.setError("Слишком короткий пароль!");
                     progressBar.setVisibility(View.GONE);
                 } else {
                     user.updatePassword(newPassword.getText().toString().trim())
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(UserAccountActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserAccountActivity.this, "Пароль изменен!", Toast.LENGTH_SHORT).show();
                                     signOut();
                                     progressBar.setVisibility(View.GONE);
                                 } else {
-                                    Toast.makeText(UserAccountActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserAccountActivity.this, "Невозможно изменить пароль!", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                 }
                             });
                 }
             } else if (newPassword.getText().toString().trim().equals("")) {
-                newPassword.setError("Enter password");
+                newPassword.setError("Введите пароль");
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -147,15 +147,15 @@ public class UserAccountActivity extends AppCompatActivity {
                 auth.sendPasswordResetEmail(oldEmail.getText().toString().trim())
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(UserAccountActivity.this, "Reset password email is sent!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UserAccountActivity.this, "Письмо с восстановлением пароля выслано!", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             } else {
-                                Toast.makeText(UserAccountActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UserAccountActivity.this, "Проверьте email!", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
             } else {
-                oldEmail.setError("Enter email");
+                oldEmail.setError("Введите email");
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -165,12 +165,12 @@ public class UserAccountActivity extends AppCompatActivity {
             if (user != null) {
                 user.delete().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(UserAccountActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserAccountActivity.this, "Профиль удален... Создайте новый!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserAccountActivity.this, SignupActivity.class));
                         finish();
                         progressBar.setVisibility(View.GONE);
                     } else {
-                        Toast.makeText(UserAccountActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserAccountActivity.this, "Невозможно удалить аккаунт!", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
                 });
