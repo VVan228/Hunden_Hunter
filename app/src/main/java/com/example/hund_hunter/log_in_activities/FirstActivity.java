@@ -32,7 +32,7 @@ public class FirstActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(FirstActivity.this, SignupActivity.class));
+            startActivity(new Intent(FirstActivity.this, ChoiceActivity.class));
             finish();
         }
 
