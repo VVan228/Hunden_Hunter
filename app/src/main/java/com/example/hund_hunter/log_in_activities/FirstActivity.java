@@ -9,12 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.hund_hunter.R;
 
@@ -28,15 +23,14 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.first_page);
 
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(FirstActivity.this, ChoiceActivity.class));
-            finish();
+            Intent reg_act = new Intent(FirstActivity.this, ChoiceActivity.class);
+            startActivity(reg_act);
         }
-
-        setContentView(R.layout.first_page);
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -45,13 +39,16 @@ public class FirstActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
-        btnSignup.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, SignupActivity.class)));
+        btnSignup.setOnClickListener(v -> {
+                    Intent intent = new Intent(FirstActivity.this, SignupActivity.class);
+                    startActivity(intent);
+                });
 
         btnReset.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, ResetPasswordActivity.class)));
 
         btnLogin.setOnClickListener(v -> {
             String email = inputEmail.getText().toString();
-            final String password = inputPassword.getText().toString();
+            String password = inputPassword.getText().toString();
 
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(getApplicationContext(), "Введите email!", Toast.LENGTH_SHORT).show();
@@ -77,7 +74,6 @@ public class FirstActivity extends AppCompatActivity {
                         } else {
                             Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
                             startActivity(intent);
-                            //finish();
                         }
                     });
         });

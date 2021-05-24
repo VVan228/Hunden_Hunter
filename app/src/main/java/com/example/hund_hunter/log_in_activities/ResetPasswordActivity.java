@@ -50,7 +50,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(ResetPasswordActivity.this, "Введена некорректная почта!", Toast.LENGTH_SHORT).show();
                         }
-
                         progressBar.setVisibility(View.GONE);
                     });
         });

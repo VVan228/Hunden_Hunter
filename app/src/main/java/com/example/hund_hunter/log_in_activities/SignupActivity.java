@@ -16,7 +16,7 @@ import com.example.hund_hunter.R;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
+    private EditText surname, name, tel, inputEmail, inputPassword;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
@@ -30,6 +30,9 @@ public class SignupActivity extends AppCompatActivity {
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
+        surname = (EditText) findViewById(R.id.surname);
+        name = (EditText) findViewById(R.id.name);
+        tel = (EditText) findViewById(R.id.tel);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -49,6 +52,11 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(getApplicationContext(), "Введите email!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(getApplicationContext(), "Введите пароль!", Toast.LENGTH_SHORT).show();
                 return;
@@ -60,7 +68,6 @@ public class SignupActivity extends AppCompatActivity {
             }
 
             progressBar.setVisibility(View.VISIBLE);
-            //create user
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(SignupActivity.this, task -> {
                         Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
@@ -68,8 +75,8 @@ public class SignupActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(), Toast.LENGTH_SHORT).show();
                         } else {
-                            startActivity(new Intent(SignupActivity.this, ChoiceActivity.class));
-                            //finish();
+                            Intent new_in = new Intent(SignupActivity.this, ChoiceActivity.class);
+                            startActivity(new_in);
                         }
                     });
         });
