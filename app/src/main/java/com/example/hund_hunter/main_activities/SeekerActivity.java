@@ -18,6 +18,7 @@ import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.log_in_activities.UserAccountActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -55,8 +56,8 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         if(item.getItemId() == R.id.action_search) {
             Toast.makeText(SeekerActivity.this, "profile lol", Toast.LENGTH_LONG).show();
             //вызвать окно профиля
-            //Intent intent = new Intent(this, SearchUsersActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
+            startActivity(intent);
         }
         return true;
     }

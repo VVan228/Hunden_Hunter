@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hund_hunter.main_activities.SeekerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.hund_hunter.R;
@@ -36,7 +37,7 @@ public class UserAccountActivity extends AppCompatActivity {
         authListener = firebaseAuth -> {
             FirebaseUser user1 = firebaseAuth.getCurrentUser();
             if (user1 == null) {
-                startActivity(new Intent(UserAccountActivity.this, LoginActivity.class));
+                startActivity(new Intent(UserAccountActivity.this, SeekerActivity.class));
                 finish();
             }
         };
@@ -99,7 +100,7 @@ public class UserAccountActivity extends AppCompatActivity {
                             }
                         });
             } else if (newEmail.getText().toString().trim().equals("")) {
-                newEmail.setError("Enter email");
+                newEmail.setError("Введите email!");
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -179,7 +180,6 @@ public class UserAccountActivity extends AppCompatActivity {
         signOut.setOnClickListener(v -> signOut());
     }
 
-    //sign out method
     public void signOut() {
         auth.signOut();
     }

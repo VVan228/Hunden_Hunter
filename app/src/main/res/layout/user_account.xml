@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
+            android:background="@color/yellow"
             app:layout_scrollFlags="scroll|enterAlways" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -25,11 +25,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
+        android:gravity="center"
+        android:background="@color/green"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/old_email"
@@ -77,13 +82,14 @@
             android:singleLine="true"
             android:importantForAutofill="no" />
 
+    </LinearLayout>
+
         <Button
             android:id="@+id/changeEmail"
             style="?android:textAppearanceSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
             android:text="change"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -94,7 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
             android:text="change"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -105,7 +110,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
             android:text="send"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -122,47 +126,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
             android:text="@string/remove"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/change_email_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/dark_green"
+            android:background="@drawable/button_main_shape"
             android:text="@string/change_email"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/change_password_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/dark_green"
+            android:background="@drawable/button_main_shape"
             android:text="@string/change_password"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/remove_user_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/dark_green"
+            android:background="@drawable/button_main_shape"
             android:text="@string/remove_user"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sign_out"
-            style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/dark_green"
+            android:background="@drawable/button_main_shape"
             android:text="@string/sign_out"
-            android:textColor="@android:color/white"
             android:textStyle="bold" />
 
     </LinearLayout>
