@@ -18,7 +18,6 @@ import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.myQuery;
-import com.example.hund_hunter.log_in_activities.RegistrationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

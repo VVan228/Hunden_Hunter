@@ -17,7 +17,6 @@
         <activity android:name=".main_activities.SetLocationActivity" />
         <activity android:name=".main_activities.SeekerActivity" />
         <activity android:name=".main_activities.OrderCreationActivity" />
-        <activity android:name=".log_in_activities.RegistrationActivity" />
         <activity android:name=".log_in_activities.StartActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

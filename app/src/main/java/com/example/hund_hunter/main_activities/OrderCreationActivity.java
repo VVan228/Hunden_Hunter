@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -131,7 +132,8 @@ public class OrderCreationActivity extends AppCompatActivity {
         String email = "insert email";
         String commentTxt = comment.getText().toString();
         String pricetTxt = price.getText().toString();
-        if(coords.equals("")||time.equals("")||commentTxt.equals("")||pricetTxt.equals("")){
+        if(coords==null||time==null||commentTxt.equals("")||pricetTxt.equals("")){
+            Toast.makeText(OrderCreationActivity.this, "заполните пустые поля", Toast.LENGTH_LONG).show();
             return;
         }
         db.pushValue(new Order(email, pricetTxt, commentTxt, coords, time));
