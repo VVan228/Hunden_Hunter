@@ -36,8 +36,6 @@ public class UserAccountActivity extends AppCompatActivity {
         authListener = firebaseAuth -> {
             FirebaseUser user1 = firebaseAuth.getCurrentUser();
             if (user1 == null) {
-                // user auth state is changed - user is null
-                // launch login activity
                 startActivity(new Intent(UserAccountActivity.this, LoginActivity.class));
                 finish();
             }
@@ -47,6 +45,7 @@ public class UserAccountActivity extends AppCompatActivity {
         btnChangeEmail = (Button) findViewById(R.id.change_email_button);
         btnChangePassword = (Button) findViewById(R.id.change_password_button);
         btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
+
         // buttons for agree
         changeEmail = (Button) findViewById(R.id.changeEmail);
         changePassword = (Button) findViewById(R.id.changePass);
