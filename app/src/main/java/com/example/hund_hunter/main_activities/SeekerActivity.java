@@ -4,8 +4,11 @@ package com.example.hund_hunter.main_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +18,7 @@ import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.log_in_activities.RegistrationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +44,23 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private LatLng coords;
     FireDB db;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.title, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_search) {
+            Toast.makeText(SeekerActivity.this, "profile lol", Toast.LENGTH_LONG).show();
+            //вызвать окно профиля
+            //Intent intent = new Intent(this, SearchUsersActivity.class);
+            //startActivity(intent);
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

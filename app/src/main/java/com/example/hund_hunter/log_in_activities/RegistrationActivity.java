@@ -101,10 +101,10 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast.makeText(RegistrationActivity.this, "почта занята", Toast.LENGTH_LONG).show();
                         return;
                     }else{
-                        SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = mySharedPreferences.edit();
-                        editor.putString(StartActivity.APP_PREFERENCES_EMAIL, edsTxt[2]);
-                        editor.apply();
+                        //SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
+                        //SharedPreferences.Editor editor = mySharedPreferences.edit();
+                        //editor.putString(StartActivity.APP_PREFERENCES_EMAIL, edsTxt[2]);
+                        //editor.apply();
 
                         ref = FirebaseDatabase.getInstance().getReference();
                         usersRef = ref.child("users");

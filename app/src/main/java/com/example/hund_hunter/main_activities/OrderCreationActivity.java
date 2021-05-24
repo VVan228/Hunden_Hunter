@@ -125,16 +125,20 @@ public class OrderCreationActivity extends AppCompatActivity {
     };
 
     public void submit(View view){
-        SharedPreferences mySharedPreferences = getSharedPreferences(StartActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
+        //берем почту из аккаунта
         EditText comment = findViewById(R.id.comment);
         EditText price = findViewById(R.id.reward);
-        String email = mySharedPreferences.getString(StartActivity.APP_PREFERENCES_EMAIL,"");
+        String email = "insert email";
         String commentTxt = comment.getText().toString();
         String pricetTxt = price.getText().toString();
         if(coords.equals("")||time.equals("")||commentTxt.equals("")||pricetTxt.equals("")){
             return;
         }
         db.pushValue(new Order(email, pricetTxt, commentTxt, coords, time));
+
+
+        Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
+        startActivity(reg_act);
     }
 
 
