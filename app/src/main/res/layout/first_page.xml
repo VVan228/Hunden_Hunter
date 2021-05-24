@@ -43,7 +43,7 @@
             android:id="@+id/btn_reset_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="20dp"
             android:background="@null"
             android:text="@string/forgot_pass"
             android:textAllCaps="false" />
@@ -52,12 +52,12 @@
             android:id="@+id/btn_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="20dp"
             android:background="@null"
             android:text="@string/new_user"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <ProgressBar
