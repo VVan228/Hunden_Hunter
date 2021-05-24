@@ -65,23 +65,19 @@ public class FirstActivity extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            //authenticate user
             auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(FirstActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressBar.setVisibility(View.GONE);
-                            if (!task.isSuccessful()) {
-                                if (password.length() < 6) {
-                                    inputPassword.setError("Пароль слишком короткий! Минимум 6 знаков!");
-                                } else {
-                                    Toast.makeText(FirstActivity.this, "Проверьте логин и пароль!", Toast.LENGTH_LONG).show();
-                                }
+                    .addOnCompleteListener(FirstActivity.this, task -> {
+                        progressBar.setVisibility(View.GONE);
+                        if (!task.isSuccessful()) {
+                            if (password.length() < 6) {
+                                inputPassword.setError("Пароль слишком короткий! Минимум 6 знаков!");
                             } else {
-                                Intent intent = new Intent(FirstActivity.this, SignupActivity.class);
-                                startActivity(intent);
-                                finish();
+                                Toast.makeText(FirstActivity.this, "Проверьте логин!", Toast.LENGTH_LONG).show();
                             }
+                        } else {
+                            Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
+                            startActivity(intent);
+                            //finish();
                         }
                     });
         });
