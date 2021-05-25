@@ -54,7 +54,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.action_search) {
-            //вызвать окно профиля
+            //вызов окна профиля
             Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
             startActivity(intent);
         }
@@ -73,7 +73,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
         //mMap.setOnMarkerClickListener(SeekerActivity.this);
 
-        //получить метки
+        //получение меток
         db.getData(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

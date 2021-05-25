@@ -97,11 +97,10 @@ public class UserAccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UserAccountActivity.this, "Email изменен!", Toast.LENGTH_LONG).show();
                                 signOut();
-                                progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(UserAccountActivity.this, "Некорректный email!", Toast.LENGTH_LONG).show();
-                                progressBar.setVisibility(View.GONE);
                             }
+                            progressBar.setVisibility(View.GONE);
                         });
             } else if (str(newEmail).equals("")) {
                 newEmail.setError("Введите email!");
@@ -132,11 +131,10 @@ public class UserAccountActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(UserAccountActivity.this, "Пароль изменен!", Toast.LENGTH_SHORT).show();
                                     signOut();
-                                    progressBar.setVisibility(View.GONE);
                                 } else {
                                     Toast.makeText(UserAccountActivity.this, "Некорректный пароль!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
                                 }
+                                progressBar.setVisibility(View.GONE);
                             });
                 }
             } else if (str(newPassword).equals("")) {
@@ -153,11 +151,10 @@ public class UserAccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UserAccountActivity.this, "Письмо с восстановлением пароля выслано!", Toast.LENGTH_SHORT).show();
                                 signOut();
-                                progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(UserAccountActivity.this, "Проверьте email!", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
                             }
+                            progressBar.setVisibility(View.GONE);
                         });
             } else {
                 oldEmail.setError("Введите email");
@@ -173,11 +170,10 @@ public class UserAccountActivity extends AppCompatActivity {
                         Toast.makeText(UserAccountActivity.this, "Профиль удален... Создайте новый!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
                         finish();
-                        progressBar.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(UserAccountActivity.this, "Невозможно удалить аккаунт!", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
                     }
+                    progressBar.setVisibility(View.GONE);
                 });
             }
         });

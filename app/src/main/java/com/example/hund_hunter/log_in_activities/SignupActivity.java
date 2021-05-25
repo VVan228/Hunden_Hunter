@@ -39,45 +39,42 @@ public class SignupActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, FirstActivity.class)));
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnOk.setOnClickListener(v -> {
 
-                String email = str(inputEmail);
-                String password = str(inputPassword);
+            String email = str(inputEmail);
+            String password = str(inputPassword);
 
-                if (TextUtils.isEmpty(str(name)) || TextUtils.isEmpty(str(surname)) || TextUtils.isEmpty(str(tel))) {
-                    Toast.makeText(getApplicationContext(), "Заполните пустые поля!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Введите email!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Введите пароль!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Пароль слишком короткий! Минимум 6 знаков!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignupActivity.this, task -> {
-                            Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(), Toast.LENGTH_SHORT).show();
-                            } else {
-                                startActivity(new Intent(SignupActivity.this, ChoiceActivity.class));
-                            }
-                        });
+            if (TextUtils.isEmpty(str(name)) || TextUtils.isEmpty(str(surname)) || TextUtils.isEmpty(str(tel))) {
+                Toast.makeText(getApplicationContext(), "Заполните пустые поля!", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(getApplicationContext(), "Введите email!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(getApplicationContext(), "Введите пароль!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (password.length() < 6) {
+                Toast.makeText(getApplicationContext(), "Пароль слишком короткий! Минимум 6 знаков!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            progressBar.setVisibility(View.VISIBLE);
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(SignupActivity.this, task -> {
+                        Toast.makeText(SignupActivity.this, "Регистрация прошла успешно.", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignupActivity.this, "Ошибка. Пользователь не зарегистрирован!" + task.getException(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(SignupActivity.this, ChoiceActivity.class));
+                        }
+                    });
         });
     }
 

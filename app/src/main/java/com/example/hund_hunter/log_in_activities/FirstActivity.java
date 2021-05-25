@@ -69,19 +69,16 @@ public class FirstActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(FirstActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(Task< AuthResult > task) {
-                            progressBar.setVisibility(View.GONE);
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(FirstActivity.this, "Проверьте логин и пароль!", Toast.LENGTH_LONG).show();
-                            } else {
-                                Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
-                                startActivity(intent);
-                                finish();
-                                }
+                    .addOnCompleteListener(FirstActivity.this, task -> {
+                        progressBar.setVisibility(View.GONE);
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(FirstActivity.this, "Проверьте логин и пароль!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
+                            startActivity(intent);
+                            finish();
                             }
-                    });
+                        });
         });
     }
 }
