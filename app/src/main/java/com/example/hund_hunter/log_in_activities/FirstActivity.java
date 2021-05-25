@@ -26,8 +26,7 @@ public class FirstActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private AppCompatButton btnLogin;
-    private Button btnSignup, btnReset;
+    private Button btnLogin, btnSignup, btnReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +38,23 @@ public class FirstActivity extends AppCompatActivity {
         if (auth.getCurrentUser() != null) {
             Intent reg_act = new Intent(FirstActivity.this, ChoiceActivity.class);
             startActivity(reg_act);
+            finish();
         }
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
+        inputEmail = (EditText) findViewById(R.id.login_email);
+        inputPassword = (EditText) findViewById(R.id.login_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignup = (Button) findViewById(R.id.btn_signup);
-        btnLogin = (AppCompatButton) findViewById(R.id.btn_login);
+        btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
-        btnSignup.setOnClickListener(v -> {
-                    Intent intent = new Intent(FirstActivity.this, SignupActivity.class);
-                    startActivity(intent);
-                });
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FirstActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnReset.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, ResetPasswordActivity.class)));
 
@@ -77,14 +80,11 @@ public class FirstActivity extends AppCompatActivity {
                         public void onComplete(Task< AuthResult > task) {
                             progressBar.setVisibility(View.GONE);
                             if (!task.isSuccessful()) {
-                                if (password.length() < 6) {
-                                    inputPassword.setError("Пароль слишком короткий! Минимум 6 знаков!");
-                                } else {
-                                Toast.makeText(FirstActivity.this, "Проверьте логин!", Toast.LENGTH_LONG).show();
-                                }
+                                Toast.makeText(FirstActivity.this, "Проверьте логин и пароль!", Toast.LENGTH_LONG).show();
                             } else {
                                 Intent intent = new Intent(FirstActivity.this, ChoiceActivity.class);
                                 startActivity(intent);
+                                finish();
                                 }
                             }
                     });

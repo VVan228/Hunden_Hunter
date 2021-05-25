@@ -54,7 +54,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.action_search) {
-            Toast.makeText(SeekerActivity.this, "profile lol", Toast.LENGTH_LONG).show();
             //вызвать окно профиля
             Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
             startActivity(intent);

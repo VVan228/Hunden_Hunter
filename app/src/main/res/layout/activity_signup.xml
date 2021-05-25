@@ -75,15 +75,14 @@
 
         <Button
             android:id="@+id/sign_in_button"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/already_exist"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
             android:layout_marginHorizontal="20dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
+            android:text="@string/already_exist"
+            android:background="@drawable/button_shape"/>
+
+        <Button
             android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

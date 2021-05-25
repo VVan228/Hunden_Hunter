@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -24,7 +24,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -32,7 +32,7 @@
             android:inputType="textPassword"
             android:autofillHints="@string/pass" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/forgot_pass"
-            android:textAllCaps="false" />
+            android:background="@drawable/button_shape" />
 
         <Button
             android:id="@+id/btn_signup"
@@ -53,9 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/new_user"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:background="@drawable/button_shape" />
     </LinearLayout>
 
     <ProgressBar

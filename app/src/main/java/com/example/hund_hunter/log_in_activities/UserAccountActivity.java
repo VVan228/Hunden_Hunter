@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hund_hunter.main_activities.SeekerActivity;
@@ -34,11 +35,14 @@ public class UserAccountActivity extends AppCompatActivity {
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        authListener = firebaseAuth -> {
-            FirebaseUser user1 = firebaseAuth.getCurrentUser();
-            if (user1 == null) {
-                startActivity(new Intent(UserAccountActivity.this, SeekerActivity.class));
-                finish();
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user1 = firebaseAuth.getCurrentUser();
+                if (user1 == null) {
+                    startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
+                    finish();
+                }
             }
         };
 
@@ -166,7 +170,7 @@ public class UserAccountActivity extends AppCompatActivity {
                 user.delete().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(UserAccountActivity.this, "Профиль удален... Создайте новый!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(UserAccountActivity.this, SignupActivity.class));
+                        startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
                         finish();
                         progressBar.setVisibility(View.GONE);
                     } else {
@@ -199,6 +203,7 @@ public class UserAccountActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        if (authListener != null) { auth.removeAuthStateListener(authListener); }
+        if (authListener != null) {
+            auth.removeAuthStateListener(authListener); }
     }
 }
