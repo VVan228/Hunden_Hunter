@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <EditText
-            android:id="@+id/login_email"
+            android:id="@+id/first_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -24,7 +24,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/first_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -33,14 +33,14 @@
             android:autofillHints="@string/pass" />
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/first_btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/come_in"
             android:background="@drawable/button_main_shape" />
 
         <Button
-            android:id="@+id/btn_reset_password"
+            android:id="@+id/first_btn_reset_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -48,7 +48,7 @@
             android:background="@drawable/button_shape" />
 
         <Button
-            android:id="@+id/btn_signup"
+            android:id="@+id/first_btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

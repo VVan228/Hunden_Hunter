@@ -19,10 +19,10 @@ import com.example.hund_hunter.R;
 
 public class UserAccountActivity extends AppCompatActivity {
 
-    private Button btnChangeEmail, btnChangePassword, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut;
+    private Button ChangeEmail, ChangePassword, RemoveUser, SignOut,
+            changeEmail, changePassword, sendEmail, remove;
 
-    private EditText oldEmail, newEmail, password, newPassword;
+    private EditText oldEmail, newEmail, oldPassword, newPassword;
     private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -48,25 +48,24 @@ public class UserAccountActivity extends AppCompatActivity {
         };
 
         // buttons for changing fields
-        btnChangeEmail = (Button) findViewById(R.id.change_email_button);
-        btnChangePassword = (Button) findViewById(R.id.change_password_button);
-        btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
-
+        ChangeEmail = (Button) findViewById(R.id.acc_bth_change_email);
+        ChangePassword = (Button) findViewById(R.id.acc_bth_change_password);
+        RemoveUser = (Button) findViewById(R.id.acc_bth_remove_user);
+        SignOut = (Button) findViewById(R.id.acc_bth_sign_out);
         // buttons for agree
-        changeEmail = (Button) findViewById(R.id.changeEmail);
-        changePassword = (Button) findViewById(R.id.changePass);
-        sendEmail = (Button) findViewById(R.id.send);
-        remove = (Button) findViewById(R.id.remove);
-        signOut = (Button) findViewById(R.id.sign_out);
+        changeEmail = (Button) findViewById(R.id.acc_ChangeEmail);
+        changePassword = (Button) findViewById(R.id.acc_ChangePass);
+        sendEmail = (Button) findViewById(R.id.acc_Send);
+        remove = (Button) findViewById(R.id.acc_Remove);
 
-        oldEmail = (EditText) findViewById(R.id.old_email);
-        newEmail = (EditText) findViewById(R.id.new_email);
-        password = (EditText) findViewById(R.id.password);
-        newPassword = (EditText) findViewById(R.id.newPassword);
+        oldEmail = (EditText) findViewById(R.id.acc_old_email);
+        newEmail = (EditText) findViewById(R.id.acc_new_email);
+        oldPassword = (EditText) findViewById(R.id.acc_old_password);
+        newPassword = (EditText) findViewById(R.id.acc_new_password);
 
         oldEmail.setVisibility(View.GONE);
         newEmail.setVisibility(View.GONE);
-        password.setVisibility(View.GONE);
+        oldPassword.setVisibility(View.GONE);
         newPassword.setVisibility(View.GONE);
         changeEmail.setVisibility(View.GONE);
         changePassword.setVisibility(View.GONE);
@@ -79,10 +78,10 @@ public class UserAccountActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
 
-        btnChangeEmail.setOnClickListener(v -> {
+        ChangeEmail.setOnClickListener(v -> {
             oldEmail.setVisibility(View.GONE);
             newEmail.setVisibility(View.VISIBLE);
-            password.setVisibility(View.GONE);
+            oldPassword.setVisibility(View.GONE);
             newPassword.setVisibility(View.GONE);
             changeEmail.setVisibility(View.VISIBLE);
             changePassword.setVisibility(View.GONE);
@@ -100,7 +99,7 @@ public class UserAccountActivity extends AppCompatActivity {
                                 signOut();
                                 progressBar.setVisibility(View.GONE);
                             } else {
-                                Toast.makeText(UserAccountActivity.this, "Невозможно изменить email!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserAccountActivity.this, "Некорректный email!", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
@@ -110,10 +109,10 @@ public class UserAccountActivity extends AppCompatActivity {
             }
         });
 
-        btnChangePassword.setOnClickListener(v -> {
+        ChangePassword.setOnClickListener(v -> {
             oldEmail.setVisibility(View.GONE);
             newEmail.setVisibility(View.GONE);
-            password.setVisibility(View.GONE);
+            oldPassword.setVisibility(View.GONE);
             newPassword.setVisibility(View.VISIBLE);
             changeEmail.setVisibility(View.GONE);
             changePassword.setVisibility(View.VISIBLE);
@@ -135,7 +134,7 @@ public class UserAccountActivity extends AppCompatActivity {
                                     signOut();
                                     progressBar.setVisibility(View.GONE);
                                 } else {
-                                    Toast.makeText(UserAccountActivity.this, "Невозможно изменить пароль!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserAccountActivity.this, "Некорректный пароль!", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                 }
                             });
@@ -166,7 +165,7 @@ public class UserAccountActivity extends AppCompatActivity {
             }
         });
 
-        btnRemoveUser.setOnClickListener(v -> {
+        RemoveUser.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             if (user != null) {
                 user.delete().addOnCompleteListener(task -> {
@@ -183,7 +182,7 @@ public class UserAccountActivity extends AppCompatActivity {
             }
         });
 
-        signOut.setOnClickListener(v -> signOut());
+        SignOut.setOnClickListener(v -> signOut());
     }
 
     public void signOut() {

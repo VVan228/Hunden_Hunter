@@ -37,7 +37,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/old_email"
+            android:id="@+id/acc_old_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/old_email"
@@ -47,7 +47,7 @@
             android:autofillHints="email" />
 
         <EditText
-            android:id="@+id/new_email"
+            android:id="@+id/acc_new_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/new_email"
@@ -57,7 +57,7 @@
             android:importantForAutofill="no" />
 
         <EditText
-            android:id="@+id/current_password"
+            android:id="@+id/acc_old_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -69,7 +69,7 @@
             android:autofillHints="current password" />
 
         <EditText
-            android:id="@+id/newPassword"
+            android:id="@+id/acc_new_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -82,7 +82,7 @@
     </LinearLayout>
 
         <Button
-            android:id="@+id/changeEmail"
+            android:id="@+id/acc_ChangeEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -91,7 +91,7 @@
             android:textColor="@color/yellow" />
 
         <Button
-            android:id="@+id/changePass"
+            android:id="@+id/acc_ChangePass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -100,7 +100,7 @@
             android:textColor="@color/yellow" />
 
         <Button
-            android:id="@+id/send"
+            android:id="@+id/acc_Send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -115,7 +115,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/remove"
+            android:id="@+id/acc_Remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -124,7 +124,7 @@
             android:textColor="@color/yellow" />
 
         <Button
-            android:id="@+id/change_email_button"
+            android:id="@+id/acc_bth_change_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -134,7 +134,7 @@
             android:text="@string/change_login" />
 
         <Button
-            android:id="@+id/change_password_button"
+            android:id="@+id/acc_bth_change_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -144,7 +144,7 @@
             android:text="@string/change_password" />
 
         <Button
-            android:id="@+id/remove_user_button"
+            android:id="@+id/acc_bth_remove_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -154,7 +154,7 @@
             android:text="@string/del_user" />
 
         <Button
-            android:id="@+id/sign_out"
+            android:id="@+id/acc_bth_sign_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

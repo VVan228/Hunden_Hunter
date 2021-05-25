@@ -41,12 +41,12 @@ public class FirstActivity extends AppCompatActivity {
             finish();
         }
 
-        inputEmail = (EditText) findViewById(R.id.login_email);
-        inputPassword = (EditText) findViewById(R.id.login_password);
+        inputEmail = (EditText) findViewById(R.id.first_email);
+        inputPassword = (EditText) findViewById(R.id.first_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
-        btnLogin = (Button) findViewById(R.id.btn_login);
-        btnReset = (Button) findViewById(R.id.btn_reset_password);
+        btnSignup = (Button) findViewById(R.id.first_btn_signup);
+        btnLogin = (Button) findViewById(R.id.first_btn_login);
+        btnReset = (Button) findViewById(R.id.first_btn_reset_password);
 
         btnSignup.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, SignupActivity.class)));
 
