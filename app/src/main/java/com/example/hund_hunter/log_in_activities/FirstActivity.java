@@ -1,6 +1,8 @@
 package com.example.hund_hunter.log_in_activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.hund_hunter.main_activities.OrderCreationActivity;
+import com.example.hund_hunter.main_activities.SeekerActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 
@@ -32,6 +36,11 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_page);
+
+        /*SharedPreferences mySharedPreferences = getSharedPreferences(FirstActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
+        if (mySharedPreferences.contains(FirstActivity.APP_PREFERENCES_EMAIL)){
+            Toast.makeText(FirstActivity.this, "logged as "+mySharedPreferences.getString(FirstActivity.APP_PREFERENCES_EMAIL,""), Toast.LENGTH_LONG).show();
+        }*/
 
         auth = FirebaseAuth.getInstance();
 
