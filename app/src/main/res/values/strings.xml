@@ -16,4 +16,15 @@
     <string name="new_user">Зарегистрироваться</string>
     <string name="forgot_pass">Забыли пароль?</string>
     <string name="come_in">Вход</string>
+    <string name="old_email">old email</string>
+    <string name="new_email">new email</string>
+    <string name="current_password">current password</string>
+    <string name="new_password">new password</string>
+    <string name="change_email">Изменить email</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="send">Отправить</string>
+    <string name="delete">Удалить</string>
+    <string name="change_login">Изменить логин</string>
+    <string name="del_user">Удалить пользователя</string>
+    <string name="exit">Выйти</string>
 </resources>

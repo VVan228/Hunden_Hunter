@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -152,6 +153,7 @@ public class UserAccountActivity extends AppCompatActivity {
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UserAccountActivity.this, "Письмо с восстановлением пароля выслано!", Toast.LENGTH_SHORT).show();
+                                signOut();
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(UserAccountActivity.this, "Проверьте email!", Toast.LENGTH_SHORT).show();
