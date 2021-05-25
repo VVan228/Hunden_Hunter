@@ -91,8 +91,8 @@ public class UserAccountActivity extends AppCompatActivity {
 
         changeEmail.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            if (user != null && !newEmail.getText().toString().trim().equals("")) {
-                user.updateEmail(newEmail.getText().toString().trim())
+            if (user != null && !str(newEmail).equals("")) {
+                user.updateEmail(str(newEmail))
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UserAccountActivity.this, "Email изменен!", Toast.LENGTH_LONG).show();
@@ -103,7 +103,7 @@ public class UserAccountActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
-            } else if (newEmail.getText().toString().trim().equals("")) {
+            } else if (str(newEmail).equals("")) {
                 newEmail.setError("Введите email!");
                 progressBar.setVisibility(View.GONE);
             }
@@ -122,12 +122,12 @@ public class UserAccountActivity extends AppCompatActivity {
 
         changePassword.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            if (user != null && !newPassword.getText().toString().trim().equals("")) {
-                if (newPassword.getText().toString().trim().length() < 6) {
+            if (user != null && !str(newPassword).equals("")) {
+                if (str(newPassword).length() < 6) {
                     newPassword.setError("Слишком короткий пароль!");
                     progressBar.setVisibility(View.GONE);
                 } else {
-                    user.updatePassword(newPassword.getText().toString().trim())
+                    user.updatePassword(str(newPassword))
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(UserAccountActivity.this, "Пароль изменен!", Toast.LENGTH_SHORT).show();
@@ -139,7 +139,7 @@ public class UserAccountActivity extends AppCompatActivity {
                                 }
                             });
                 }
-            } else if (newPassword.getText().toString().trim().equals("")) {
+            } else if (str(newPassword).equals("")) {
                 newPassword.setError("Введите пароль");
                 progressBar.setVisibility(View.GONE);
             }
@@ -147,8 +147,8 @@ public class UserAccountActivity extends AppCompatActivity {
 
         sendEmail.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            if (!oldEmail.getText().toString().trim().equals("")) {
-                auth.sendPasswordResetEmail(oldEmail.getText().toString().trim())
+            if (!str(oldEmail).equals("")) {
+                auth.sendPasswordResetEmail(str(oldEmail))
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UserAccountActivity.this, "Письмо с восстановлением пароля выслано!", Toast.LENGTH_SHORT).show();
@@ -206,5 +206,9 @@ public class UserAccountActivity extends AppCompatActivity {
         super.onStop();
         if (authListener != null) {
             auth.removeAuthStateListener(authListener); }
+    }
+
+    String str(EditText t){
+        return t.getText().toString().trim();
     }
 }

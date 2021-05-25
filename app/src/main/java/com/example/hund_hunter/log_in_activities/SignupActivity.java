@@ -17,7 +17,7 @@ import com.example.hund_hunter.R;
 public class SignupActivity extends AppCompatActivity {
 
     private EditText surname, name, tel, inputEmail, inputPassword;
-    private Button btnSignIn, btnSignUp, btnResetPassword;
+    private Button btnOk, btnBack;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -28,21 +28,18 @@ public class SignupActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        surname = (EditText) findViewById(R.id.surname);
-        name = (EditText) findViewById(R.id.name);
-        tel = (EditText) findViewById(R.id.tel);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
+        btnOk = (Button) findViewById(R.id.sign_ok);
+        btnBack = (Button) findViewById(R.id.sign_back);
+        surname = (EditText) findViewById(R.id.sign_surname);
+        name = (EditText) findViewById(R.id.sign_name);
+        tel = (EditText) findViewById(R.id.sign_tel);
+        inputEmail = (EditText) findViewById(R.id.sign_email);
+        inputPassword = (EditText) findViewById(R.id.sign_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
 
-        btnResetPassword.setOnClickListener(v -> new Intent(SignupActivity.this, ResetPasswordActivity.class));
+        btnBack.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, FirstActivity.class)));
 
-        btnSignIn.setOnClickListener(v -> finish());
-
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -77,8 +74,7 @@ public class SignupActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(), Toast.LENGTH_SHORT).show();
                             } else {
-                                Intent new_in = new Intent(SignupActivity.this, ChoiceActivity.class);
-                                startActivity(new_in);
+                                startActivity(new Intent(SignupActivity.this, ChoiceActivity.class));
                             }
                         });
             }
