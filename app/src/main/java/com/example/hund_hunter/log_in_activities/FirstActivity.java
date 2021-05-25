@@ -32,15 +32,21 @@ public class FirstActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnLogin, btnSignup, btnReset;
 
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_EMAIL = "email";
+    public static final String APP_PREFERENCES_PASS = "******";
+
+    SharedPreferences mySharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_page);
 
-        /*SharedPreferences mySharedPreferences = getSharedPreferences(FirstActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
+        mySharedPreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         if (mySharedPreferences.contains(FirstActivity.APP_PREFERENCES_EMAIL)){
             Toast.makeText(FirstActivity.this, "logged as "+mySharedPreferences.getString(FirstActivity.APP_PREFERENCES_EMAIL,""), Toast.LENGTH_LONG).show();
-        }*/
+        }
 
         auth = FirebaseAuth.getInstance();
 
