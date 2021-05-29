@@ -125,6 +125,16 @@
             android:textColor="@color/yellow" />
 
         <Button
+            android:id="@+id/acc_bth_mylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/dark_green"
+            android:background="@drawable/button_shape"
+            android:text="@string/my_list" />
+
+        <Button
             android:id="@+id/acc_bth_change_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

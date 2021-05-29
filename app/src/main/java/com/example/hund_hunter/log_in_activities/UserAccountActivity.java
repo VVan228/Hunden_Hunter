@@ -19,8 +19,8 @@ import com.example.hund_hunter.R;
 
 public class UserAccountActivity extends AppCompatActivity {
 
-    private Button ChangeEmail, ChangePassword, RemoveUser, SignOut,
-            changeEmail, changePassword, sendEmail, remove;
+    private Button ChangeEmail, ChangePassword, RemoveUser, SignOut, MyList,
+             changeEmail, changePassword, sendEmail, remove;
 
     private EditText oldEmail, newEmail, oldPassword, newPassword;
     private ProgressBar progressBar;
@@ -52,7 +52,9 @@ public class UserAccountActivity extends AppCompatActivity {
         ChangePassword = (Button) findViewById(R.id.acc_bth_change_password);
         RemoveUser = (Button) findViewById(R.id.acc_bth_remove_user);
         SignOut = (Button) findViewById(R.id.acc_bth_sign_out);
-        // buttons for agree
+        MyList = (Button) findViewById(R.id.acc_bth_mylist);
+
+        // buttons for next actions
         changeEmail = (Button) findViewById(R.id.acc_ChangeEmail);
         changePassword = (Button) findViewById(R.id.acc_ChangePass);
         sendEmail = (Button) findViewById(R.id.acc_Send);
@@ -179,6 +181,8 @@ public class UserAccountActivity extends AppCompatActivity {
         });
 
         SignOut.setOnClickListener(v -> signOut());
+
+        MyList.setOnClickListener(v ->  startActivity(new Intent(UserAccountActivity.this, ListOfMyItems.class)));
     }
 
     public void signOut() {

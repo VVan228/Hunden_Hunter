@@ -27,4 +27,6 @@
     <string name="change_login">Изменить логин</string>
     <string name="del_user">Удалить пользователя</string>
     <string name="exit">Выйти</string>
+    <string name="my_list">Мои объявления</string>
+    <string name="end_list">Назад</string>
 </resources>
