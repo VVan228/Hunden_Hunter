@@ -32,21 +32,36 @@ public class FirstActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnLogin, btnSignup, btnReset;
 
-    public static final String APP_PREFERENCES = "mysettings";
+    /*public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_EMAIL = "email";
     public static final String APP_PREFERENCES_PASS = "******";
 
     SharedPreferences mySharedPreferences;
+    SharedPreferences.Editor editor;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_page);
 
-        mySharedPreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        if (mySharedPreferences.contains(FirstActivity.APP_PREFERENCES_EMAIL)){
-            Toast.makeText(FirstActivity.this, "logged as "+mySharedPreferences.getString(FirstActivity.APP_PREFERENCES_EMAIL,""), Toast.LENGTH_LONG).show();
-        }
+        inputEmail = (EditText) findViewById(R.id.first_email);
+        inputPassword = (EditText) findViewById(R.id.first_password);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        btnSignup = (Button) findViewById(R.id.first_btn_signup);
+        btnLogin = (Button) findViewById(R.id.first_btn_login);
+        btnReset = (Button) findViewById(R.id.first_btn_reset_password);
+
+        /*mySharedPreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        editor = mySharedPreferences.edit();
+        inputEmail.setOnClickListener(v -> {
+            // автозаполнение
+            Toast.makeText(getApplicationContext(), ""+mySharedPreferences.contains(APP_PREFERENCES_EMAIL),  Toast.LENGTH_LONG).show();
+            inputEmail.setText(mySharedPreferences.getString(APP_PREFERENCES_EMAIL, ""));
+        });
+
+        // сохранение значений
+        editor.putString(APP_PREFERENCES_EMAIL, inputEmail.getText().toString());
+        editor.apply();*/
 
         auth = FirebaseAuth.getInstance();
 
@@ -55,13 +70,6 @@ public class FirstActivity extends AppCompatActivity {
             startActivity(reg_act);
             finish();
         }
-
-        inputEmail = (EditText) findViewById(R.id.first_email);
-        inputPassword = (EditText) findViewById(R.id.first_password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.first_btn_signup);
-        btnLogin = (Button) findViewById(R.id.first_btn_login);
-        btnReset = (Button) findViewById(R.id.first_btn_reset_password);
 
         btnSignup.setOnClickListener(v -> startActivity(new Intent(FirstActivity.this, SignupActivity.class)));
 
@@ -93,7 +101,7 @@ public class FirstActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                             }
-                        });
+                    });
         });
     }
 }
