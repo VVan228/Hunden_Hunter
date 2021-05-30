@@ -35,4 +35,8 @@
     <string name="add_photo">Прикрепить фото</string>
     <string name="comment">Коментарий</string>
     <string name="publish">Опубликовать</string>
+    <string name="pet_name">Кличка</string>
+    <string name="descr_pet">Описание</string>
+    <string name="tel_number">Номер телефона</string>
+    <string name="owner">Фамилия Имя</string>
 </resources>
