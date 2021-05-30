@@ -23,7 +23,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
-import com.example.hund_hunter.fire_classes.myQuery;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,33 +58,6 @@ public class OrderCreationActivity extends AppCompatActivity {
         add_photo = (AppCompatButton) findViewById(R.id.bth_add_photo);
         photo = (ImageView) findViewById(R.id.iv_pet_photo);
 
-        //пример запроса данных, игнорируйте
-        db.getData(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Log.d("FireDB", snapshot.getValue(Order.class).getEmail());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        }, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
 
         add_photo.setOnClickListener(v -> {
             // отображение галереи всех изображений, хранящихся на телефоне, позволяя выбрать одно
