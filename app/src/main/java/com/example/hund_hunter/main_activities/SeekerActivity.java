@@ -136,16 +136,30 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                     reward.setText("error " + e.getMessage());
                 }
 
-                TextView comment = findViewById(R.id.commentInfo);
+                TextView pet_name = findViewById(R.id.bottom_sheet_pet);
+                try {
+                    pet_name.setText(markerData.getString("pet"));
+                } catch (JSONException e) {
+                    pet_name.setText("error " + e.getMessage());
+                }
+
+                TextView comment = findViewById(R.id.bottom_sheet_commentInfo);
                 try {
                     comment.setText(markerData.getString("comment"));
                 } catch (JSONException e) {
                     comment.setText("error " + e.getMessage());
                 }
 
-                TextView time = findViewById(R.id.timeInfo);
+                TextView time = findViewById(R.id.bottom_sheet_time);
                 try {
-                    time.setText(markerData.getString("time"));
+                    time.setText("Время: " + markerData.getString("time"));
+                } catch (JSONException e) {
+                    time.setText("error " + e.getMessage());
+                }
+
+                TextView owner = findViewById(R.id.bottom_sheet_owner);
+                try {
+                    time.setText("ФИО: " + markerData.getString("familia") + markerData.getString("name"));
                 } catch (JSONException e) {
                     time.setText("error " + e.getMessage());
                 }

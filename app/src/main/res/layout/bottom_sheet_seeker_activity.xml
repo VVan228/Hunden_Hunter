@@ -67,7 +67,13 @@
                 android:text="@string/descr_pet"/>
 
             <TextView
-                android:id="@+id/bottom_sheet_owner_owner"
+                android:id="@+id/bottom_sheet_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/time"/>
+
+            <TextView
+                android:id="@+id/bottom_sheet_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/owner"/>
