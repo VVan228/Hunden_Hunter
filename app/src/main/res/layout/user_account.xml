@@ -175,5 +175,13 @@
             android:text="@string/exit" />
 
     </LinearLayout>
+    <Button
+        android:id="@+id/bth_back_from_user_acc"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:layout_margin="10dp"
+        android:background="@color/dark_green"
+        android:text="@string/end_list" />
 
 </LinearLayout>

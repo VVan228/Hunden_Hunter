@@ -16,17 +16,13 @@
     <string name="new_user">Зарегистрироваться</string>
     <string name="forgot_pass">Забыли пароль?</string>
     <string name="come_in">Вход</string>
-    <string name="old_email">old email</string>
-    <string name="new_email">new email</string>
-    <string name="current_password">current password</string>
-    <string name="new_password">new password</string>
     <string name="change_email">Изменить email</string>
     <string name="change_password">Изменить пароль</string>
     <string name="send">Отправить</string>
     <string name="delete">Удалить</string>
     <string name="change_login">Изменить логин</string>
     <string name="del_user">Удалить пользователя</string>
-    <string name="exit">Выйти</string>
+    <string name="exit">Выйти из учетной записи</string>
     <string name="my_list">Мои объявления</string>
     <string name="end_list">Назад</string>
     <string name="choose_place">Выбрать место</string>
@@ -40,4 +36,8 @@
     <string name="tel_number">Номер телефона</string>
     <string name="owner">Фамилия Имя</string>
     <string name="time">Время: 00:00</string>
+    <string name="old_email">текущий email</string>
+    <string name="new_email">новый email</string>
+    <string name="current_password">текущий пароль</string>
+    <string name="new_password">новый пароль</string>
 </resources>

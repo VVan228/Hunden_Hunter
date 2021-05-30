@@ -23,7 +23,6 @@
         android:layout_weight="0.5"
         android:layout_margin="10dp"
         android:background="@drawable/button_shape"
-        android:text="@string/end_list"
-        />
+        android:text="@string/end_list" />
 
 </LinearLayout>
