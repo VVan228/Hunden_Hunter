@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hund_hunter.data_classes.User;
+import com.example.hund_hunter.fire_classes.FireDB;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.hund_hunter.R;
 
@@ -20,6 +22,7 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnOk, btnBack;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private FireDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         auth = FirebaseAuth.getInstance();
+        db = new FireDB(new String[]{"users"});
 
         btnOk = (Button) findViewById(R.id.sign_ok);
         btnBack = (Button) findViewById(R.id.sign_back);
@@ -67,11 +71,12 @@ public class SignupActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(SignupActivity.this, task -> {
-                        Toast.makeText(SignupActivity.this, "Регистрация прошла успешно.", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignupActivity.this, "Ошибка. Пользователь не зарегистрирован!" + task.getException(), Toast.LENGTH_SHORT).show();
                         } else {
+                            db.pushValue(new User(str(name), str(surname), email, str(tel)));
+                            Toast.makeText(SignupActivity.this, "Регистрация прошла успешно.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignupActivity.this, ChoiceActivity.class));
                         }
                     });
