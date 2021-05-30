@@ -43,6 +43,7 @@ public class OrderCreationActivity extends AppCompatActivity {
     String time;
     AppCompatButton add_photo;
     static final int GALLERY_REQUEST = 1;
+    static final int LOCATION_REQUEST = 228;
     ImageView photo;
     Bitmap bitmap = null;
     String image = "";
@@ -71,7 +72,7 @@ public class OrderCreationActivity extends AppCompatActivity {
     }
     public void setLocation(View view){
         Intent set_act = new Intent(OrderCreationActivity.this, SetLocationActivity.class);
-        startActivityForResult(set_act, 1);
+        startActivityForResult(set_act, LOCATION_REQUEST);
     }
 
     @Override
@@ -80,7 +81,6 @@ public class OrderCreationActivity extends AppCompatActivity {
         if (data == null) {
             return;
         }
-        coords = data.getStringExtra("coords");
 
         switch(requestCode) {
             case GALLERY_REQUEST:
@@ -95,6 +95,10 @@ public class OrderCreationActivity extends AppCompatActivity {
                     image = bitmapToString(bitmap);
                     photo.setImageBitmap(bitmap);
                 }
+                break;
+            case LOCATION_REQUEST:
+                coords = data.getStringExtra("coords");
+                break;
         }
 
     }
