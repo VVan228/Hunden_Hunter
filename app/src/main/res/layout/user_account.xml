@@ -179,7 +179,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/dark_green"
+            android:background="@drawable/button_shape"
             android:text="@string/end_list" />
 
     </LinearLayout>
