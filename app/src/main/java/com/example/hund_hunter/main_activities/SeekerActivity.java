@@ -4,8 +4,11 @@ package com.example.hund_hunter.main_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +18,7 @@ import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.log_in_activities.UserAccountActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,6 +46,22 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     FireDB db;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.title, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_search) {
+            //вызов окна профиля
+            Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
+            startActivity(intent);
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
@@ -53,7 +73,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
         //mMap.setOnMarkerClickListener(SeekerActivity.this);
 
-        //получить метки
+        //получение меток
         db.getData(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

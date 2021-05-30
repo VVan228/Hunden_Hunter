@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hund_hunter">
 
-    <application
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,14 +22,28 @@
         <activity android:name=".main_activities.SetLocationActivity" />
         <activity android:name=".main_activities.SeekerActivity" />
         <activity android:name=".main_activities.OrderCreationActivity" />
-        <activity android:name=".log_in_activities.RegistrationActivity" />
-        <activity android:name=".log_in_activities.StartActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".log_in_activities.ChoiceActivity" />
+        <activity
+            android:name=".log_in_activities.FirstActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".log_in_activities.SignupActivity"
+            android:theme="@style/AppTheme.NoActionBar"> </activity>
+        <activity
+            android:name=".log_in_activities.UserAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar"> </activity>
+        <activity
+            android:name=".log_in_activities.ResetPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"> </activity>
+        <activity
+            android:name=".log_in_activities.ListOfMyItems"
+            android:theme="@style/AppTheme.NoActionBar"> </activity>
     </application>
 
 </manifest>
