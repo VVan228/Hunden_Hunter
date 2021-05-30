@@ -4,8 +4,11 @@ package com.example.hund_hunter.main_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,9 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
-import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
-import com.example.hund_hunter.fire_classes.MyQuery;
-import com.example.hund_hunter.fire_classes.interfaces.OnChildAddedListener;
+import com.example.hund_hunter.fire_classes.myQuery;
+import com.example.hund_hunter.log_in_activities.UserAccountActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,6 +46,22 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     FireDB db;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.title, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_search) {
+            //вызов окна профиля
+            Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
+            startActivity(intent);
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
@@ -55,8 +73,8 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
         //mMap.setOnMarkerClickListener(SeekerActivity.this);
 
-        //получить метки
-        db.getData(new MyQuery(db.getRef()).orderBy("time"), new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
+        //получение меток
+        db.getData(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Order order = snapshot.getValue(Order.class);
@@ -77,7 +95,27 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 createMarker(coords, markerDataJson.toString());
                 Log.d("tag4me", markerDataJson.toString());
             }
-        }).create());
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        }, new myQuery(db.getRef()).orderBy("time"));
     }
 
     @Override
