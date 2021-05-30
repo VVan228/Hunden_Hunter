@@ -12,13 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hund_hunter.main_activities.ListOfMyItems;
+import com.example.hund_hunter.main_activities.SeekerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.hund_hunter.R;
 
 public class UserAccountActivity extends AppCompatActivity {
 
-    private Button ChangeEmail, ChangePassword, RemoveUser, SignOut, MyList,
+    private Button ChangeEmail, ChangePassword, RemoveUser, SignOut, MyList, Back,
              changeEmail, changePassword, sendEmail, remove;
 
     private EditText oldEmail, newEmail, oldPassword, newPassword;
@@ -52,6 +53,7 @@ public class UserAccountActivity extends AppCompatActivity {
         RemoveUser = (Button) findViewById(R.id.acc_bth_remove_user);
         SignOut = (Button) findViewById(R.id.acc_bth_sign_out);
         MyList = (Button) findViewById(R.id.acc_bth_mylist);
+        Back = (Button) findViewById(R.id.bth_back_from_user_acc);
 
         // buttons for next actions
         changeEmail = (Button) findViewById(R.id.acc_ChangeEmail);
@@ -182,6 +184,8 @@ public class UserAccountActivity extends AppCompatActivity {
         SignOut.setOnClickListener(v -> signOut());
 
         MyList.setOnClickListener(v ->  startActivity(new Intent(UserAccountActivity.this, ListOfMyItems.class)));
+
+        Back.setOnClickListener(v -> startActivity(new Intent(UserAccountActivity.this, SeekerActivity.class)));
     }
 
     public void signOut() {
