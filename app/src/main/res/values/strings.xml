@@ -29,4 +29,10 @@
     <string name="exit">Выйти</string>
     <string name="my_list">Мои объявления</string>
     <string name="end_list">Назад</string>
+    <string name="choose_place">Выбрать место</string>
+    <string name="choose_time">Ввести время</string>
+    <string name="money">Вознаграждение ₽</string>
+    <string name="add_photo">Прикрепить фото</string>
+    <string name="comment">Коментарий</string>
+    <string name="publish">Опубликовать</string>
 </resources>

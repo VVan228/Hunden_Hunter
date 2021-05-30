@@ -41,6 +41,9 @@
         <activity
             android:name=".log_in_activities.ResetPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar"> </activity>
+        <activity
+            android:name=".log_in_activities.ListOfMyItems"
+            android:theme="@style/AppTheme.NoActionBar"> </activity>
     </application>
 
 </manifest>

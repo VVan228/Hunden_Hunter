@@ -3,10 +3,14 @@ package com.example.hund_hunter.main_activities;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -14,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
@@ -24,6 +29,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.IOException;
+
 public class OrderCreationActivity extends AppCompatActivity {
     FireDB db;
     private EditText revard;
@@ -33,6 +40,10 @@ public class OrderCreationActivity extends AppCompatActivity {
     TextView tvTime;
     String coords;
     String time;
+    AppCompatButton add_photo;
+    static final int GALLERY_REQUEST = 1;
+    ImageView photo;
+    Bitmap bitmap = null;
 
     DatabaseReference ref;
     DatabaseReference usersRef;
@@ -45,6 +56,8 @@ public class OrderCreationActivity extends AppCompatActivity {
         db = new FireDB(new String[]{"orders"});
         tvTime = (TextView) findViewById(R.id.tvTime);
         revard = (EditText) findViewById(R.id.reward);
+        add_photo = (AppCompatButton) findViewById(R.id.bth_add_photo);
+        photo = (ImageView) findViewById(R.id.iv_pet_photo);
 
         //пример запроса данных, игнорируйте
         db.getData(new ChildEventListener() {
@@ -73,6 +86,13 @@ public class OrderCreationActivity extends AppCompatActivity {
 
             }
         }, new myQuery(db.getRef()).orderBy("email").equalTo("vvang"));
+
+        add_photo.setOnClickListener(v -> {
+            // отображение галереи всех изображений, хранящихся на телефоне, позволяя выбрать одно
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+        });
     }
     public void setLocation(View view){
         Intent set_act = new Intent(OrderCreationActivity.this, SetLocationActivity.class);
@@ -87,6 +107,18 @@ public class OrderCreationActivity extends AppCompatActivity {
         }
         coords = data.getStringExtra("coords");
 
+        switch(requestCode) {
+            case GALLERY_REQUEST:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = data.getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    photo.setImageBitmap(bitmap);
+                }
+        }
 
     }
 
@@ -139,6 +171,5 @@ public class OrderCreationActivity extends AppCompatActivity {
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);
     }
-
 
 }
