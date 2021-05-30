@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/yellow"
-    tools:context=".log_in_activities.ListOfMyItems">
+    tools:context=".main_activities.ListOfMyItems">
 
     <ListView
         android:id="@+id/lv_list_items"

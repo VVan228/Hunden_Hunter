@@ -1,4 +1,4 @@
-package com.example.hund_hunter.log_in_activities;
+package com.example.hund_hunter.main_activities;
 
 import android.app.Activity;
 import android.os.Bundle;
