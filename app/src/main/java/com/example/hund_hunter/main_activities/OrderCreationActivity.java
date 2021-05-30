@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class OrderCreationActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class OrderCreationActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
     ImageView photo;
     Bitmap bitmap = null;
+    String image = "";
 
     DatabaseReference ref;
     DatabaseReference usersRef;
@@ -88,6 +91,8 @@ public class OrderCreationActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    //Log.d("tag4me", "ye ");
+                    image = bitmapToString(bitmap);
                     photo.setImageBitmap(bitmap);
                 }
         }
@@ -137,11 +142,20 @@ public class OrderCreationActivity extends AppCompatActivity {
             Toast.makeText(OrderCreationActivity.this, "заполните пустые поля", Toast.LENGTH_LONG).show();
             return;
         }
-        db.pushValue(new Order(email, pricetTxt, commentTxt, coords, time));
+        Log.d("tag4me", "debug str");
+        db.pushValue(new Order(email, pricetTxt, commentTxt, coords, time, image));
 
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);
+    }
+
+    String bitmapToString(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return encoded;
     }
 
 }

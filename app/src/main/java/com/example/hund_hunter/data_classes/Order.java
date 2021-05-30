@@ -1,20 +1,24 @@
 package com.example.hund_hunter.data_classes;
 
+import android.graphics.Bitmap;
+
 public class Order {
     String email;
     String price;
     String comment;
     String coord;
     String time;
+    String image;
 
     public Order() {}
 
-    public Order(String email, String price, String comment, String coord, String time) {
+    public Order(String email, String price, String comment, String coord, String time, String image) {
         this.email = email;
         this.price = price;
         this.comment = comment;
         this.coord = coord;
         this.time = time;
+        this.image = image;
     }
 
     public String getEmail() {
@@ -55,5 +59,13 @@ public class Order {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getImage(){
+        return image;
+    }
+
+    public void setImage(String image){
+        this.image = image;
     }
 }

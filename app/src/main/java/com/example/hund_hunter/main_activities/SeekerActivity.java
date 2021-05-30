@@ -2,11 +2,15 @@
 package com.example.hund_hunter.main_activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,13 +89,15 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 String price = order.getPrice();
                 String comment = order.getComment();
                 String time = order.getTime();
+                String photoStr = order.getImage();
 
                 Map<String, String> markerData = new HashMap<>();
-                markerData.put("coords", order.getCoord());
-                markerData.put("email", order.getEmail());
-                markerData.put("price", order.getPrice());
-                markerData.put("comment", order.getComment());
-                markerData.put("time", order.getTime());
+                markerData.put("coords", coords);
+                markerData.put("email", email);
+                markerData.put("price", price);
+                markerData.put("comment", comment);
+                markerData.put("time", time);
+                markerData.put("photo", photoStr);
 
                 JSONObject markerDataJson = new JSONObject(markerData);
                 createMarker(coords, markerDataJson.toString());
@@ -143,6 +149,13 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 } catch (JSONException e) {
                     time.setText("error " + e.getMessage());
                 }
+
+                ImageView photo = findViewById(R.id.bottom_sheet_photo);
+                try {
+                    photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
+                } catch (JSONException e){
+
+                }
                 return true;
             }
         });
@@ -174,4 +187,17 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         Marker a = mMap.addMarker(new MarkerOptions().zIndex(100).position(new LatLng(lat,lon)));
         a.setTag(tag);
     }
+
+    Bitmap stringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
 }
