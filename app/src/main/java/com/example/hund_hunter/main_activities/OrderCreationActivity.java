@@ -24,6 +24,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -139,15 +140,16 @@ public class OrderCreationActivity extends AppCompatActivity {
         //берем почту из аккаунта
         EditText comment = findViewById(R.id.comment);
         EditText price = findViewById(R.id.reward);
-        String email = "insert email";
+        EditText pet = findViewById(R.id.pet_name_create);
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String commentTxt = comment.getText().toString();
-        String pricetTxt = price.getText().toString();
-        if(coords==null||time==null||commentTxt.equals("")||pricetTxt.equals("")){
+        String priceTxt = price.getText().toString();
+        String petTxt = pet.getText().toString();
+        if(coords==null||time==null||commentTxt.equals("")||priceTxt.equals("")||petTxt.equals("")){
             Toast.makeText(OrderCreationActivity.this, "заполните пустые поля", Toast.LENGTH_LONG).show();
             return;
         }
-        Log.d("tag4me", "debug str");
-        db.pushValue(new Order(email, pricetTxt, commentTxt, coords, time, image));
+        db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
 
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);

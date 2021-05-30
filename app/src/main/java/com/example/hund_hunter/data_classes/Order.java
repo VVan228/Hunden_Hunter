@@ -9,16 +9,18 @@ public class Order {
     String coord;
     String time;
     String image;
+    String pet;
 
     public Order() {}
 
-    public Order(String email, String price, String comment, String coord, String time, String image) {
+    public Order(String email, String price, String comment, String coord, String time, String image, String pet) {
         this.email = email;
         this.price = price;
         this.comment = comment;
         this.coord = coord;
         this.time = time;
         this.image = image;
+        this.pet = pet;
     }
 
     public String getEmail() {
@@ -67,5 +69,13 @@ public class Order {
 
     public void setImage(String image){
         this.image = image;
+    }
+
+    public String getPet() {
+        return pet;
+    }
+
+    public void setPet(String pet) {
+        this.pet = pet;
     }
 }

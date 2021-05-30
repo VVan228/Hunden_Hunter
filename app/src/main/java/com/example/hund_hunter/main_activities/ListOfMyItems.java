@@ -61,7 +61,7 @@ public class ListOfMyItems extends Activity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Order obj = snapshot.getValue(Order.class);
-                names.add(0, obj.getComment());
+                names.add(0, obj.getPet());
                 adapter.notifyDataSetChanged();
             }
         }).create());

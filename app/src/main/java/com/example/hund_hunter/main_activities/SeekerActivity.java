@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
+import com.example.hund_hunter.data_classes.User;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
 import com.example.hund_hunter.fire_classes.MyQuery;
@@ -50,6 +51,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private LatLng coords;
     FireDB db;
+    FireDB users;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,6 +75,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_seeker);
 
         db = new FireDB(new String[]{"orders"});
+        users = new FireDB(new String[]{"users"});
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -90,6 +93,8 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 String comment = order.getComment();
                 String time = order.getTime();
                 String photoStr = order.getImage();
+                String pet = order.getPet();
+
 
                 Map<String, String> markerData = new HashMap<>();
                 markerData.put("coords", coords);
@@ -98,6 +103,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 markerData.put("comment", comment);
                 markerData.put("time", time);
                 markerData.put("photo", photoStr);
+                markerData.put("pet", pet);
 
                 JSONObject markerDataJson = new JSONObject(markerData);
                 createMarker(coords, markerDataJson.toString());
@@ -128,6 +134,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 TextView comment = findViewById(R.id.bottom_sheet_commentInfo);
                 TextView time = findViewById(R.id.bottom_sheet_time);
                 TextView owner = findViewById(R.id.bottom_sheet_owner);
+                TextView tel = findViewById(R.id.bottom_sheet_tel);
                 ImageView photo = findViewById(R.id.bottom_sheet_photo);
 
                 try {
@@ -136,7 +143,18 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                     pet_name.setText(markerData.getString("pet"));
                     comment.setText(markerData.getString("comment"));
                     time.setText("Время: " + markerData.getString("time"));
-                    owner.setText("Владелец: " + markerData.getString("familia") + " " + markerData.getString("name"));
+
+                    users.getData(new MyQuery(users.getRef()).orderBy("email").equalTo(markerData.getString("email")),
+                            new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    User obj = snapshot.getValue(User.class);
+                                    owner.setText("Владелец: " + obj.getFamilia() + " " + obj.getName());
+                                    tel.setText(obj.getTel());
+                                }
+                            }).create());
+
+
                     photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
 
 

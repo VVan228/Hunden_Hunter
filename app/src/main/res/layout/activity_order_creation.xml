@@ -8,7 +8,7 @@
     tools:context=".main_activities.OrderCreationActivity">
 
     <EditText
-        android:id="@+id/pet_name"
+        android:id="@+id/pet_name_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
