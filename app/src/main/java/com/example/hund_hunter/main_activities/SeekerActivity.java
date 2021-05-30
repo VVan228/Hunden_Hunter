@@ -123,52 +123,30 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                     markerData = new JSONObject(info);
                 }
                 TextView email = findViewById(R.id.emailInfo);
+                TextView reward = findViewById(R.id.rewardInfo);
+                TextView pet_name = findViewById(R.id.bottom_sheet_pet);
+                TextView comment = findViewById(R.id.bottom_sheet_commentInfo);
+                TextView time = findViewById(R.id.bottom_sheet_time);
+                TextView owner = findViewById(R.id.bottom_sheet_owner);
+                ImageView photo = findViewById(R.id.bottom_sheet_photo);
+
                 try {
                     email.setText(markerData.getString("email"));
+                    reward.setText(markerData.getString("price"));
+                    pet_name.setText(markerData.getString("pet"));
+                    comment.setText(markerData.getString("comment"));
+                    time.setText("Время: " + markerData.getString("time"));
+                    owner.setText("Владелец: " + markerData.getString("familia") + " " + markerData.getString("name"));
+                    photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
+
+
                 } catch (JSONException e) {
                     email.setText("error " + e.getMessage());
-                }
-
-                TextView reward = findViewById(R.id.rewardInfo);
-                try {
-                    reward.setText(markerData.getString("price"));
-                } catch (JSONException e) {
                     reward.setText("error " + e.getMessage());
-                }
-
-                TextView pet_name = findViewById(R.id.bottom_sheet_pet);
-                try {
-                    pet_name.setText(markerData.getString("pet"));
-                } catch (JSONException e) {
                     pet_name.setText("error " + e.getMessage());
-                }
-
-                TextView comment = findViewById(R.id.bottom_sheet_commentInfo);
-                try {
-                    comment.setText(markerData.getString("comment"));
-                } catch (JSONException e) {
                     comment.setText("error " + e.getMessage());
-                }
-
-                TextView time = findViewById(R.id.bottom_sheet_time);
-                try {
-                    time.setText("Время: " + markerData.getString("time"));
-                } catch (JSONException e) {
                     time.setText("error " + e.getMessage());
-                }
-
-                TextView owner = findViewById(R.id.bottom_sheet_owner);
-                try {
-                    time.setText("ФИО: " + markerData.getString("familia") + markerData.getString("name"));
-                } catch (JSONException e) {
-                    time.setText("error " + e.getMessage());
-                }
-
-                ImageView photo = findViewById(R.id.bottom_sheet_photo);
-                try {
-                    photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
-                } catch (JSONException e){
-
+                    owner.setText("error " + e.getMessage());
                 }
                 return true;
             }
