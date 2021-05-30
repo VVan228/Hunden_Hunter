@@ -7,6 +7,17 @@
     android:background="@color/green"
     tools:context=".main_activities.OrderCreationActivity">
 
+
+    <EditText
+        android:id="@+id/pet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Кличка"
+        android:inputType="textPersonName" />
+
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"

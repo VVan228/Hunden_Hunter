@@ -36,52 +36,25 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="15dp"
         android:paddingVertical="25dp">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/bottom_sheet_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/commentInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="5">
+            android:layout_weight="1"
+            android:text="comment"/>
 
-            <ImageView
-                android:id="@+id/bottom_sheet_photo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/commentInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="comment"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="loss time: "/>
-
-            <TextView
-                android:id="@+id/timeInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:00"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
