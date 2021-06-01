@@ -27,9 +27,6 @@ public class ChoiceActivity extends AppCompatActivity {
 
     public final int LOCATION_PERMISSION = 1001;
 
-    Button showMapButton;
-    TextView latText, lonText, timeText;
-
     LocationManager locationManager;
     Location location;
 
@@ -77,12 +74,9 @@ public class ChoiceActivity extends AppCompatActivity {
             this.location = location;
             // getLatitude - широта
             String koord = String.format("%.4f", location.getLatitude());
-            latText.setText(koord);
             // getLongitude - долгота
             koord = String.format("%.4f", location.getLongitude());
-            lonText.setText(koord);
             koord = new Date(location.getTime()).toString();
-            timeText.setText(koord);
 
         }
     }
@@ -107,11 +101,8 @@ public class ChoiceActivity extends AppCompatActivity {
                 if (location != null){
                     // Получить последние координаты
                     String koord = String.format("%.4f", location.getLatitude());
-                    latText.setText(koord);
                     koord = String.format("%.4f", location.getLongitude());
-                    lonText.setText(koord);
                     koord = new Date(location.getTime()).toString();
-                    timeText.setText(koord);
                 }
             }
         }

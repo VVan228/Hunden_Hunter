@@ -1,9 +1,12 @@
 
 package com.example.hund_hunter.main_activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -34,6 +37,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,7 +45,9 @@ import com.google.firebase.database.DatabaseError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +56,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     private Marker marker;
     private GoogleMap mMap;
     private LatLng coords;
+    private String apiKey = "AIzaSyDEWTvRriVn6e_uxBiURqhkA5jvDQ-KRns";
     FireDB db;
     FireDB users;
 
@@ -74,7 +81,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
 
-        db = new FireDB(new String[]{"orders"});
         users = new FireDB(new String[]{"users"});
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -82,6 +88,17 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
         //mMap.setOnMarkerClickListener(SeekerActivity.this);
 
+        Intent intent = getIntent();
+        double lat = intent.getDoubleExtra("latitude", 52.27537);;
+        double lan = intent.getDoubleExtra("longitude", 104.2774);;
+        String[]adress = SeekerActivity.getAdress(new LatLng(lat, lan).toString(), this);
+        if(adress==null){
+            Toast.makeText(SeekerActivity.this, "не получилось распознать адрес", Toast.LENGTH_LONG).show();
+            return;
+        }
+        String locality = adress[0];
+        String postal = adress[1];
+        db = new FireDB(new String[]{"orders", locality, postal});
         //получение меток
         db.getData(new MyQuery(db.getRef()).orderBy("time"), new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
             @Override
@@ -180,19 +197,14 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void createMarker(String string, String tag){
-        String from_lat_lng = "";
-        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(string);
-        while(m.find()) {
-            from_lat_lng = m.group(1) ;
-        }
-        String[] gpsVal = from_lat_lng.split(",");
-        double lat = Double.parseDouble(gpsVal[0]);
-        double lon = Double.parseDouble(gpsVal[1]);
+        double[]str = getLatLang(string);
+        double lat = str[0];
+        double lon = str[1];
         Marker a = mMap.addMarker(new MarkerOptions().zIndex(100).position(new LatLng(lat,lon)));
         a.setTag(tag);
     }
 
-    Bitmap stringToBitMap(String encodedString){
+    static Bitmap stringToBitMap(String encodedString){
         try{
             byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
@@ -200,6 +212,37 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         }
         catch(Exception e){
             e.getMessage();
+            return null;
+        }
+    }
+
+    static double[] getLatLang(String string){
+        String from_lat_lng = "";
+        Log.d("tag4me", "string " + string);
+        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(string);
+        while(m.find()) {
+            from_lat_lng = m.group(1) ;
+        }
+        String[] gpsVal = from_lat_lng.split(",");
+        return new double[]{Double.parseDouble(gpsVal[0]), Double.parseDouble(gpsVal[1])};
+    }
+
+
+    static public String[] getAdress(String latLng, Context context){
+        Geocoder geoCoder = new Geocoder(context);
+        List<Address> matches = null;
+        try {
+            double[]str = getLatLang(latLng);
+            matches = geoCoder.getFromLocation(str[0], str[1], 1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+        if(bestMatch!=null && bestMatch.getPostalCode()!=null && bestMatch.getLocality()!=null){
+            //Log.d("tag4me", bestMatch.getLocality() +" "+ bestMatch.getPostalCode());
+            return new String[]{bestMatch.getLocality(), bestMatch.getPostalCode()};
+        }else{
             return null;
         }
     }

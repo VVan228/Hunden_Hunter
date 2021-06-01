@@ -75,8 +75,8 @@ implements
             }
         } else {
             // Permission to access the location is missing. Show rationale and request permission
-            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
-                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+            //PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    //Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
     }
 
@@ -86,7 +86,7 @@ implements
             return;
         }
 
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (true) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
@@ -110,8 +110,7 @@ implements
      * Displays a dialog with error message explaining that the location permission is missing.
      */
     private void showMissingPermissionError() {
-        PermissionUtils.PermissionDeniedDialog
-                .newInstance(true).show(getSupportFragmentManager(), "dialog");
+        //PermissionUtils.PermissionDeniedDialog.newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
     public void onSubmit(View view) {

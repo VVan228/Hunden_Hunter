@@ -11,7 +11,9 @@ public class Order {
     String image;
     String pet;
 
+
     public Order() {}
+
 
     public Order(String email, String price, String comment, String coord, String time, String image, String pet) {
         this.email = email;
@@ -21,6 +23,7 @@ public class Order {
         this.time = time;
         this.image = image;
         this.pet = pet;
+
     }
 
     public String getEmail() {

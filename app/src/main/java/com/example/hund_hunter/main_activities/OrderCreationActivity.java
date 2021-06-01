@@ -57,7 +57,7 @@ public class OrderCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_creation);
 
-        db = new FireDB(new String[]{"orders"});
+
         tvTime = (TextView) findViewById(R.id.tvTime);
         revard = (EditText) findViewById(R.id.reward);
         add_photo = (AppCompatButton) findViewById(R.id.bth_add_photo);
@@ -149,6 +149,18 @@ public class OrderCreationActivity extends AppCompatActivity {
             Toast.makeText(OrderCreationActivity.this, "заполните пустые поля", Toast.LENGTH_LONG).show();
             return;
         }
+
+        String[]adress = SeekerActivity.getAdress(coords, this);
+
+        if(adress==null){
+            Toast.makeText(OrderCreationActivity.this, "не получилось распознать адрес", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String locality = adress[0];
+        String postal = adress[1];
+
+        db = new FireDB(new String[]{"orders", locality, postal});
         db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
 
 
