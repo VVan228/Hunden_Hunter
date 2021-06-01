@@ -116,58 +116,52 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //слушатель нажатий на маркеры
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                //Toast.makeText(SeekerActivity.this, marker.getPosition().toString(), Toast.LENGTH_LONG).show();
-                JSONObject markerData = null;
-                try {
-                    markerData = new JSONObject(marker.getTag().toString());
-                } catch (JSONException e) {
-                    Map<String, String> info = new HashMap<>();
-                    info.put("information", e.getMessage());
-                    markerData = new JSONObject(info);
-                }
-                TextView email = findViewById(R.id.emailInfo);
-                TextView reward = findViewById(R.id.rewardInfo);
-                TextView pet_name = findViewById(R.id.bottom_sheet_pet);
-                TextView comment = findViewById(R.id.bottom_sheet_commentInfo);
-                TextView time = findViewById(R.id.bottom_sheet_time);
-                TextView owner = findViewById(R.id.bottom_sheet_owner);
-                TextView tel = findViewById(R.id.bottom_sheet_tel);
-                ImageView photo = findViewById(R.id.bottom_sheet_photo);
-
-                try {
-                    email.setText(markerData.getString("email"));
-                    reward.setText(markerData.getString("price"));
-                    pet_name.setText(markerData.getString("pet"));
-                    comment.setText(markerData.getString("comment"));
-                    time.setText("Время: " + markerData.getString("time"));
-
-                    users.getData(new MyQuery(users.getRef()).orderBy("email").equalTo(markerData.getString("email")),
-                            new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                    User obj = snapshot.getValue(User.class);
-                                    owner.setText("Владелец: " + obj.getFamilia() + " " + obj.getName());
-                                    tel.setText(obj.getTel());
-                                }
-                            }).create());
-
-
-                    photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
-
-
-                } catch (JSONException e) {
-                    email.setText("error " + e.getMessage());
-                    reward.setText("error " + e.getMessage());
-                    pet_name.setText("error " + e.getMessage());
-                    comment.setText("error " + e.getMessage());
-                    time.setText("error " + e.getMessage());
-                    owner.setText("error " + e.getMessage());
-                }
-                return true;
+        mMap.setOnMarkerClickListener(marker -> {
+            //Toast.makeText(SeekerActivity.this, marker.getPosition().toString(), Toast.LENGTH_LONG).show();
+            JSONObject markerData = null;
+            try {
+                markerData = new JSONObject(marker.getTag().toString());
+            } catch (JSONException e) {
+                Map<String, String> info = new HashMap<>();
+                info.put("information", e.getMessage());
+                markerData = new JSONObject(info);
             }
+            TextView adress = findViewById(R.id.bottom_sheet_adress);
+            TextView reward = findViewById(R.id.rewardInfo);
+            TextView pet_name = findViewById(R.id.bottom_sheet_pet);
+            TextView comment = findViewById(R.id.bottom_sheet_commentInfo);
+            TextView time = findViewById(R.id.bottom_sheet_time);
+            TextView owner = findViewById(R.id.bottom_sheet_owner);
+            TextView tel = findViewById(R.id.bottom_sheet_tel);
+            ImageView photo = findViewById(R.id.bottom_sheet_photo);
+
+            try {
+                adress.setText(markerData.getString("email"));
+                reward.setText(markerData.getString("price"));
+                pet_name.setText(markerData.getString("pet"));
+                comment.setText(markerData.getString("comment"));
+                time.setText("Время: " + markerData.getString("time"));
+
+                users.getData(new MyQuery(users.getRef()).orderBy("email").equalTo(markerData.getString("email")),
+                        new MyChildListenerFactory().addAddedListener((snapshot, previousChildName) -> {
+                            User obj = snapshot.getValue(User.class);
+                            owner.setText("Владелец: " + obj.getFamilia() + " " + obj.getName());
+                            tel.setText(obj.getTel());
+                        }).create());
+
+
+                photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
+
+
+            } catch (JSONException e) {
+                adress.setText("error " + e.getMessage());
+                reward.setText("error " + e.getMessage());
+                pet_name.setText("error " + e.getMessage());
+                comment.setText("error " + e.getMessage());
+                time.setText("error " + e.getMessage());
+                owner.setText("error " + e.getMessage());
+            }
+            return true;
         });
         //Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
