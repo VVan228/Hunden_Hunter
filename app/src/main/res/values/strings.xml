@@ -40,4 +40,5 @@
     <string name="new_email">новый email</string>
     <string name="current_password">текущий пароль</string>
     <string name="new_password">новый пароль</string>
+    <string name="adress">Адрес</string>
 </resources>
