@@ -2,9 +2,7 @@ package com.example.hund_hunter.main_activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cursoradapter.widget.CursorAdapter;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
@@ -43,7 +40,7 @@ public class ListOfMyItems extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_of_items);
+        setContentView(R.layout.list_of_items_activity);
 
         list = findViewById(R.id.lv_list_items);
         back = (Button) findViewById(R.id.bth_back_from_list);
