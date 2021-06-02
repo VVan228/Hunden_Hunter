@@ -38,7 +38,7 @@ import java.util.Map;
 // класс для списка своих объявлений
 public class ListOfMyItems extends Activity {
 
-    Button back;
+    Button back, add_new_adv;
     ListView list;
     public static ArrayList<String> names;
     public static ArrayList<String> paths;
@@ -50,11 +50,15 @@ public class ListOfMyItems extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_of_items);
+        setContentView(R.layout.list_of_items_activity);
 
         list = findViewById(R.id.lv_list_items);
         back = (Button) findViewById(R.id.bth_back_from_list);
+        add_new_adv = (Button) findViewById(R.id.bth_new_adv);
+
         back.setOnClickListener(v -> startActivity(new Intent(ListOfMyItems.this, UserAccountActivity.class)));
+
+        add_new_adv.setOnClickListener(v -> startActivity((new Intent(ListOfMyItems.this, OrderCreationActivity.class))));
 
         names = new ArrayList<>();
         paths = new ArrayList<>();
@@ -62,7 +66,6 @@ public class ListOfMyItems extends Activity {
         list.setAdapter(adapter);
 
         db = new FireDB();
-
 
         /*Order obj = snapshot.getValue(Order.class);
                 names.add(0, obj.getPet());

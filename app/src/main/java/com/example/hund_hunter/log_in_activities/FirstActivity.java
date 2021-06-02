@@ -1,8 +1,6 @@
 package com.example.hund_hunter.log_in_activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,17 +9,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.hund_hunter.main_activities.OrderCreationActivity;
-import com.example.hund_hunter.main_activities.SeekerActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.auth.AuthResult;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.hund_hunter.R;
 
@@ -42,7 +31,7 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.first_page);
+        setContentView(R.layout.first_page_activity);
 
         inputEmail = (EditText) findViewById(R.id.first_email);
         inputPassword = (EditText) findViewById(R.id.first_password);

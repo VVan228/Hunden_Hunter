@@ -9,8 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,7 +32,6 @@ public class ChoiceActivity extends AppCompatActivity {
 
     private boolean granted = false;
 
-    //TODO описать listener
     LocationListener listener = new LocationListener() {
         @SuppressLint("DefaultLocale")
         @Override
@@ -56,7 +53,6 @@ public class ChoiceActivity extends AppCompatActivity {
         @Override
         public void onProviderEnabled(String provider) {
             //что делать, если провайдер включен
-            //прямое воздействие из программного кода запрещено
             if(granted || checkPermission())
                 showLocation(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
         }
@@ -86,7 +82,7 @@ public class ChoiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.choice_activity);
 
         //подключить менеджер местоположения
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -101,18 +97,16 @@ public class ChoiceActivity extends AppCompatActivity {
             if (locationManager != null) {
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (location != null){
-                    // Получить последние координаты
-                    String koord = String.format("%.4f", location.getLatitude());
-                    koord = String.format("%.4f", location.getLongitude());
-                    koord = new Date(location.getTime()).toString();
+                    // Последние координаты
+                    Toast.makeText(this, String.format("%.4f", location.getLatitude()) + " " +
+                            String.format("%.4f", location.getLongitude()), Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
     private boolean checkPermission(){
-        //относится к опасным разрешениям, требует запроса. Функция вторична - не сразу
-        //объяснить зачем разрешение, запрос только из активностей или фрагментов
+        //относится к опасным разрешениям, требует запроса.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {

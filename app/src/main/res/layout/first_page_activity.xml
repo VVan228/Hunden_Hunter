@@ -44,17 +44,23 @@
             android:id="@+id/first_btn_reset_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/forgot_pass"
-            android:background="@drawable/button_shape" />
+            android:background="#00006E5A"
+            android:text="@string/forgot_pass" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ИЛИ"
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/first_btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/new_user"
-            android:background="@drawable/button_shape" />
+            android:background="@drawable/button_shape"
+            android:layout_marginTop="20dp"/>
+
     </LinearLayout>
 
     <ProgressBar
