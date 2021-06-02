@@ -80,6 +80,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     void setPlace(){
+        Log.d("tag4me", "setPlace start");
         String[]adress = SeekerActivity.getAdress(myPos.toString(), this);
         if(adress==null){
             Toast.makeText(SeekerActivity.this, "не получилось распознать адрес", Toast.LENGTH_LONG).show();
@@ -251,9 +252,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             matches = geoCoder.getFromLocation(str[0], str[1], 1);
 
         } catch (Exception e) {
+            Log.d("tag4me", e.getMessage());
             e.printStackTrace();
         }
-        Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+        Address bestMatch = (matches == null ? null : matches.get(0));
         if(bestMatch!=null && bestMatch.getPostalCode()!=null && bestMatch.getLocality()!=null){
             //Log.d("tag4me", bestMatch.getLocality() +" "+ bestMatch.getPostalCode());
             return new String[]{bestMatch.getLocality(), bestMatch.getPostalCode()};

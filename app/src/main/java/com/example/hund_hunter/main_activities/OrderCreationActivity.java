@@ -159,15 +159,7 @@ public class OrderCreationActivity extends AppCompatActivity {
         String postal = adress[1];
 
         db = new FireDB(new String[]{"orders", locality, postal});
-        Log.d("tag4me", email+" "+priceTxt+" "+commentTxt+" "+coords+" "+time+" "+petTxt+" "+locality+" "+postal);
-        Log.d("tag4me", db.getRef().toString());
-        db.checkConnection();
-        if(!db.isConnected()){
-            Toast.makeText(this, "вы не подключены к базе", Toast.LENGTH_SHORT).show();
-            return;
-        }
         db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
-
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);
