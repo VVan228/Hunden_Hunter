@@ -2,6 +2,7 @@ package com.example.hund_hunter.main_activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,20 +26,26 @@ import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
 import com.example.hund_hunter.fire_classes.MyQuery;
 import com.example.hund_hunter.fire_classes.interfaces.OnChildAddedListener;
+import com.example.hund_hunter.fire_classes.interfaces.OnDataChangeListener;
 import com.example.hund_hunter.log_in_activities.UserAccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 // класс для списка своих объявлений
 public class ListOfMyItems extends Activity {
 
     Button back;
     ListView list;
-    ArrayList<String> names;
-    CustomListAdapter adapter;
+    public static ArrayList<String> names;
+    public static ArrayList<String> paths;
+    public static FireDB db;
+    public static CustomListAdapter adapter;
+    SharedPreferences c;
+    SharedPreferences pets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +57,38 @@ public class ListOfMyItems extends Activity {
         back.setOnClickListener(v -> startActivity(new Intent(ListOfMyItems.this, UserAccountActivity.class)));
 
         names = new ArrayList<>();
+        paths = new ArrayList<>();
         adapter = new CustomListAdapter(this, R.layout.list_item, names);
         list.setAdapter(adapter);
 
-        FireDB db = new FireDB(new String[]{"orders"});
+        db = new FireDB();
 
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        db.getData(new MyQuery(db.getRef()).orderBy("email").equalTo(email),
-                new MyChildListenerFactory().addAddedListener(new OnChildAddedListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Order obj = snapshot.getValue(Order.class);
+
+        /*Order obj = snapshot.getValue(Order.class);
                 names.add(0, obj.getPet());
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();*/
+
+        c = getSharedPreferences(OrderCreationActivity.PETS_COUNT, Context.MODE_PRIVATE);
+        pets = getSharedPreferences(OrderCreationActivity.PETS, Context.MODE_PRIVATE);
+        int count = Integer.parseInt(c.getString(OrderCreationActivity.PETS_COUNT, "0"));
+        String path = "";
+        for(int i = 0; i<count; i++){
+            path = pets.getString(Integer.toString(i), "null");
+            if(!path.equals("null")){
+                paths.add(0, path);
+                db.getParticularChild(path, new OnDataChangeListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Order res = snapshot.getValue(Order.class);
+                        if(res==null){
+                            return;
+                        }
+                        names.add(0, res.getPet());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
-        }).create());
+        }
     }
 }
 
@@ -108,7 +132,12 @@ class CustomListAdapter extends ArrayAdapter<String> {
         holder.button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(context, "Delete button pressed: ", Toast.LENGTH_LONG).show();
+                String path = ListOfMyItems.paths.get(position);
+                ListOfMyItems.db.removeParticularChild(path);
+
+                //ListOfMyItems.paths.remove(position);
+                //ListOfMyItems.names.remove(position);
+                //ListOfMyItems.adapter.notifyDataSetChanged();
             }
 
         });

@@ -2,7 +2,9 @@ package com.example.hund_hunter.main_activities;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OrderCreationActivity extends AppCompatActivity {
     FireDB db;
@@ -45,6 +49,10 @@ public class OrderCreationActivity extends AppCompatActivity {
     AppCompatButton add_photo;
     static final int GALLERY_REQUEST = 1;
     static final int LOCATION_REQUEST = 228;
+    static final String PETS_COUNT = "count";
+    static final String PETS = "pets";
+    SharedPreferences c;
+    SharedPreferences pets;
     ImageView photo;
     Bitmap bitmap = null;
     String image = "";
@@ -57,7 +65,8 @@ public class OrderCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_creation);
 
-
+        c = getSharedPreferences(PETS_COUNT, Context.MODE_PRIVATE);
+        pets = getSharedPreferences(PETS, Context.MODE_PRIVATE);
         tvTime = (TextView) findViewById(R.id.tvTime);
         revard = (EditText) findViewById(R.id.reward);
         add_photo = (AppCompatButton) findViewById(R.id.bth_add_photo);
@@ -159,7 +168,18 @@ public class OrderCreationActivity extends AppCompatActivity {
         String postal = adress[1];
 
         db = new FireDB(new String[]{"orders", locality, postal});
-        db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
+        String path = db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
+
+        //записали ссылку на нашего питомца
+        SharedPreferences.Editor editor = pets.edit();
+        int count = Integer.parseInt(c.getString(PETS_COUNT, "0"));
+        editor.putString(Integer.toString(count), path);
+        editor.apply();
+
+        SharedPreferences.Editor editor2 = c.edit();
+        editor2.putString(PETS_COUNT, Integer.toString(++count));
+        editor2.apply();
+
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);
