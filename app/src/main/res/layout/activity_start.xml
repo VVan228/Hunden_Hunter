@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green"
-    android:orientation="vertical"
     tools:context=".log_in_activities.ChoiceActivity">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/choice_lose"
+        <LinearLayout
+            android:id="@+id/ll_start"
+            android:background="@color/green"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="200dp"
-            android:layout_weight="1"
-            android:text="@string/lose"
-            android:background="@drawable/button_main_shape" />
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/choice_find"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="200dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_weight="1"
-            android:text="@string/find"
-            android:background="@drawable/button_main_shape" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:onClick="lostButtonClick"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:id="@+id/b_lose"
+                    android:layout_marginTop="200dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/lose"
+                    android:background="@drawable/button_main_shape"
+                    />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:onClick="findButtonOnClick"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="200dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:id="@+id/b_find"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/find"
+                    android:background="@drawable/button_main_shape"
+                    />
+        </LinearLayout>
 </LinearLayout>
