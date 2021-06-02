@@ -20,12 +20,14 @@ import androidx.core.app.ActivityCompat;
 import com.example.hund_hunter.main_activities.OrderCreationActivity;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.main_activities.SeekerActivity;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
 public class ChoiceActivity extends AppCompatActivity {
 
     public final int LOCATION_PERMISSION = 1001;
+    public static LatLng myPlace;
 
     LocationManager locationManager;
     Location location;
@@ -153,12 +155,14 @@ public class ChoiceActivity extends AppCompatActivity {
     public void findButtonOnClick(View view){
         Intent intent = new Intent(ChoiceActivity.this, SeekerActivity.class);
         if(location != null) {
-            intent.putExtra("latitude", location.getLatitude());
-            intent.putExtra("longitude", location.getLongitude());
+            //intent.putExtra("latitude", location.getLatitude());
+            //intent.putExtra("longitude", location.getLongitude());
+            myPlace = new LatLng(location.getLatitude(), location.getLongitude());
 
         }else{
-            intent.putExtra("latitude", 52.27537);
-            intent.putExtra("longitude", 104.2774);
+            //intent.putExtra("latitude", 52.27537);
+            //intent.putExtra("longitude", 104.2774);
+            myPlace = new LatLng(52.27537, 104.2774);
         }
         startActivity(intent);
     }
@@ -166,12 +170,15 @@ public class ChoiceActivity extends AppCompatActivity {
     public void lostButtonClick(View view){
         Intent intent = new Intent(ChoiceActivity.this, OrderCreationActivity.class);
         if(location != null) {
-            intent.putExtra("latitude", location.getLatitude());
-            intent.putExtra("longitude", location.getLongitude());
+            //intent.putExtra("latitude", location.getLatitude());
+            //intent.putExtra("longitude", location.getLongitude());
+            myPlace = new LatLng(location.getLatitude(), location.getLongitude());
+
 
         }else{
-            intent.putExtra("latitude", 52.27537);
-            intent.putExtra("longitude", 104.2774);
+            //intent.putExtra("latitude", 52.27537);
+            //intent.putExtra("longitude", 104.2774);
+            myPlace = new LatLng(52.27537, 104.2774);
         }
         startActivity(intent);
     }

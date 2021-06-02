@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.hund_hunter.R;
+import com.example.hund_hunter.log_in_activities.ChoiceActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,7 +51,8 @@ implements
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
-        LatLng myPlace = new LatLng(52.27537, 104.2774);
+        LatLng myPlace = ChoiceActivity.myPlace;//new LatLng(52.27537, 104.2774);
+        coords = myPlace;
         mMap.addMarker(new MarkerOptions().position(myPlace).title("здесь"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
         CameraPosition cameraPosition = new CameraPosition(myPlace, 23, 0, 15);

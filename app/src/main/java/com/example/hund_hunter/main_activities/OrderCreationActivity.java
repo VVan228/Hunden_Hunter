@@ -106,8 +106,6 @@ public class OrderCreationActivity extends AppCompatActivity {
 
     public void onclick(View view) {
         showDialog(DIALOG_TIME);
-
-
     }
 
     protected Dialog onCreateDialog(int id) {
@@ -124,11 +122,11 @@ public class OrderCreationActivity extends AppCompatActivity {
             myMinute = minute;
             String minNull = "";
             String hourNull = "";
-            if(myHour <= 10 ){
+            if(myHour < 10 ){
                 hourNull = "0";
             }
 
-            if(myMinute <= 10 ){
+            if(myMinute < 10 ){
                 minNull = "0";
             }
             tvTime.setText(hourNull + myHour + " : " + minNull + myMinute);
@@ -161,6 +159,13 @@ public class OrderCreationActivity extends AppCompatActivity {
         String postal = adress[1];
 
         db = new FireDB(new String[]{"orders", locality, postal});
+        Log.d("tag4me", email+" "+priceTxt+" "+commentTxt+" "+coords+" "+time+" "+petTxt+" "+locality+" "+postal);
+        Log.d("tag4me", db.getRef().toString());
+        db.checkConnection();
+        if(!db.isConnected()){
+            Toast.makeText(this, "вы не подключены к базе", Toast.LENGTH_SHORT).show();
+            return;
+        }
         db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
 
 
