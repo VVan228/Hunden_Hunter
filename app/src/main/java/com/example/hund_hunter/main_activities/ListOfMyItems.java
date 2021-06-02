@@ -35,7 +35,7 @@ import java.util.List;
 // класс для списка своих объявлений
 public class ListOfMyItems extends Activity {
 
-    Button back;
+    Button back, add_new_adv;
     ListView list;
     ArrayList<String> names;
     CustomListAdapter adapter;
@@ -47,7 +47,11 @@ public class ListOfMyItems extends Activity {
 
         list = findViewById(R.id.lv_list_items);
         back = (Button) findViewById(R.id.bth_back_from_list);
+        add_new_adv = (Button) findViewById(R.id.bth_new_adv);
+
         back.setOnClickListener(v -> startActivity(new Intent(ListOfMyItems.this, UserAccountActivity.class)));
+
+        add_new_adv.setOnClickListener(v -> startActivity((new Intent(ListOfMyItems.this, OrderCreationActivity.class))));
 
         names = new ArrayList<>();
         adapter = new CustomListAdapter(this, R.layout.list_item, names);
