@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="377dp"
     android:background="@color/green"
     android:orientation="vertical"
     app:behavior_hideable="false"
@@ -34,7 +34,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="25dp"
         android:paddingVertical="25dp">
 
         <LinearLayout
@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +56,7 @@
                 android:layout_margin="20dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:background="@drawable/for_order">
 
                 <TextView
@@ -66,7 +67,8 @@
                     android:text="@string/pet_name"
                     android:textAlignment="center"
                     android:textColor="@color/yellow"
-                    android:textSize="17dp" />
+                    android:textSize="18sp"
+                    android:background="@drawable/for_order"/>
 
                 <TextView
                     android:id="@+id/bottom_sheet_commentInfo"
@@ -104,7 +106,8 @@
                     android:gravity="center"
                     android:text="Награда"
                     android:textColor="@color/yellow"
-                    android:textSize="18dp" />
+                    android:textSize="18sp"
+                    android:background="@drawable/for_order"/>
             </LinearLayout>
         </LinearLayout>
 
