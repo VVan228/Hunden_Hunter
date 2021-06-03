@@ -22,6 +22,7 @@
             android:id="@+id/bottom_sheet_adress"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:textSize="16dp"
             android:layout_weight="3"
             android:text="@string/adress"
             android:gravity="center"/>
@@ -41,11 +42,11 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_weight="1"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_margin="20dp">
@@ -54,6 +55,7 @@
                 android:id="@+id/bottom_sheet_pet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:text="@string/pet_name"
                 android:textColor="@color/yellow"
                 android:textAlignment="center"
@@ -63,24 +65,28 @@
                 android:id="@+id/bottom_sheet_commentInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="15dp"
                 android:text="@string/descr_pet"/>
 
             <TextView
                 android:id="@+id/bottom_sheet_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="15dp"
                 android:text="@string/time"/>
 
             <TextView
                 android:id="@+id/bottom_sheet_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="15dp"
                 android:text="@string/owner"/>
 
             <TextView
                 android:id="@+id/bottom_sheet_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="15dp"
                 android:text="@string/tel_number"/>
 
             <TextView
@@ -90,7 +96,8 @@
                 android:layout_weight="7"
                 android:text="Награда"
                 android:textColor="@color/yellow"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="18dp"/>
 
         </LinearLayout>
 

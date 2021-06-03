@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.5"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/light_green">
 
         <Button
             android:id="@+id/bth_back_from_list"

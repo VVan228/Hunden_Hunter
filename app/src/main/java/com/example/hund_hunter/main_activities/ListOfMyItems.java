@@ -56,7 +56,7 @@ public class ListOfMyItems extends Activity {
         back = (Button) findViewById(R.id.bth_back_from_list);
         add_new_adv = (Button) findViewById(R.id.bth_new_adv);
 
-        back.setOnClickListener(v -> startActivity(new Intent(ListOfMyItems.this, UserAccountActivity.class)));
+        back.setOnClickListener(v -> finish());
 
         add_new_adv.setOnClickListener(v -> startActivity((new Intent(ListOfMyItems.this, OrderCreationActivity.class))));
 

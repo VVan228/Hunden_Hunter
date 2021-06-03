@@ -167,7 +167,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             try {
                 String adres = getFullAdress(markerData.getString("coords"), this);
                 adress.setText(adres);
-                reward.setText(markerData.getString("price"));
+                reward.setText("Награда: " + markerData.getString("price") + "р.");
                 pet_name.setText(markerData.getString("pet"));
                 comment.setText(markerData.getString("comment"));
                 time.setText("Время: " + markerData.getString("time"));

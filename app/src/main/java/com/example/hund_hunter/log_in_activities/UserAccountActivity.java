@@ -185,7 +185,7 @@ public class UserAccountActivity extends AppCompatActivity {
 
         MyList.setOnClickListener(v ->  startActivity(new Intent(UserAccountActivity.this, ListOfMyItems.class)));
 
-        Back.setOnClickListener(v -> startActivity(new Intent(UserAccountActivity.this, SeekerActivity.class)));
+        Back.setOnClickListener(v -> finish());
     }
 
     public void signOut() {
