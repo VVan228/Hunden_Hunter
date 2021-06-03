@@ -73,12 +73,14 @@ public class ListOfMyItems extends Activity {
 
         c = getSharedPreferences(OrderCreationActivity.PETS_COUNT, Context.MODE_PRIVATE);
         pets = getSharedPreferences(OrderCreationActivity.PETS, Context.MODE_PRIVATE);
+
+
         int count = Integer.parseInt(c.getString(OrderCreationActivity.PETS_COUNT, "0"));
         String path = "";
         for(int i = 0; i<count; i++){
             path = pets.getString(Integer.toString(i), "null");
             if(!path.equals("null")){
-                paths.add(0, path);
+                paths.add(paths.size(), path);
                 db.getParticularChild(path, new OnDataChangeListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -86,7 +88,7 @@ public class ListOfMyItems extends Activity {
                         if(res==null){
                             return;
                         }
-                        names.add(0, res.getPet());
+                        names.add(names.size(), res.getPet());
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -136,11 +138,27 @@ class CustomListAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v){
                 String path = ListOfMyItems.paths.get(position);
+
+                ListOfMyItems.db.removeListener(path);
                 ListOfMyItems.db.removeParticularChild(path);
 
-                //ListOfMyItems.paths.remove(position);
-                //ListOfMyItems.names.remove(position);
-                //ListOfMyItems.adapter.notifyDataSetChanged();
+                SharedPreferences c = context.getSharedPreferences(OrderCreationActivity.PETS_COUNT, Context.MODE_PRIVATE);
+                int count = Integer.parseInt(c.getString(OrderCreationActivity.PETS_COUNT, "1"));
+                count--;
+                SharedPreferences.Editor editor = c.edit();
+                editor.putString(OrderCreationActivity.PETS_COUNT, Integer.toString(count));
+                editor.apply();
+
+                SharedPreferences pets = context.getSharedPreferences(OrderCreationActivity.PETS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = pets.edit();
+                editor2.remove(Integer.toString(position));
+                editor2.apply();
+
+
+
+                ListOfMyItems.paths.remove(position);
+                ListOfMyItems.names.remove(position);
+                ListOfMyItems.adapter.notifyDataSetChanged();
             }
 
         });

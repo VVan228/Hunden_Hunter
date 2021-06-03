@@ -29,6 +29,8 @@ public class FireDB {
     DatabaseReference ref;
     boolean connected;
 
+    ValueEventListener listener;
+
     public FireDB(){
         database = FirebaseDatabase.getInstance();
         ref = database.getReference();
@@ -95,7 +97,7 @@ public class FireDB {
 
     public void getParticularChild(String path, OnDataChangeListener listener){
         DatabaseReference r = database.getReference(path);
-        r.addValueEventListener(new ValueEventListener() {
+        this.listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listener.onDataChange(snapshot);
@@ -104,7 +106,13 @@ public class FireDB {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        r.addValueEventListener(this.listener);
+    }
+
+    public void removeListener(String path){
+        DatabaseReference r = database.getReference(path);
+        r.removeEventListener(this.listener);
     }
 
     public void removeParticularChild(String path){
