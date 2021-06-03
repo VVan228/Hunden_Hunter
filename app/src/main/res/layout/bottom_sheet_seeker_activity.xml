@@ -37,70 +37,78 @@
         android:paddingHorizontal="15dp"
         android:paddingVertical="25dp">
 
-        <ImageView
-            android:id="@+id/bottom_sheet_photo"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_height="wrap_content"
+            android:background="@drawable/for_order">
 
-            <TextView
-                android:id="@+id/bottom_sheet_pet"
+            <ImageView
+                android:id="@+id/bottom_sheet_photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:text="@string/pet_name"
-                android:textColor="@color/yellow"
-                android:textAlignment="center"
-                android:gravity="center_horizontal" />
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/bottom_sheet_commentInfo"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="@string/descr_pet"/>
+                android:layout_height="200dp"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/for_order">
 
-            <TextView
-                android:id="@+id/bottom_sheet_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="@string/time"/>
+                <TextView
+                    android:id="@+id/bottom_sheet_pet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/pet_name"
+                    android:textAlignment="center"
+                    android:textColor="@color/yellow"
+                    android:textSize="17dp" />
 
-            <TextView
-                android:id="@+id/bottom_sheet_owner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="@string/owner"/>
+                <TextView
+                    android:id="@+id/bottom_sheet_commentInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/descr_pet"
+                    android:textSize="15dp" />
 
-            <TextView
-                android:id="@+id/bottom_sheet_tel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="@string/tel_number"/>
+                <TextView
+                    android:id="@+id/bottom_sheet_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time"
+                    android:textSize="15dp" />
 
-            <TextView
-                android:id="@+id/rewardInfo"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="7"
-                android:text="Награда"
-                android:textColor="@color/yellow"
-                android:gravity="center"
-                android:textSize="18dp"/>
+                <TextView
+                    android:id="@+id/bottom_sheet_owner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/owner"
+                    android:textSize="15dp" />
 
+                <TextView
+                    android:id="@+id/bottom_sheet_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tel_number"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/rewardInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="7"
+                    android:gravity="center"
+                    android:text="Награда"
+                    android:textColor="@color/yellow"
+                    android:textSize="18dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
+
 
 </LinearLayout>

@@ -95,8 +95,7 @@ public class UserAccountActivity extends AppCompatActivity {
         changeEmail.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             if (user != null && !str(newEmail).equals("")) {
-                user.updateEmail(str(newEmail))
-                        .addOnCompleteListener(task -> {
+                user.updateEmail(str(newEmail)).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(UserAccountActivity.this, "Email изменен!", Toast.LENGTH_LONG).show();
                                 signOut();
