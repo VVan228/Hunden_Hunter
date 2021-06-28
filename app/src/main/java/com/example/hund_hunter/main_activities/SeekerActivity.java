@@ -75,6 +75,8 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         return true;
     }
 
+    
+
     void setPlace(){
         Log.d("tag4me", "setPlace start");
         String[]adress = SeekerActivity.getAdress(myPos.toString(), this);
