@@ -17,10 +17,9 @@
         android:layout_weight="10"/>
 
     <androidx.appcompat.widget.AppCompatButton
-
-        android:textColor="@color/dark_green"
+        android:theme="@style/MainButtonTheme"
+        android:background="@drawable/button_main_shape"
         android:id="@+id/setPlaceSubmit"
-        android:background="@color/yellow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onSubmit"

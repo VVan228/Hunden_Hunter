@@ -11,49 +11,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/green"
+        android:background="@color/colorBackground"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="25dp">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone" />
 
         <EditText
+            android:theme="@style/MainEditText"
             android:id="@+id/first_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="16dp"
             android:hint="@string/email"
+            android:background="@drawable/edittext_shape"
             android:inputType="textEmailAddress" />
 
         <EditText
+            android:theme="@style/MainEditText"
             android:id="@+id/first_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="16dp"
             android:hint="@string/pass"
             android:inputType="textPassword"
+            android:background="@drawable/edittext_shape"
             android:autofillHints="@string/pass" />
 
         <Button
+            android:theme="@style/MainButtonTheme"
             android:id="@+id/first_btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/come_in"
             android:background="@drawable/button_main_shape" />
 
-        <Button
+        <TextView
             android:id="@+id/first_btn_reset_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00006E5A"
-            android:text="@string/forgot_pass" />
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:text="@string/forgot_pass"
+            android:textStyle="bold"
+            android:theme="@style/ForgotButton" />
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="ИЛИ"
             android:gravity="center"/>
 
         <Button
+            android:theme="@style/ButtonTheme"
             android:id="@+id/first_btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,12 +80,4 @@
             android:layout_marginTop="20dp"/>
 
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone" />
 </LinearLayout>

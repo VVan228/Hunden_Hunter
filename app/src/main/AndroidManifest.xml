@@ -20,37 +20,67 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Hund_Hunter">
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDEWTvRriVn6e_uxBiURqhkA5jvDQ-KRns" />
 
-        <activity android:name=".main_activities.SetLocationActivity" />
-        <activity android:name=".main_activities.SeekerActivity" />
-        <activity android:name=".main_activities.OrderCreationActivity" />
-        <activity android:name=".log_in_activities.ChoiceActivity" />
+
+
         <activity
             android:name=".log_in_activities.FirstActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".log_in_activities.SignupActivity"
-            android:theme="@style/AppTheme.NoActionBar"> </activity>
-        <activity
-            android:name=".log_in_activities.UserAccountActivity"
-            android:theme="@style/AppTheme.NoActionBar"> </activity>
+            android:label="Регистрация"/>
+
+
         <activity
             android:name=".log_in_activities.ResetPasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar"> </activity>
+            android:label="Забыли пароль?"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".log_in_activities.ChoiceActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
+        <activity
+            android:name=".main_activities.SeekerActivity"
+            android:label="Объявления"/>
+
+
+        <activity android:name=".main_activities.OrderCreationActivity"
+            android:label="Создать объявление"/>
+
+
+        <activity
+            android:name=".log_in_activities.UserAccountActivity"
+            android:label="Аккаунт"/>
+
+
         <activity
             android:name=".main_activities.ListOfMyItems"
-            android:theme="@style/AppTheme.NoActionBar"> </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
+        <activity android:name=".main_activities.SetLocationActivity"
+            android:label="Выбрать место"/>
+
     </application>
 
 </manifest>

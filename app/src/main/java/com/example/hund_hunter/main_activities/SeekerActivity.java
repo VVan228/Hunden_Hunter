@@ -75,7 +75,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         return true;
     }
 
-    
+
 
     void setPlace(){
         Log.d("tag4me", "setPlace start");
@@ -169,20 +169,29 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             try {
                 String adres = getFullAdress(markerData.getString("coords"), this);
                 adress.setText(adres);
-                reward.setText("Награда: " + markerData.getString("price") + "р.");
+                reward.setText("р." + markerData.getString("price"));
                 pet_name.setText(markerData.getString("pet"));
                 comment.setText(markerData.getString("comment"));
-                time.setText("Время: " + markerData.getString("time"));
+                time.setText("время - " + markerData.getString("time"));
 
                 users.getData(new MyQuery(users.getRef()).orderBy("email").equalTo(markerData.getString("email")),
                         new MyChildListenerFactory().addAddedListener((snapshot, previousChildName) -> {
                             User obj = snapshot.getValue(User.class);
-                            owner.setText("Владелец: " + obj.getFamilia() + " " + obj.getName());
+                            owner.setText(obj.getFamilia() + " " + obj.getName());
                             tel.setText(obj.getTel());
                         }).create());
 
+                if(markerData.getString("photo").equals("")){
+                    TextView no_foto = findViewById(R.id.no_foto);
+                    no_foto.setVisibility(View.VISIBLE);
+                    photo.setVisibility(View.GONE);
+                }else{
+                    TextView no_foto = findViewById(R.id.no_foto);
+                    no_foto.setVisibility(View.GONE);
+                    photo.setVisibility(View.VISIBLE);
+                    photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
+                }
 
-                photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
 
 
             } catch (JSONException e) {

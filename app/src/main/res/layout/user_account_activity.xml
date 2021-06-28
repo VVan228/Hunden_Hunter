@@ -8,36 +8,24 @@
     tools:context=".log_in_activities.UserAccountActivity"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:elevation="0dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/yellow"
-            app:layout_scrollFlags="scroll|enterAlways" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@color/green"
+        android:background="@color/colorBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:padding="10dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
+            android:theme="@style/MainEditText"
+            android:background="@drawable/edittext_shape"
             android:id="@+id/acc_old_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,9 +33,11 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
-            android:autofillHints="email" />
+            android:autofillHints="email"/>
 
         <EditText
+            android:theme="@style/MainEditText"
+            android:background="@drawable/edittext_shape"
             android:id="@+id/acc_new_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +48,8 @@
             android:importantForAutofill="no" />
 
         <EditText
+            android:theme="@style/MainEditText"
+            android:background="@drawable/edittext_shape"
             android:id="@+id/acc_old_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,6 +62,8 @@
             android:autofillHints="current password" />
 
         <EditText
+            android:theme="@style/MainEditText"
+            android:background="@drawable/edittext_shape"
             android:id="@+id/acc_new_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,31 +77,35 @@
     </LinearLayout>
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
+            android:paddingHorizontal="10dp"
             android:id="@+id/acc_ChangeEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/change_email"
-            android:background="@color/dark_green"
-            android:textColor="@color/yellow" />
+            android:text="@string/change_email"/>
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
+            android:paddingHorizontal="10dp"
             android:id="@+id/acc_ChangePass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/change_password"
-            android:background="@color/dark_green"
-            android:textColor="@color/yellow" />
+            />
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
+            android:paddingHorizontal="10dp"
             android:id="@+id/acc_Send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/send"
-            android:background="@color/dark_green"
-            android:textColor="@color/yellow" />
+            android:text="@string/send"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -116,71 +114,81 @@
             android:visibility="gone" />
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
+            android:paddingHorizontal="10dp"
             android:id="@+id/acc_Remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/delete"
-            android:background="@color/dark_green"
-            android:textColor="@color/yellow" />
+            android:text="@string/delete"/>
 
         <Button
+            android:theme="@style/ButtonTheme"
             android:id="@+id/acc_bth_mylist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="20dp"
-            android:textColor="@color/dark_green"
+            android:layout_marginHorizontal="25dp"
             android:background="@drawable/button_shape"
             android:text="@string/my_list" />
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
             android:id="@+id/acc_bth_change_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="20dp"
-            android:textColor="@color/dark_green"
-            android:background="@drawable/button_main_shape"
+            android:layout_marginHorizontal="25dp"
             android:text="@string/change_login" />
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
             android:id="@+id/acc_bth_change_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="20dp"
-            android:textColor="@color/dark_green"
-            android:background="@drawable/button_main_shape"
+            android:layout_marginHorizontal="25dp"
             android:text="@string/change_password" />
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
             android:id="@+id/acc_bth_remove_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="20dp"
-            android:textColor="@color/dark_green"
-            android:background="@drawable/button_main_shape"
+            android:layout_marginHorizontal="25dp"
             android:text="@string/del_user" />
 
         <Button
+            android:theme="@style/ButtonTheme"
+            android:background="@drawable/button_shape"
             android:id="@+id/acc_bth_sign_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="20dp"
-            android:textColor="@color/dark_green"
-            android:background="@drawable/button_main_shape"
+            android:layout_marginHorizontal="25dp"
             android:text="@string/exit" />
 
-        <Button
-            android:id="@+id/bth_back_from_user_acc"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/button_shape"
-            android:text="@string/end_list" />
+            android:orientation="vertical"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="16dp">
+            <Button
+                android:layout_gravity="right"
+                android:theme="@style/ButtonTheme"
+                android:background="@drawable/button_shape"
+                android:id="@+id/bth_back_from_user_acc"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/end_list" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

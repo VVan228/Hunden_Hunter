@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class OrderCreationActivity extends AppCompatActivity {
     TextView tvTime;
     String coords;
     String time;
-    AppCompatButton add_photo;
+    Button add_photo;
     static final int GALLERY_REQUEST = 1;
     static final int LOCATION_REQUEST = 228;
     static final String PETS_COUNT = "count";
@@ -63,7 +64,7 @@ public class OrderCreationActivity extends AppCompatActivity {
         pets = getSharedPreferences(PETS, Context.MODE_PRIVATE);
         tvTime = (TextView) findViewById(R.id.tvTime);
         revard = (EditText) findViewById(R.id.reward);
-        add_photo = (AppCompatButton) findViewById(R.id.bth_add_photo);
+        add_photo = (Button) findViewById(R.id.bth_add_photo);
         photo = (ImageView) findViewById(R.id.iv_pet_photo);
 
 
@@ -97,7 +98,10 @@ public class OrderCreationActivity extends AppCompatActivity {
                     }
                     //Log.d("tag4me", "ye ");
                     image = bitmapToString(bitmap);
+                    photo.setVisibility(View.VISIBLE);
                     photo.setImageBitmap(bitmap);
+                    TextView no_photo = findViewById(R.id.order_no_photo);
+                    no_photo.setVisibility(View.GONE);
                 }
                 break;
             case LOCATION_REQUEST:

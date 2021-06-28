@@ -2,30 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/for_item">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
+            android:theme="@style/MainTextView"
             android:id="@+id/pet_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="25dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="@string/pet_name"
-            android:textSize="20dp"
             android:layout_weight="1" />
 
         <Button
+            android:theme="@style/MainButtonTheme"
+            android:background="@drawable/button_main_shape"
             android:id="@+id/delete_pet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@color/yellow"
             android:text="@string/delete" />
     </LinearLayout>
 

@@ -41,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.sign_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        btnBack.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, FirstActivity.class)));
+        btnBack.setOnClickListener(v -> finish());
 
         btnOk.setOnClickListener(v -> {
 
