@@ -48,7 +48,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     FireDB db;
     FireDB users;
     LatLng myPos;
-    ArrayList<String>postals;
 
 
 
