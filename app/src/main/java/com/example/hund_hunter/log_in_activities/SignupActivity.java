@@ -19,7 +19,6 @@ import com.example.hund_hunter.R;
 public class SignupActivity extends AppCompatActivity {
 
     private EditText surname, name, tel, inputEmail, inputPassword;
-    private Button btnOk, btnBack;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     private FireDB db;
@@ -32,8 +31,6 @@ public class SignupActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = new FireDB(new String[]{"users"});
 
-        btnOk = (Button) findViewById(R.id.sign_ok);
-        btnBack = (Button) findViewById(R.id.sign_back);
         surname = (EditText) findViewById(R.id.sign_surname);
         name = (EditText) findViewById(R.id.sign_name);
         tel = (EditText) findViewById(R.id.sign_tel);
@@ -41,8 +38,10 @@ public class SignupActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.sign_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        btnBack.setOnClickListener(v -> finish());
+        Button btnOk = (Button) findViewById(R.id.sign_ok);
+        Button btnBack = (Button) findViewById(R.id.sign_back);
 
+        btnBack.setOnClickListener(v -> finish());
         btnOk.setOnClickListener(v -> {
 
             String email = str(inputEmail);
@@ -52,17 +51,14 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Заполните пустые поля!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(getApplicationContext(), "Введите email!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(getApplicationContext(), "Введите пароль!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             if (password.length() < 6) {
                 Toast.makeText(getApplicationContext(), "Пароль слишком короткий! Минимум 6 знаков!", Toast.LENGTH_SHORT).show();
                 return;

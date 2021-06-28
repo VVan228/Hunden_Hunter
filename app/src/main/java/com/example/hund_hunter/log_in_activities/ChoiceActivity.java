@@ -20,7 +20,6 @@ import com.example.hund_hunter.R;
 import com.example.hund_hunter.main_activities.SeekerActivity;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.Date;
 
 public class ChoiceActivity extends AppCompatActivity {
 
@@ -36,9 +35,7 @@ public class ChoiceActivity extends AppCompatActivity {
         @SuppressLint("DefaultLocale")
         @Override
         public void onLocationChanged(Location location) {
-            if (location == null) {
-                return;
-            }else {
+            if (location != null) {
                 showLocation(location);
             }
         }
@@ -70,12 +67,6 @@ public class ChoiceActivity extends AppCompatActivity {
         }
         if(location.getProvider().equals(LocationManager.GPS_PROVIDER)){
             this.location = location;
-            // getLatitude - широта
-            String koord = String.format("%.4f", location.getLatitude());
-            // getLongitude - долгота
-            koord = String.format("%.4f", location.getLongitude());
-            koord = new Date(location.getTime()).toString();
-
         }
     }
 
@@ -96,10 +87,8 @@ public class ChoiceActivity extends AppCompatActivity {
                     1000 * 10, 20, listener);
             if (locationManager != null) {
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null){
-                    // Последние координаты
-                    Toast.makeText(this, String.format("%.4f", location.getLatitude()) + " " +
-                            String.format("%.4f", location.getLongitude()), Toast.LENGTH_SHORT).show();
+                if (location == null){
+                    Toast.makeText(this, "location detect failed", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -149,13 +138,9 @@ public class ChoiceActivity extends AppCompatActivity {
     public void findButtonOnClick(View view){
         Intent intent = new Intent(ChoiceActivity.this, SeekerActivity.class);
         if(location != null) {
-            //intent.putExtra("latitude", location.getLatitude());
-            //intent.putExtra("longitude", location.getLongitude());
             myPlace = new LatLng(location.getLatitude(), location.getLongitude());
 
         }else{
-            //intent.putExtra("latitude", 52.27537);
-            //intent.putExtra("longitude", 104.2774);
             myPlace = new LatLng(52.27537, 104.2774);
         }
         startActivity(intent);
@@ -164,14 +149,10 @@ public class ChoiceActivity extends AppCompatActivity {
     public void lostButtonClick(View view){
         Intent intent = new Intent(ChoiceActivity.this, OrderCreationActivity.class);
         if(location != null) {
-            //intent.putExtra("latitude", location.getLatitude());
-            //intent.putExtra("longitude", location.getLongitude());
             myPlace = new LatLng(location.getLatitude(), location.getLongitude());
 
 
         }else{
-            //intent.putExtra("latitude", 52.27537);
-            //intent.putExtra("longitude", 104.2774);
             myPlace = new LatLng(52.27537, 104.2774);
         }
         startActivity(intent);

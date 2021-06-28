@@ -20,8 +20,6 @@ public class FirstActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnLogin, btnSignup;
-    private TextView btnReset;
 
     /*public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_EMAIL = "email";
@@ -38,9 +36,9 @@ public class FirstActivity extends AppCompatActivity {
         inputEmail = (EditText) findViewById(R.id.first_email);
         inputPassword = (EditText) findViewById(R.id.first_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (Button) findViewById(R.id.first_btn_signup);
-        btnLogin = (Button) findViewById(R.id.first_btn_login);
-        btnReset = findViewById(R.id.first_btn_reset_password);
+        Button btnSignup = (Button) findViewById(R.id.first_btn_signup);
+        Button btnLogin = (Button) findViewById(R.id.first_btn_login);
+        TextView btnReset = findViewById(R.id.first_btn_reset_password);
 
         auth = FirebaseAuth.getInstance();
 

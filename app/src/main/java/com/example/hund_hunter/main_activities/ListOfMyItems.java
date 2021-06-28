@@ -1,39 +1,28 @@
 package com.example.hund_hunter.main_activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.content.Context;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cursoradapter.widget.CursorAdapter;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
-import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
-import com.example.hund_hunter.fire_classes.MyQuery;
-import com.example.hund_hunter.fire_classes.interfaces.OnChildAddedListener;
 import com.example.hund_hunter.fire_classes.interfaces.OnDataChangeListener;
-import com.example.hund_hunter.log_in_activities.UserAccountActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 // класс для списка своих объявлений
 public class ListOfMyItems extends Activity {
@@ -67,30 +56,23 @@ public class ListOfMyItems extends Activity {
 
         db = new FireDB();
 
-        /*Order obj = snapshot.getValue(Order.class);
-                names.add(0, obj.getPet());
-                adapter.notifyDataSetChanged();*/
-
         c = getSharedPreferences(OrderCreationActivity.PETS_COUNT, Context.MODE_PRIVATE);
         pets = getSharedPreferences(OrderCreationActivity.PETS, Context.MODE_PRIVATE);
 
 
         int count = Integer.parseInt(c.getString(OrderCreationActivity.PETS_COUNT, "0"));
-        String path = "";
+        String path;
         for(int i = 0; i<count; i++){
             path = pets.getString(Integer.toString(i), "null");
             if(!path.equals("null")){
                 paths.add(paths.size(), path);
-                db.getParticularChild(path, new OnDataChangeListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Order res = snapshot.getValue(Order.class);
-                        if(res==null){
-                            return;
-                        }
-                        names.add(names.size(), res.getPet());
-                        adapter.notifyDataSetChanged();
+                db.getParticularChild(path, snapshot -> {
+                    Order res = snapshot.getValue(Order.class);
+                    if(res==null){
+                        return;
                     }
+                    names.add(names.size(), res.getPet());
+                    adapter.notifyDataSetChanged();
                 });
             }
         }

@@ -8,19 +8,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hund_hunter.main_activities.ListOfMyItems;
-import com.example.hund_hunter.main_activities.SeekerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.hund_hunter.R;
 
 public class UserAccountActivity extends AppCompatActivity {
 
-    private Button ChangeEmail, ChangePassword, RemoveUser, SignOut, MyList, Back,
-             changeEmail, changePassword, sendEmail, remove;
+    private Button changeEmail;
+    private Button changePassword;
+    private Button sendEmail;
+    private Button remove;
 
     private EditText oldEmail, newEmail, oldPassword, newPassword;
     private ProgressBar progressBar;
@@ -36,24 +36,21 @@ public class UserAccountActivity extends AppCompatActivity {
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user1 = firebaseAuth.getCurrentUser();
-                if (user1 == null) {
-                    startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
-                    finish();
-                }
+        authListener = firebaseAuth -> {
+            FirebaseUser user1 = firebaseAuth.getCurrentUser();
+            if (user1 == null) {
+                startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
+                finish();
             }
         };
 
         // buttons for changing fields
-        ChangeEmail = (Button) findViewById(R.id.acc_bth_change_email);
-        ChangePassword = (Button) findViewById(R.id.acc_bth_change_password);
-        RemoveUser = (Button) findViewById(R.id.acc_bth_remove_user);
-        SignOut = (Button) findViewById(R.id.acc_bth_sign_out);
-        MyList = (Button) findViewById(R.id.acc_bth_mylist);
-        Back = (Button) findViewById(R.id.bth_back_from_user_acc);
+        Button changeEmail1 = (Button) findViewById(R.id.acc_bth_change_email);
+        Button changePassword1 = (Button) findViewById(R.id.acc_bth_change_password);
+        Button removeUser = (Button) findViewById(R.id.acc_bth_remove_user);
+        Button signOut = (Button) findViewById(R.id.acc_bth_sign_out);
+        Button myList = (Button) findViewById(R.id.acc_bth_mylist);
+        Button back = (Button) findViewById(R.id.bth_back_from_user_acc);
 
         // buttons for next actions
         changeEmail = (Button) findViewById(R.id.acc_ChangeEmail);
@@ -81,7 +78,7 @@ public class UserAccountActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
 
-        ChangeEmail.setOnClickListener(v -> {
+        changeEmail1.setOnClickListener(v -> {
             oldEmail.setVisibility(View.GONE);
             newEmail.setVisibility(View.VISIBLE);
             oldPassword.setVisibility(View.GONE);
@@ -110,7 +107,7 @@ public class UserAccountActivity extends AppCompatActivity {
             }
         });
 
-        ChangePassword.setOnClickListener(v -> {
+        changePassword1.setOnClickListener(v -> {
             oldEmail.setVisibility(View.GONE);
             newEmail.setVisibility(View.GONE);
             oldPassword.setVisibility(View.GONE);
@@ -164,7 +161,7 @@ public class UserAccountActivity extends AppCompatActivity {
             }
         });
 
-        RemoveUser.setOnClickListener(v -> {
+        removeUser.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             if (user != null) {
                 user.delete().addOnCompleteListener(task -> {
@@ -180,11 +177,11 @@ public class UserAccountActivity extends AppCompatActivity {
             }
         });
 
-        SignOut.setOnClickListener(v -> signOut());
+        signOut.setOnClickListener(v -> signOut());
 
-        MyList.setOnClickListener(v ->  startActivity(new Intent(UserAccountActivity.this, ListOfMyItems.class)));
+        myList.setOnClickListener(v ->  startActivity(new Intent(UserAccountActivity.this, ListOfMyItems.class)));
 
-        Back.setOnClickListener(v -> finish());
+        back.setOnClickListener(v -> finish());
     }
 
     public void signOut() {

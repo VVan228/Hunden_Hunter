@@ -23,6 +23,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
+import com.example.hund_hunter.fire_classes.AddressesMethods;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -155,7 +156,7 @@ public class OrderCreationActivity extends AppCompatActivity {
             return;
         }
 
-        String[]adress = SeekerActivity.getAdress(coords, this);
+        String[]adress = AddressesMethods.getLocalityAndPostal(coords, this);
 
         if(adress==null){
             Toast.makeText(OrderCreationActivity.this, "не получилось распознать адрес", Toast.LENGTH_LONG).show();
