@@ -1,6 +1,7 @@
 package com.example.hund_hunter.main_activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hund_hunter.R;
@@ -28,11 +30,18 @@ import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.other_classes.AddressesMethods;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.other_classes.DBHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 public class OrderCreationActivity extends AppCompatActivity {
     FireDB db;
@@ -48,6 +57,7 @@ public class OrderCreationActivity extends AppCompatActivity {
     ImageView photo;
     Bitmap bitmap = null;
     String image = "";
+    Uri imagePath;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,13 +92,14 @@ public class OrderCreationActivity extends AppCompatActivity {
             case GALLERY_REQUEST:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
+                    imagePath = selectedImage;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     //Log.d("tag4me", "ye ");
-                    image = bitmapToString(bitmap);
+                    image = setImage(bitmap);
                     photo.setVisibility(View.VISIBLE);
                     photo.setImageBitmap(bitmap);
                     TextView no_photo = findViewById(R.id.order_no_photo);
@@ -175,6 +186,36 @@ public class OrderCreationActivity extends AppCompatActivity {
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);
+        finish();
+    }
+
+    String setImage(Bitmap bitmap){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+
+        progressDialog.setTitle("загружаю...");
+        progressDialog.show();
+        String dbImagePath = "images/" + UUID.randomUUID().toString();
+        StorageReference ref = storageReference.child(dbImagePath);
+        ref.putFile(imagePath)
+                .addOnSuccessListener(taskSnapshot -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(OrderCreationActivity.this, "успешно", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Error, Image not uploaded
+                        progressDialog.dismiss();
+                        Toast.makeText(OrderCreationActivity.this, "неудачно.. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnProgressListener(taskSnapshot -> {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("загружено - " + (int)progress + "%");
+                });
+        return dbImagePath;
     }
 
     String bitmapToString(Bitmap bitmap){

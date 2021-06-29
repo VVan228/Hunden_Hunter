@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +57,9 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     FireDB users;
     LatLng myPos;
     HashMap<String, Marker> markers;
+    HashMap<String, Bitmap> image_cache;
+    Marker lastMarker;
+    public static final float MY_COLOR = 10.0f;
 
 
 
@@ -59,6 +68,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seeker_activity);
 
+        image_cache = new HashMap<>();
         markers = new HashMap<>();
         users = new FireDB(new String[]{"users"});
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -133,6 +143,17 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         //слушатель нажатий на маркеры
         mMap.setOnMapClickListener(this);
         mMap.setOnMarkerClickListener(marker -> {
+            final ProgressBar image_progressBar = findViewById(R.id.bottom_image_progressBar);
+
+            if(image_progressBar.getVisibility() == View.VISIBLE){
+                return true;
+            }
+
+            if(lastMarker!=null){
+                lastMarker.setIcon(BitmapDescriptorFactory.defaultMarker(MY_COLOR));
+            }
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            lastMarker = marker;
             JSONObject markerData;
             try {
                 String tag = Objects.requireNonNull(marker.getTag()).toString();
@@ -167,15 +188,47 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                             tel.setText(obj.getTel());
                         }).create());
 
-                if(markerData.getString("photo").equals("")){
-                    TextView no_photo = findViewById(R.id.no_foto);
-                    no_photo.setVisibility(View.VISIBLE);
+                final TextView no_photo = findViewById(R.id.no_foto);
+                String path = markerData.getString("photo");
+                if(path.equals("")){
                     photo.setVisibility(View.GONE);
+                    image_progressBar.setVisibility(View.GONE);
+                    no_photo.setVisibility(View.VISIBLE);
                 }else{
-                    TextView no_photo = findViewById(R.id.no_foto);
-                    no_photo.setVisibility(View.GONE);
-                    photo.setVisibility(View.VISIBLE);
-                    photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
+                    if(image_cache.containsKey(path)) {
+                        no_photo.setVisibility(View.GONE);
+                        image_progressBar.setVisibility(View.GONE);
+
+                        photo.setImageBitmap(image_cache.get(path));
+                        photo.setVisibility(View.VISIBLE);
+                    }else {
+
+                        no_photo.setVisibility(View.GONE);
+                        photo.setVisibility(View.GONE);
+                        image_progressBar.setVisibility(View.VISIBLE);
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
+                        StorageReference imageRef = storageRef.child(markerData.getString("photo"));
+                        final long ONE_MEGABYTE = 1024 * 1024 * 5;
+                        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                // Data for "images/island.jpg" is returns, use this as needed
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                photo.setImageBitmap(bitmap);
+                                image_progressBar.setVisibility(View.GONE);
+                                photo.setVisibility(View.VISIBLE);
+                                image_cache.put(path, bitmap);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                image_progressBar.setVisibility(View.GONE);
+                                no_photo.setVisibility(View.VISIBLE);
+                                Toast.makeText(SeekerActivity.this, "картинку не скачал.. " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
 
             } catch (JSONException e) {
@@ -205,7 +258,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         Marker a = mMap.addMarker(new MarkerOptions()
                 .zIndex(100)
                 .position(new LatLng(lat,lon))
-                .icon(BitmapDescriptorFactory.defaultMarker(10.0f)));
+                .icon(BitmapDescriptorFactory.defaultMarker(MY_COLOR)));
         a.setTag(tag);
 
         markers.put(new LatLng(lat,lon).toString(), a);
