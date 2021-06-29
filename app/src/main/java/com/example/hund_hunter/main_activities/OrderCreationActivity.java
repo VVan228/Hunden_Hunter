@@ -36,7 +36,6 @@ import java.io.IOException;
 
 public class OrderCreationActivity extends AppCompatActivity {
     FireDB db;
-    private EditText revard;
     int DIALOG_TIME = 1;
     int myHour = 14;
     int myMinute = 35;
@@ -46,26 +45,16 @@ public class OrderCreationActivity extends AppCompatActivity {
     Button add_photo;
     static final int GALLERY_REQUEST = 1;
     static final int LOCATION_REQUEST = 228;
-    static final String PETS_COUNT = "count";
-    static final String PETS = "pets";
-    SharedPreferences c;
-    SharedPreferences pets;
     ImageView photo;
     Bitmap bitmap = null;
     String image = "";
 
-    DatabaseReference ref;
-    DatabaseReference usersRef;
-
-    /** Called when the activity is first created. */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_creation_activity);
 
-        c = getSharedPreferences(PETS_COUNT, Context.MODE_PRIVATE);
-        pets = getSharedPreferences(PETS, Context.MODE_PRIVATE);
         tvTime = (TextView) findViewById(R.id.tvTime);
-        revard = (EditText) findViewById(R.id.reward);
+        EditText revard = (EditText) findViewById(R.id.reward);
         add_photo = (Button) findViewById(R.id.bth_add_photo);
         photo = (ImageView) findViewById(R.id.iv_pet_photo);
 
@@ -138,7 +127,7 @@ public class OrderCreationActivity extends AppCompatActivity {
             if(myMinute < 10 ){
                 minNull = "0";
             }
-            tvTime.setText(hourNull + myHour + " : " + minNull + myMinute);
+            tvTime.setText(String.format("%s%d : %s%d", hourNull, myHour, minNull, myMinute));
             time = hourNull + myHour + " : " + minNull + myMinute;
         }
     };
@@ -190,10 +179,9 @@ public class OrderCreationActivity extends AppCompatActivity {
 
     String bitmapToString(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return encoded;
     }
-
 }
