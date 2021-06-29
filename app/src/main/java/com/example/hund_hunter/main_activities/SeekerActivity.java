@@ -50,6 +50,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     FireDB db;
     FireDB users;
     LatLng myPos;
+    HashMap<String, Marker> markers;
 
 
 
@@ -58,6 +59,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seeker_activity);
 
+        markers = new HashMap<>();
         users = new FireDB(new String[]{"users"});
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -116,7 +118,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         }).addRemovedListener(snapshot -> {
             Order order = snapshot.getValue(Order.class);
             assert order != null;
-            Log.d("tag4me1", order.getCoord());
+            Log.d("tag4me1", "removed " + order.getCoord());
+            Objects.requireNonNull(markers.get(order.getCoord())).remove();
+            markers.remove(order.getCoord());
+
         }).create());
     }
 
@@ -173,8 +178,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                     photo.setImageBitmap(stringToBitMap(markerData.getString("photo")));
                 }
 
-
-
             } catch (JSONException e) {
                 address.setText(R.string.error);
                 reward.setText(R.string.error);
@@ -204,6 +207,8 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                 .position(new LatLng(lat,lon))
                 .icon(BitmapDescriptorFactory.defaultMarker(10.0f)));
         a.setTag(tag);
+
+        markers.put(new LatLng(lat,lon).toString(), a);
     }
 
     static Bitmap stringToBitMap(String encodedString){
