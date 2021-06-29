@@ -52,8 +52,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private GoogleMap mMap;
@@ -62,7 +64,9 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     LatLng myPos;
     HashMap<String, Marker> markers;
     HashMap<String, Bitmap> image_cache;
+    Set<String> loading_images;
     Marker lastMarker;
+    static String currentImagePath = "";
     public static final float MY_COLOR = 10.0f;
 
     SharedPreferences settings;
@@ -77,6 +81,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.seeker_activity);
 
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        loading_images = new HashSet<>();
         image_cache = new HashMap<>();
         markers = new HashMap<>();
         users = new FireDB(new String[]{"users"});
@@ -169,9 +174,9 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         mMap.setOnMarkerClickListener(marker -> {
             final ProgressBar image_progressBar = findViewById(R.id.bottom_image_progressBar);
 
-            if(image_progressBar.getVisibility() == View.VISIBLE){
-                return true;
-            }
+            //if(image_progressBar.getVisibility() == View.VISIBLE){
+            //    return true;
+            //}
 
             if(lastMarker!=null){
                 lastMarker.setIcon(BitmapDescriptorFactory.defaultMarker(MY_COLOR));
@@ -214,6 +219,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 final TextView no_photo = findViewById(R.id.no_foto);
                 String path = markerData.getString("photo");
+                currentImagePath = path;
                 if(path.equals("")){
                     photo.setVisibility(View.GONE);
                     image_progressBar.setVisibility(View.GONE);
@@ -226,10 +232,16 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                         photo.setImageBitmap(image_cache.get(path));
                         photo.setVisibility(View.VISIBLE);
                     }else {
-
                         no_photo.setVisibility(View.GONE);
                         photo.setVisibility(View.GONE);
                         image_progressBar.setVisibility(View.VISIBLE);
+
+                        if(loading_images.contains(path)){
+                            return true;
+                        }
+
+                        loading_images.add(path);
+
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
                         StorageReference imageRef = storageRef.child(markerData.getString("photo"));
@@ -239,9 +251,13 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
                             public void onSuccess(byte[] bytes) {
                                 // Data for "images/island.jpg" is returns, use this as needed
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                photo.setImageBitmap(bitmap);
-                                image_progressBar.setVisibility(View.GONE);
-                                photo.setVisibility(View.VISIBLE);
+
+                                if(currentImagePath.equals(path)){
+                                    photo.setImageBitmap(bitmap);
+                                    image_progressBar.setVisibility(View.GONE);
+                                    photo.setVisibility(View.VISIBLE);
+                                }
+                                loading_images.remove(path);
                                 image_cache.put(path, bitmap);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
