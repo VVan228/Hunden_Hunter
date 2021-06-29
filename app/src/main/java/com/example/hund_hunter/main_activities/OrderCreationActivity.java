@@ -5,11 +5,14 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,19 +22,17 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
-import com.example.hund_hunter.fire_classes.AddressesMethods;
+import com.example.hund_hunter.other_classes.AddressesMethods;
 import com.example.hund_hunter.fire_classes.FireDB;
+import com.example.hund_hunter.other_classes.DBHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class OrderCreationActivity extends AppCompatActivity {
     FireDB db;
@@ -169,16 +170,19 @@ public class OrderCreationActivity extends AppCompatActivity {
         db = new FireDB(new String[]{"orders", locality, postal});
         String path = db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
 
-        //записали ссылку на нашего питомца
-        SharedPreferences.Editor editor = pets.edit();
-        int count = Integer.parseInt(c.getString(PETS_COUNT, "0"));
-        editor.putString(Integer.toString(count), path);
-        editor.apply();
+        final DBHelper dbhelper = new DBHelper(this);
+        SQLiteDatabase sqldb = dbhelper.getWritableDatabase();
+        sqldb.execSQL("INSERT INTO " + DBHelper.TABLE_NAME + "(name, email, link) VALUES (" + "'" + petTxt + "', '" + email + "', '" + path + "');");
 
-        SharedPreferences.Editor editor2 = c.edit();
-        editor2.putString(PETS_COUNT, Integer.toString(++count));
-        editor2.apply();
 
+        String Query = "Select * from " + DBHelper.TABLE_NAME;
+        Cursor cursor = sqldb.rawQuery(Query, null);
+        while(cursor.moveToNext()) {
+            String item = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            Log.d("tag4me1", "в базе " + item);
+
+        }
+        cursor.close();
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);

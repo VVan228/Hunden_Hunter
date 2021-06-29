@@ -1,10 +1,14 @@
 package com.example.hund_hunter.main_activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,8 @@ import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.interfaces.OnDataChangeListener;
+import com.example.hund_hunter.other_classes.DBHelper;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
@@ -29,12 +35,9 @@ public class ListOfMyItems extends Activity {
 
     Button back, add_new_adv;
     ListView list;
-    public static ArrayList<String> names;
-    public static ArrayList<String> paths;
-    public static FireDB db;
     public static CustomListAdapter adapter;
-    SharedPreferences c;
-    SharedPreferences pets;
+    public static ArrayList<Pet> pets;
+    public static FireDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,42 +52,69 @@ public class ListOfMyItems extends Activity {
 
         add_new_adv.setOnClickListener(v -> startActivity((new Intent(ListOfMyItems.this, OrderCreationActivity.class))));
 
-        names = new ArrayList<>();
-        paths = new ArrayList<>();
-        adapter = new CustomListAdapter(this, R.layout.list_item, names);
+        pets = new ArrayList<>();
+        adapter = new CustomListAdapter(this, R.layout.list_item, pets);
         list.setAdapter(adapter);
 
         db = new FireDB();
 
-        c = getSharedPreferences(OrderCreationActivity.PETS_COUNT, Context.MODE_PRIVATE);
-        pets = getSharedPreferences(OrderCreationActivity.PETS, Context.MODE_PRIVATE);
 
+        final DBHelper dbhelper = new DBHelper(this);
+        SQLiteDatabase sqldb = dbhelper.getWritableDatabase();
 
-        int count = Integer.parseInt(c.getString(OrderCreationActivity.PETS_COUNT, "0"));
-        String path;
-        for(int i = 0; i<count; i++){
-            path = pets.getString(Integer.toString(i), "null");
-            if(!path.equals("null")){
-                paths.add(paths.size(), path);
-                db.getParticularChild(path, snapshot -> {
-                    Order res = snapshot.getValue(Order.class);
-                    if(res==null){
-                        return;
-                    }
-                    names.add(names.size(), res.getPet());
-                    adapter.notifyDataSetChanged();
-                });
+        String Query = "Select * from " + DBHelper.TABLE_NAME;
+        Cursor cursor = sqldb.rawQuery(Query, null);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String current_email;
+        if(auth.getCurrentUser()==null){
+            return;
+        }else{
+            current_email = auth.getCurrentUser().getEmail();
+        }
+        while(cursor.moveToNext()) {
+            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            String link = cursor.getString(cursor.getColumnIndexOrThrow("link"));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+            if(email.equals(current_email)){
+                pets.add(new Pet(name, link, id));
+                adapter.notifyDataSetChanged();
             }
         }
+        cursor.close();
     }
 }
 
 
-class CustomListAdapter extends ArrayAdapter<String> {
+class Pet{
+    String name;
+    String path;
+    int id;
+    Pet(String name, String path, int id){
+        this.name = name;
+        this.path = path;
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public int getId() {
+        return id;
+    }
+}
+
+class CustomListAdapter extends ArrayAdapter<Pet> {
 
     private Context context;
 
-    public CustomListAdapter(Context context, int resourceId, List<String> items ) {
+    public CustomListAdapter(Context context, int resourceId, List<Pet> items ) {
         super(context, resourceId, items);
         this.context = context;
     }
@@ -96,15 +126,11 @@ class CustomListAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-
-        String rowItem = getItem(position);
-
+        Pet rowItem = getItem(position);
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-
             convertView = mInflater.inflate(R.layout.list_item, null);
-
             holder = new ViewHolder();
 
             holder.name = convertView.findViewById(R.id.pet_name);
@@ -114,35 +140,22 @@ class CustomListAdapter extends ArrayAdapter<String> {
         else
             holder = (ViewHolder) convertView.getTag();
 
-        holder.name.setText(rowItem);
+        holder.name.setText(rowItem.getName());
 
-        holder.button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                String path = ListOfMyItems.paths.get(position);
+        holder.button.setOnClickListener(v -> {
+            Pet rowItem1 = getItem(position);
+            String path = rowItem1.getPath();
 
-                ListOfMyItems.db.removeListener(path);
-                ListOfMyItems.db.removeParticularChild(path);
+            ListOfMyItems.db.removeParticularChild(path);
 
-                SharedPreferences c = context.getSharedPreferences(OrderCreationActivity.PETS_COUNT, Context.MODE_PRIVATE);
-                int count = Integer.parseInt(c.getString(OrderCreationActivity.PETS_COUNT, "1"));
-                count--;
-                SharedPreferences.Editor editor = c.edit();
-                editor.putString(OrderCreationActivity.PETS_COUNT, Integer.toString(count));
-                editor.apply();
-
-                SharedPreferences pets = context.getSharedPreferences(OrderCreationActivity.PETS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor2 = pets.edit();
-                editor2.remove(Integer.toString(position));
-                editor2.apply();
+            final DBHelper dbhelper = new DBHelper(context);
+            SQLiteDatabase sqldb = dbhelper.getWritableDatabase();
+            sqldb.execSQL("DELETE FROM " + DBHelper.TABLE_NAME + " WHERE _id = " + rowItem1.getId() + ";");
 
 
 
-                ListOfMyItems.paths.remove(position);
-                ListOfMyItems.names.remove(position);
-                ListOfMyItems.adapter.notifyDataSetChanged();
-            }
-
+            ListOfMyItems.pets.remove(position);
+            ListOfMyItems.adapter.notifyDataSetChanged();
         });
 
         return convertView;

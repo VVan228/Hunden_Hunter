@@ -20,7 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.data_classes.User;
-import com.example.hund_hunter.fire_classes.AddressesMethods;
+import com.example.hund_hunter.fire_classes.interfaces.OnChildRemovedListener;
+import com.example.hund_hunter.other_classes.AddressesMethods;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
 import com.example.hund_hunter.fire_classes.MyQuery;
@@ -30,15 +31,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -111,6 +113,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             Log.d("tag4me", "child added");
             JSONObject markerDataJson = new JSONObject(markerData);
             createMarker(cords, markerDataJson.toString());
+        }).addRemovedListener(snapshot -> {
+            Order order = snapshot.getValue(Order.class);
+            assert order != null;
+            Log.d("tag4me1", order.getCoord());
         }).create());
     }
 
@@ -193,7 +199,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         double[]str = AddressesMethods.getLatLang(string);
         double lat = str[0];
         double lon = str[1];
-        Marker a = mMap.addMarker(new MarkerOptions().zIndex(100).position(new LatLng(lat,lon)));
+        Marker a = mMap.addMarker(new MarkerOptions()
+                .zIndex(100)
+                .position(new LatLng(lat,lon))
+                .icon(BitmapDescriptorFactory.defaultMarker(10.0f)));
         a.setTag(tag);
     }
 

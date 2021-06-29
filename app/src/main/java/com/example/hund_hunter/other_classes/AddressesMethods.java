@@ -1,4 +1,4 @@
-package com.example.hund_hunter.fire_classes;
+package com.example.hund_hunter.other_classes;
 
 import android.content.Context;
 import android.location.Address;
