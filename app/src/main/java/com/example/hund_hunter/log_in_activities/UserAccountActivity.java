@@ -39,7 +39,7 @@ public class UserAccountActivity extends AppCompatActivity {
         authListener = firebaseAuth -> {
             FirebaseUser user1 = firebaseAuth.getCurrentUser();
             if (user1 == null) {
-                startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
+                startActivity(new Intent(UserAccountActivity.this, LoginActivity.class));
                 finish();
             }
         };
@@ -167,7 +167,7 @@ public class UserAccountActivity extends AppCompatActivity {
                 user.delete().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(UserAccountActivity.this, "Профиль удален... Создайте новый!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(UserAccountActivity.this, FirstActivity.class));
+                        startActivity(new Intent(UserAccountActivity.this, LoginActivity.class));
                         finish();
                     } else {
                         Toast.makeText(UserAccountActivity.this, "Невозможно удалить аккаунт!", Toast.LENGTH_SHORT).show();

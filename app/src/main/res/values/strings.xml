@@ -42,4 +42,6 @@
     <string name="new_password">новый пароль</string>
     <string name="adress">адрес</string>
     <string name="error">error</string>
+    <string name="tutorial">для того чтобы загрузить дополнительные метки, нажмите на произвольный район на карте, метки из этого района загрузятся из базы данных</string>
+
 </resources>

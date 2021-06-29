@@ -1,7 +1,10 @@
 
 package com.example.hund_hunter.main_activities;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -61,6 +65,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     Marker lastMarker;
     public static final float MY_COLOR = 10.0f;
 
+    SharedPreferences settings;
+    public static final String TUTORIAL = "tutor";
+    public static final String APP_PREFERENCES = "settings";
+
 
 
     @Override
@@ -68,6 +76,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seeker_activity);
 
+        settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         image_cache = new HashMap<>();
         markers = new HashMap<>();
         users = new FireDB(new String[]{"users"});
@@ -80,6 +89,21 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         myPos = ChoiceActivity.myPlace;
         //записать текущую позицию и обновить бд
         setPlace();
+
+        if(!settings.contains(TUTORIAL)){
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(TUTORIAL, "");
+            editor.apply();
+
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.tutorial_dialog);
+            dialog.setTitle("");
+
+            Button cancel = (Button) dialog.findViewById(R.id.tutorial_cancel);
+            cancel.setOnClickListener(v -> dialog.dismiss());
+            dialog.show();
+        }
+
         //получение меток
         updateData();
     }

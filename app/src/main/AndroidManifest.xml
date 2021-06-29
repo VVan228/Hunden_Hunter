@@ -2,14 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hund_hunter">
 
-    <uses-permission
-        android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission
-        android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -21,14 +17,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDEWTvRriVn6e_uxBiURqhkA5jvDQ-KRns" />
 
-
-
         <activity
-            android:name=".log_in_activities.FirstActivity"
+            android:name=".log_in_activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -36,51 +34,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".log_in_activities.SignupActivity"
-            android:label="Регистрация"/>
-
-
+            android:label="Регистрация" />
         <activity
             android:name=".log_in_activities.ResetPasswordActivity"
             android:label="Забыли пароль?"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
-
         <activity
             android:name=".log_in_activities.ChoiceActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main_activities.SeekerActivity"
-            android:label="Объявления"/>
-
-
-        <activity android:name=".main_activities.OrderCreationActivity"
-            android:label="Создать объявление"/>
-
-
+            android:label="Объявления" />
+        <activity
+            android:name=".main_activities.OrderCreationActivity"
+            android:label="Создать объявление" />
         <activity
             android:name=".log_in_activities.UserAccountActivity"
-            android:label="Аккаунт"/>
-
-
+            android:label="Аккаунт" />
         <activity
             android:name=".main_activities.ListOfMyItems"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-
-        <activity android:name=".main_activities.SetLocationActivity"
-            android:label="Выбрать место"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".main_activities.SetLocationActivity"
+            android:label="Выбрать место" />
     </application>
 
 </manifest>
