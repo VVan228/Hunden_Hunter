@@ -92,6 +92,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
         myPos = ChoiceActivity.myPlace;
+        if(myPos == null){
+            Toast.makeText(SeekerActivity.this, "не получилось определить локацию", Toast.LENGTH_LONG).show();
+            return;
+        }
         //записать текущую позицию и обновить бд
         setPlace();
 
@@ -130,6 +134,9 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
     void updateData(){
+        if(db == null){
+            return;
+        }
         db.getData(new MyQuery(db.getRef()).orderBy("time"), new MyChildListenerFactory().addAddedListener((snapshot, previousChildName) -> {
             Order order = snapshot.getValue(Order.class);
             assert order != null;
