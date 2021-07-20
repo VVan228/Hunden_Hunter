@@ -43,6 +43,7 @@
             android:name=".log_in_activities.ChoiceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:theme="@style/AppTheme.NoActionBarWithAccent"
             android:name=".main_activities.SeekerActivity"
             android:label="Объявления" />
         <activity

@@ -49,7 +49,6 @@ public class UserAccountActivity extends AppCompatActivity {
         Button changePassword1 = (Button) findViewById(R.id.acc_bth_change_password);
         Button removeUser = (Button) findViewById(R.id.acc_bth_remove_user);
         Button signOut = (Button) findViewById(R.id.acc_bth_sign_out);
-        Button myList = (Button) findViewById(R.id.acc_bth_mylist);
         Button back = (Button) findViewById(R.id.bth_back_from_user_acc);
 
         // buttons for next actions
@@ -178,8 +177,6 @@ public class UserAccountActivity extends AppCompatActivity {
         });
 
         signOut.setOnClickListener(v -> signOut());
-
-        myList.setOnClickListener(v ->  startActivity(new Intent(UserAccountActivity.this, ListOfMyItems.class)));
 
         back.setOnClickListener(v -> finish());
     }

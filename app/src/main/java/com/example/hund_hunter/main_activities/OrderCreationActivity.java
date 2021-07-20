@@ -67,6 +67,10 @@ public class OrderCreationActivity extends AppCompatActivity {
         EditText revard = (EditText) findViewById(R.id.reward);
         add_photo = (Button) findViewById(R.id.bth_add_photo);
         photo = (ImageView) findViewById(R.id.iv_pet_photo);
+        Button back = findViewById(R.id.bth_back_from_order_creation);
+        back.setOnClickListener(v -> {
+            finish();
+        });
 
 
         add_photo.setOnClickListener(v -> {

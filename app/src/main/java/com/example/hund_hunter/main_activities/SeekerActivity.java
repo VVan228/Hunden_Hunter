@@ -1,6 +1,7 @@
 
 package com.example.hund_hunter.main_activities;
 
+import android.animation.Animator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +16,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +53,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -88,6 +93,14 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     LatLng polygonCenter;
     PointsHolder polygonPoints;;
 
+    boolean isFABOpen;
+    FloatingActionButton fab;
+    LinearLayout fab1;
+    LinearLayout fab2;
+    LinearLayout fab3;
+    TextView fab1text;
+    TextView fab2text;
+    TextView fab3text;
 
 
     @Override
@@ -139,6 +152,174 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         //записать текущую позицию и обновить бд
         setPlaceAndUpdateData();
         //получение меток
+
+
+        fab = (FloatingActionButton) findViewById(R.id.main_fab_menu);
+        fab1 = findViewById(R.id.fab_menu_1);
+        fab2 = findViewById(R.id.fab_menu_2);
+        fab3 = findViewById(R.id.fab_menu_3);
+        fab1text = findViewById(R.id.menu_text1);
+        fab2text = findViewById(R.id.menu_text2);
+        fab3text = findViewById(R.id.menu_text3);
+        isFABOpen = false;
+        fab.setOnClickListener(view -> {
+            if(!isFABOpen){
+                fab.setRotation(180);
+                showFABMenu();
+            }else{
+                fab.setRotation(0);
+                closeFABMenu();
+            }
+        });
+        fab1.setOnClickListener(v -> {
+            Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
+            startActivity(intent);
+        });
+        fab2.setOnClickListener(v -> {
+            Intent intent = new Intent(SeekerActivity.this, ListOfMyItems.class);
+            startActivity(intent);
+        });
+        fab3.setOnClickListener(v -> {
+            Intent intent = new Intent(SeekerActivity.this, OrderCreationActivity.class);
+            startActivity(intent);
+        });
+    }
+    private void showFABMenu(){
+        isFABOpen=true;
+        fab1.animate().translationY(getResources().getDimension(R.dimen.standard_55)).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                fab1text.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        fab2.animate().translationY(getResources().getDimension(R.dimen.standard_105)).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                fab2text.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        fab3.animate().translationY(getResources().getDimension(R.dimen.standard_155)).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                fab3text.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+    }
+
+    private void closeFABMenu(){
+        isFABOpen=false;
+        fab1.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        fab2.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        fab3.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        fab1text.setVisibility(View.GONE);
+        fab2text.setVisibility(View.GONE);
+        fab3text.setVisibility(View.GONE);
     }
 
 
@@ -182,6 +363,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
             double[] res = AddressesMethods.getLatLang(cords);
             polygonPoints.addThreeWithMargin(new LatLng(res[0], res[1]));
+            polygonPoints.add(new LatLng(res[0], res[1]));
             updatePolygon();
 
 
@@ -220,9 +402,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         mMap.setOnMarkerClickListener(marker -> {
             final ProgressBar image_progressBar = findViewById(R.id.bottom_image_progressBar);
 
-            //if(image_progressBar.getVisibility() == View.VISIBLE){
-            //    return true;
-            //}
 
             if(lastMarker!=null){
                 lastMarker.setIcon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_unselected));
@@ -355,6 +534,12 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onMapClick(LatLng latLng) {
+        if(isFABOpen){
+            fab.setRotation(0);
+            closeFABMenu();
+            return;
+        }
+
         polygonPoints.addThreeWithMargin(latLng);
         updatePolygon();
 
@@ -362,21 +547,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         setPlaceAndUpdateData();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.title, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_search) {
-            //вызов окна профиля
-            Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
-            startActivity(intent);
-        }
-        return true;
-    }
 
 
     BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
