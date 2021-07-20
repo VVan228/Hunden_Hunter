@@ -50,7 +50,8 @@ implements
         //LatLng sydney = new LatLng(-34, 151);
         LatLng myPlace = ChoiceActivity.myPlace;
         coords = myPlace;
-        mMap.addMarker(new MarkerOptions().position(myPlace).title("здесь"));
+        mMap.addMarker(new MarkerOptions().position(myPlace).title("здесь")
+                .icon(SeekerActivity.bitmapDescriptorFromVector(this, R.drawable.ic_marker_unselected)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
         CameraPosition cameraPosition = new CameraPosition(myPlace, 23, 0, 15);
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -58,7 +59,8 @@ implements
 
         mMap.setOnMapClickListener(latLng -> {
             mMap.clear();
-            mMap.addMarker(new MarkerOptions().position(latLng).title("здесь"));
+            mMap.addMarker(new MarkerOptions().position(latLng).title("здесь")
+                    .icon(SeekerActivity.bitmapDescriptorFromVector(this, R.drawable.ic_marker_selected)));
             coords = latLng;
         });
         enableMyLocation();

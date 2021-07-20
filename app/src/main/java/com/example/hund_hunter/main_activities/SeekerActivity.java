@@ -549,7 +549,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
 
-    BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+    static BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
