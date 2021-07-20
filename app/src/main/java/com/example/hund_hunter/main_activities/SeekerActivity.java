@@ -184,6 +184,17 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             startActivity(intent);
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        if(isFABOpen){
+            fab.setRotation(0);
+            closeFABMenu();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
     private void showFABMenu(){
         isFABOpen=true;
         fab1.animate().translationY(getResources().getDimension(R.dimen.standard_55)).setListener(new Animator.AnimatorListener() {
