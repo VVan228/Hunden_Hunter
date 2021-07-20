@@ -11,35 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
-            android:visibility="gone"
-            android:paddingHorizontal="10dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackground"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_weight="1"
-                android:theme="@style/MainTextView"
-                android:text="количество районов:\n0/10"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-            <ImageButton
-                android:layout_margin="10dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_minus" />
-            <ImageButton
-                android:layout_margin="10dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_plus" />
-        </LinearLayout>
 
 
         <fragment
@@ -48,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".main_activities.SetLocationActivity"
-            android:layout_weight="10"/>
+            android:layout_weight="10">
+        </fragment>
     </LinearLayout>
 
 

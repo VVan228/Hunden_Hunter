@@ -27,12 +27,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:27.0.0')
 
     implementation 'com.google.firebase:firebase-analytics'
+
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
 
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'

@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,11 +23,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
 import com.example.hund_hunter.data_classes.User;
-import com.example.hund_hunter.fire_classes.interfaces.OnChildRemovedListener;
 import com.example.hund_hunter.other_classes.AddressesMethods;
 import com.example.hund_hunter.fire_classes.FireDB;
 import com.example.hund_hunter.fire_classes.MyChildListenerFactory;
@@ -42,15 +44,20 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -65,6 +72,8 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     HashMap<String, Marker> markers;
     HashMap<String, Bitmap> image_cache;
     Set<String> loading_images;
+    Set<String> loaded_indexes;
+    String curPostal;
     Marker lastMarker;
     static String currentImagePath = "";
     public static final float MY_COLOR = 10.0f;
@@ -74,14 +83,22 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     public static final String APP_PREFERENCES = "settings";
 
 
+    Polygon currentPolygon;
+    final double marginRadius = 0.0005;
+    LatLng polygonCenter;
+    PointsHolder polygonPoints;;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seeker_activity);
 
+        polygonPoints = new PointsHolder();
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         loading_images = new HashSet<>();
+        loaded_indexes = new HashSet<>();
         image_cache = new HashMap<>();
         markers = new HashMap<>();
         users = new FireDB(new String[]{"users"});
@@ -92,12 +109,18 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
         myPos = ChoiceActivity.myPlace;
+        polygonCenter = myPos;
         if(myPos == null){
             Toast.makeText(SeekerActivity.this, "не получилось определить локацию", Toast.LENGTH_LONG).show();
             return;
         }
-        //записать текущую позицию и обновить бд
-        setPlace();
+
+        polygonPoints.add(new LatLng(myPos.latitude + marginRadius,myPos.longitude));
+        polygonPoints.add(new LatLng(myPos.latitude,myPos.longitude - marginRadius));
+        polygonPoints.add(new LatLng(myPos.latitude - marginRadius,myPos.longitude));
+        polygonPoints.add(new LatLng(myPos.latitude,myPos.longitude + marginRadius));
+
+
 
         if(!settings.contains(TUTORIAL)){
             SharedPreferences.Editor editor = settings.edit();
@@ -113,13 +136,14 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             dialog.show();
         }
 
+        //записать текущую позицию и обновить бд
+        setPlaceAndUpdateData();
         //получение меток
-        updateData();
     }
 
 
-    void setPlace(){
-        Log.d("tag4me", "setPlace start");
+    void setPlaceAndUpdateData(){
+        //Log.d("tag4me", "setPlace start");
         String[]address = AddressesMethods.getLocalityAndPostal(myPos.toString(), this);
         if(address==null){
             Toast.makeText(SeekerActivity.this, "не получилось распознать адрес", Toast.LENGTH_LONG).show();
@@ -127,14 +151,22 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         }
         String locality = address[0];
         String postal = address[1];
-
-        db = new FireDB(new String[]{"orders", locality, postal});
         Log.d("tag4me", locality+" "+postal);
+        for(String s: loaded_indexes){
+            Log.d("tag4me", s);
+        }
+        if(!loaded_indexes.contains(locality+postal)){
+            db = new FireDB(new String[]{"orders", locality, postal});
+            updateData();
+            //Log.d("tag4me", "added");
+            loaded_indexes.add(locality+postal);
+        }
+
     }
 
 
     void updateData(){
-        if(db == null){
+        if(db == null){// || loaded_indexes.contains(curPostal)){
             return;
         }
         db.getData(new MyQuery(db.getRef()).orderBy("time"), new MyChildListenerFactory().addAddedListener((snapshot, previousChildName) -> {
@@ -147,6 +179,10 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             String time = order.getTime();
             String photoStr = order.getImage();
             String pet = order.getPet();
+
+            double[] res = AddressesMethods.getLatLang(cords);
+            polygonPoints.addThreeWithMargin(new LatLng(res[0], res[1]));
+            updatePolygon();
 
 
             Map<String, String> markerData = new HashMap<>();
@@ -176,6 +212,9 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        currentPolygon = mMap.addPolygon(polygonPoints.getOptions());
+
         //слушатель нажатий на маркеры
         mMap.setOnMapClickListener(this);
         mMap.setOnMarkerClickListener(marker -> {
@@ -186,9 +225,9 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             //}
 
             if(lastMarker!=null){
-                lastMarker.setIcon(BitmapDescriptorFactory.defaultMarker(MY_COLOR));
+                lastMarker.setIcon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_unselected));
             }
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            marker.setIcon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_selected));
             lastMarker = marker;
             JSONObject markerData;
             try {
@@ -305,29 +344,22 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         Marker a = mMap.addMarker(new MarkerOptions()
                 .zIndex(100)
                 .position(new LatLng(lat,lon))
-                .icon(BitmapDescriptorFactory.defaultMarker(MY_COLOR)));
+                //.icon(BitmapDescriptorFactory.defaultMarker(MY_COLOR)));
+                .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker_unselected)));
         a.setTag(tag);
 
         markers.put(new LatLng(lat,lon).toString(), a);
     }
 
-    static Bitmap stringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
     @Override
     public void onMapClick(LatLng latLng) {
+        polygonPoints.addThreeWithMargin(latLng);
+        updatePolygon();
+
         myPos = latLng;
-        setPlace();
-        updateData();
+        setPlaceAndUpdateData();
     }
 
     @Override
@@ -344,5 +376,172 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
             startActivity(intent);
         }
         return true;
+    }
+
+
+    BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+
+    public double distance (LatLng p1, LatLng p2){
+        double lat_a = p1.latitude;
+        double lat_b = p2.latitude;
+        double lng_a = p1.longitude;
+        double lng_b = p2.longitude;
+
+        double earthRadius = 3958.75;
+        double latDiff = Math.toRadians(lat_b-lat_a);
+        double lngDiff = Math.toRadians(lng_b-lng_a);
+        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
+                Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
+                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = earthRadius * c;
+
+        int meterConversion = 1609;
+
+        return distance * meterConversion;
+    }
+
+    double angle(LatLng p1, LatLng p2) {
+        double lat1 = p1.latitude;
+        double lat2 = p2.latitude;
+        double long1 = p1.longitude;
+        double long2 = p2.longitude;
+
+
+        double dLon = (long2 - long1);
+
+        double y = Math.sin(dLon) * Math.cos(lat2);
+        double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
+                * Math.cos(lat2) * Math.cos(dLon);
+
+        double brng = Math.atan2(y, x);
+
+        brng = Math.toDegrees(brng);
+        brng = (brng + 360) % 360;
+        //brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
+
+        return brng;
+    }
+
+    double angleFromCenter(LatLng o){
+        return angle(o, polygonCenter);
+    }
+    double distanceFromCenter(LatLng o){
+        return distance(o, polygonCenter);
+    }
+    LatLng rotatePoint(LatLng point, LatLng midPoint, double angle){
+        double piDiv180 = Math.PI / 180;
+
+        // Convert the input angle to radians
+        final double r = angle * piDiv180;
+
+        // Create local variables using appropriate nomenclature
+        final double x = point.longitude;
+        final double y = point.latitude;
+        final double mx = midPoint.longitude;
+        final double my = midPoint.latitude;
+
+        // Offset input point by the midpoint so the midpoint becomes the origin
+        final double ox = x - mx;
+        final double oy = y - my;
+
+        // Cache trig results because trig is expensive
+        final double cosr = Math.cos(r);
+        final double sinr = Math.sin(r);
+
+        // Perform rotation
+        final double dx = ox * cosr - oy * sinr;
+        final double dy = ox * sinr + oy * cosr;
+
+        // Undo the offset
+        return new LatLng(dy + my, dx + mx);
+    }
+
+
+    void updatePolygon(){
+        currentPolygon.remove();
+        currentPolygon = mMap.addPolygon(polygonPoints.getOptions());
+    }
+
+    class PointsHolder{
+        ArrayList<LatLng> points;
+        PointsComparator comparator;
+
+        PointsHolder(){
+            points = new ArrayList<>();
+            comparator = new PointsComparator();
+        }
+
+        void add(LatLng point){
+            points.add(point);
+            Collections.sort(points, new PointsComparator());
+
+            checkCircle();
+        }
+        void addThreeWithMargin(LatLng point){
+            LatLng elevatedPoint = new LatLng(point.latitude+marginRadius*3, point.longitude);
+            LatLng left = rotatePoint(elevatedPoint, point, angleFromCenter(elevatedPoint)-45);
+            LatLng right = rotatePoint(elevatedPoint, point, angleFromCenter(elevatedPoint)+45);
+            //LatLng center = rotatePoint(elevatedPoint, point, angleFromCenter(elevatedPoint));
+            points.add(left);
+            points.add(right);
+            //points.add(center);
+
+            polygonCenter = calculateCenter();
+            Collections.sort(points, new PointsComparator());
+            checkCircle();
+        }
+
+        void checkCircle(){
+            for(int i = 1; i<points.size(); i++){
+                double dist = Math.min( angleFromCenter(points.get(i)), angleFromCenter(points.get(i-1) ));
+                Log.d("bbbb", Double.toString(dist));
+                if(Math.abs( angleFromCenter(points.get(i)) - angleFromCenter(points.get(i-1))) < 10 &&
+                        Math.abs( distanceFromCenter(points.get(i)) - distanceFromCenter(points.get(i-1))) > 10){
+                    if(distanceFromCenter(points.get(i)) > distanceFromCenter(points.get(i-1))){
+                        points.remove(i-1);
+                    }else{
+                        points.remove(i);
+                    }
+                }
+            }
+        }
+
+        LatLng calculateCenter(){
+            double lat = 0.0;
+            double lng = 0.0;
+            for(LatLng p: points){
+                lat += p.latitude;
+                lng += p.longitude;
+            }
+            return new LatLng(lat/points.size(), lng/points.size());
+        }
+
+        PolygonOptions getOptions(){
+            PolygonOptions res = new PolygonOptions()
+                    .fillColor(Color.argb(20,0,0,0))
+                    .strokeColor(Color.argb(255,255,255,255))
+                    .strokeWidth(5);
+            for (LatLng p: points) {
+                res.add(p);
+            }
+            return res;
+        }
+    }
+
+    class PointsComparator implements Comparator<LatLng>{
+
+        @Override
+        public int compare(LatLng o1, LatLng o2) {
+            return Double.compare(angleFromCenter(o1), angleFromCenter(o2));
+        }
     }
 }
