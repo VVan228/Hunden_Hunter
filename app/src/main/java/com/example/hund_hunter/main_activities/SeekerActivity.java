@@ -164,31 +164,31 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
         isFABOpen = false;
         fab.setOnClickListener(view -> {
             if(!isFABOpen){
-                fab.setRotation(180);
                 showFABMenu();
             }else{
-                fab.setRotation(0);
                 closeFABMenu();
             }
         });
         fab1.setOnClickListener(v -> {
             Intent intent = new Intent(SeekerActivity.this, UserAccountActivity.class);
             startActivity(intent);
+            closeFABMenu();
         });
         fab2.setOnClickListener(v -> {
             Intent intent = new Intent(SeekerActivity.this, ListOfMyItems.class);
             startActivity(intent);
+            closeFABMenu();
         });
         fab3.setOnClickListener(v -> {
             Intent intent = new Intent(SeekerActivity.this, OrderCreationActivity.class);
             startActivity(intent);
+            closeFABMenu();
         });
     }
 
     @Override
     public void onBackPressed() {
         if(isFABOpen){
-            fab.setRotation(0);
             closeFABMenu();
         }else{
             super.onBackPressed();
@@ -196,6 +196,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void showFABMenu(){
+        fab.setRotation(180);
         isFABOpen=true;
         fab1.animate().translationY(getResources().getDimension(R.dimen.standard_55)).setListener(new Animator.AnimatorListener() {
             @Override
@@ -264,6 +265,7 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void closeFABMenu(){
+        fab.setRotation(0);
         isFABOpen=false;
         fab1.animate().translationY(0).setListener(new Animator.AnimatorListener() {
             @Override
@@ -546,7 +548,6 @@ public class SeekerActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapClick(LatLng latLng) {
         if(isFABOpen){
-            fab.setRotation(0);
             closeFABMenu();
             return;
         }
