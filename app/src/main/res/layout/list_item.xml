@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/for_item">
 
-    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:theme="@style/MainTextView"
+        android:id="@+id/pet_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:gravity="center"
+        android:text="@string/pet_name"
+        android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/pet_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="25dp"
-            android:gravity="center_vertical"
-            android:text="@string/pet_name"
-            android:textSize="20dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/delete_pet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@color/yellow"
-            android:text="@string/delete" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:theme="@style/MainButtonTheme"
+        android:background="@drawable/button_main_shape"
+        android:id="@+id/delete_pet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:text="@string/delete" />
+</LinearLayout>

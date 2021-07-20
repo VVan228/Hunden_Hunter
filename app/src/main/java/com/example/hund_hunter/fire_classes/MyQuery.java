@@ -17,6 +17,11 @@ public class MyQuery {
         return this;
     }
 
+    public MyQuery orderByKey(){
+        ref = ref.orderByKey();
+        return this;
+    }
+
     public MyQuery limitToFirst(int n){
         ref = ref.limitToFirst(n);
         return this;

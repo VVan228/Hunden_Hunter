@@ -7,15 +7,128 @@
 
     tools:context="com.example.hund_hunter.main_activities.SeekerActivity">
 
-
-    <fragment
-
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".main_activities.SetLocationActivity"
-        android:layout_weight="10"/>
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".main_activities.SetLocationActivity"/>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:id="@+id/fab_menu_1">
+            <TextView
+                android:paddingHorizontal="4dp"
+                android:background="@color/colorBackground"
+                android:id="@+id/menu_text1"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="настройки"
+                android:layout_gravity="center"
+                android:theme="@style/MenuTextView"
+                android:layout_marginRight="15dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                app:elevation="0dp"
+                app:fabSize="mini"
+                android:src="@drawable/settings"
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:id="@+id/fab_menu_2">
+            <TextView
+                android:paddingHorizontal="4dp"
+                android:background="@color/colorBackground"
+                android:id="@+id/menu_text2"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="список моих объявлений"
+                android:layout_gravity="center"
+                android:theme="@style/MenuTextView"
+                android:layout_marginRight="15dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                app:elevation="0dp"
+                app:fabSize="mini"
+                android:src="@drawable/list"
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:id="@+id/fab_menu_3">
+            <TextView
+                android:paddingHorizontal="4dp"
+                android:background="@color/colorBackground"
+                android:id="@+id/menu_text3"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="создать объявление"
+                android:layout_gravity="center"
+                android:theme="@style/MenuTextView"
+                android:layout_marginRight="15dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                app:elevation="0dp"
+                app:fabSize="mini"
+                android:src="@drawable/add"
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:elevation="0dp"
+            app:fabSize="mini"
+            android:src="@drawable/menu"
+            app:backgroundTint="@color/colorPrimary"
+            android:id="@+id/main_fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp" />
+    </RelativeLayout>
+
 
     <!-- подключение элемента app bar -->
 

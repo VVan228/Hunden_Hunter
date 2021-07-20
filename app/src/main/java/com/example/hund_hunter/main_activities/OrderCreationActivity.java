@@ -1,70 +1,76 @@
 package com.example.hund_hunter.main_activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hund_hunter.R;
 import com.example.hund_hunter.data_classes.Order;
+import com.example.hund_hunter.other_classes.AddressesMethods;
 import com.example.hund_hunter.fire_classes.FireDB;
+import com.example.hund_hunter.other_classes.DBHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
 
 public class OrderCreationActivity extends AppCompatActivity {
     FireDB db;
-    private EditText revard;
     int DIALOG_TIME = 1;
     int myHour = 14;
     int myMinute = 35;
     TextView tvTime;
     String coords;
     String time;
-    AppCompatButton add_photo;
+    Button add_photo;
     static final int GALLERY_REQUEST = 1;
     static final int LOCATION_REQUEST = 228;
-    static final String PETS_COUNT = "count";
-    static final String PETS = "pets";
-    SharedPreferences c;
-    SharedPreferences pets;
     ImageView photo;
     Bitmap bitmap = null;
     String image = "";
+    Uri imagePath;
 
-    DatabaseReference ref;
-    DatabaseReference usersRef;
-
-    /** Called when the activity is first created. */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_creation_activity);
 
-        c = getSharedPreferences(PETS_COUNT, Context.MODE_PRIVATE);
-        pets = getSharedPreferences(PETS, Context.MODE_PRIVATE);
         tvTime = (TextView) findViewById(R.id.tvTime);
-        revard = (EditText) findViewById(R.id.reward);
-        add_photo = (AppCompatButton) findViewById(R.id.bth_add_photo);
+        EditText revard = (EditText) findViewById(R.id.reward);
+        add_photo = (Button) findViewById(R.id.bth_add_photo);
         photo = (ImageView) findViewById(R.id.iv_pet_photo);
+        Button back = findViewById(R.id.bth_back_from_order_creation);
+        back.setOnClickListener(v -> {
+            finish();
+        });
 
 
         add_photo.setOnClickListener(v -> {
@@ -90,14 +96,18 @@ public class OrderCreationActivity extends AppCompatActivity {
             case GALLERY_REQUEST:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
+                    imagePath = selectedImage;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     //Log.d("tag4me", "ye ");
-                    image = bitmapToString(bitmap);
+                    image = setImage(bitmap);
+                    photo.setVisibility(View.VISIBLE);
                     photo.setImageBitmap(bitmap);
+                    TextView no_photo = findViewById(R.id.order_no_photo);
+                    no_photo.setVisibility(View.GONE);
                 }
                 break;
             case LOCATION_REQUEST:
@@ -132,7 +142,7 @@ public class OrderCreationActivity extends AppCompatActivity {
             if(myMinute < 10 ){
                 minNull = "0";
             }
-            tvTime.setText(hourNull + myHour + " : " + minNull + myMinute);
+            tvTime.setText(String.format("%s%d : %s%d", hourNull, myHour, minNull, myMinute));
             time = hourNull + myHour + " : " + minNull + myMinute;
         }
     };
@@ -151,7 +161,7 @@ public class OrderCreationActivity extends AppCompatActivity {
             return;
         }
 
-        String[]adress = SeekerActivity.getAdress(coords, this);
+        String[]adress = AddressesMethods.getLocalityAndPostal(coords, this);
 
         if(adress==null){
             Toast.makeText(OrderCreationActivity.this, "не получилось распознать адрес", Toast.LENGTH_LONG).show();
@@ -164,27 +174,59 @@ public class OrderCreationActivity extends AppCompatActivity {
         db = new FireDB(new String[]{"orders", locality, postal});
         String path = db.pushValue(new Order(email, priceTxt, commentTxt, coords, time, image, petTxt));
 
-        //записали ссылку на нашего питомца
-        SharedPreferences.Editor editor = pets.edit();
-        int count = Integer.parseInt(c.getString(PETS_COUNT, "0"));
-        editor.putString(Integer.toString(count), path);
-        editor.apply();
+        final DBHelper dbhelper = new DBHelper(this);
+        SQLiteDatabase sqldb = dbhelper.getWritableDatabase();
+        sqldb.execSQL("INSERT INTO " + DBHelper.TABLE_NAME + "(name, email, link) VALUES (" + "'" + petTxt + "', '" + email + "', '" + path + "');");
 
-        SharedPreferences.Editor editor2 = c.edit();
-        editor2.putString(PETS_COUNT, Integer.toString(++count));
-        editor2.apply();
 
+        String Query = "Select * from " + DBHelper.TABLE_NAME;
+        Cursor cursor = sqldb.rawQuery(Query, null);
+        while(cursor.moveToNext()) {
+            String item = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            Log.d("tag4me1", "в базе " + item);
+
+        }
+        cursor.close();
 
         Intent reg_act = new Intent(OrderCreationActivity.this, SeekerActivity.class);
         startActivity(reg_act);
+        finish();
+    }
+
+    String setImage(Bitmap bitmap){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+
+        progressDialog.setTitle("загружаю...");
+        progressDialog.show();
+        String dbImagePath = "images/" + UUID.randomUUID().toString();
+        StorageReference ref = storageReference.child(dbImagePath);
+        ref.putFile(imagePath)
+                .addOnSuccessListener(taskSnapshot -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(OrderCreationActivity.this, "успешно", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Error, Image not uploaded
+                        progressDialog.dismiss();
+                        Toast.makeText(OrderCreationActivity.this, "неудачно.. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnProgressListener(taskSnapshot -> {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("загружено - " + (int)progress + "%");
+                });
+        return dbImagePath;
     }
 
     String bitmapToString(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return encoded;
     }
-
 }

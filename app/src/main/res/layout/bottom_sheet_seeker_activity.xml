@@ -3,88 +3,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="377dp"
-    android:background="@color/green"
+    android:layout_height="424dp"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     app:behavior_hideable="false"
     app:behavior_peekHeight="80dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:background="@color/yellow"
+        android:orientation="vertical"
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center_vertical"
         android:paddingHorizontal="15dp">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_slider"
+            android:paddingTop="8dp" />
         <TextView
+            android:theme="@style/MainTextView"
             android:id="@+id/bottom_sheet_adress"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="16dp"
-            android:layout_weight="3"
+            android:layout_height="match_parent"
             android:text="@string/adress"
             android:gravity="center"/>
-
-
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="25dp"
-        android:paddingVertical="25dp">
+        android:paddingVertical="25dp"
+        android:background="@color/colorBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/for_order">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/no_foto"
+                android:theme="@style/HighlightedTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="нет фото"
+                android:gravity="center"
+                android:background="@drawable/button_shape"
+                android:layout_weight="6"/>
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/bottom_sheet_photo"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="20dp"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="4"/>
+
+            <ProgressBar
+                android:id="@+id/bottom_image_progressBar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="40dp"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:layout_marginLeft="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:background="@drawable/for_order">
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/bottom_sheet_pet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:gravity="center_vertical"
                     android:text="@string/pet_name"
-                    android:textAlignment="center"
-                    android:textColor="@color/yellow"
-                    android:textSize="18sp"
-                    android:background="@drawable/for_order"/>
+                    android:textStyle="bold"
+                    android:theme="@style/LargeTextView" />
 
                 <TextView
-                    android:id="@+id/bottom_sheet_commentInfo"
+                    android:id="@+id/rewardInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/descr_pet"
-                    android:textSize="15dp" />
+                    android:text="р.1000"
+                    android:textStyle="bold"
+                    android:theme="@style/HighlightedTextView"
+                    android:layout_marginBottom="8dp"/>
+
 
                 <TextView
-                    android:id="@+id/bottom_sheet_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time"
-                    android:textSize="15dp" />
-
-                <TextView
+                    android:theme="@style/MainTextView"
                     android:id="@+id/bottom_sheet_owner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,6 +106,7 @@
                     android:textSize="15dp" />
 
                 <TextView
+                    android:theme="@style/MainTextView"
                     android:id="@+id/bottom_sheet_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,17 +114,30 @@
                     android:textSize="15dp" />
 
                 <TextView
-                    android:id="@+id/rewardInfo"
+                    android:theme="@style/MainTextView"
+                    android:id="@+id/bottom_sheet_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="7"
-                    android:gravity="center"
-                    android:text="Награда"
-                    android:textColor="@color/yellow"
-                    android:textSize="18sp"
-                    android:background="@drawable/for_order"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/time"
+                    android:textSize="15dp" />
+
+
+
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:theme="@style/MainTextView"
+            android:layout_weight="1"
+            android:id="@+id/bottom_sheet_commentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/descr_pet"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="25dp"
+            android:textSize="15dp"
+            android:background="@drawable/edittext_shape"/>
 
     </LinearLayout>
 
